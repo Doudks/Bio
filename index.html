@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta http-equiv="Content-Security-Policy"
+content="default-src 'self' https: data:; img-src https: data:; media-src https:;">
+
+  <meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nosifer&family=Rubik+Glitch&family=Metal+Mania&display=swap" rel="stylesheet">
+<title>My Personal Site</title>
+
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Doldie/Mybio/main/favicon.png">
+
+<meta property="og:title" content="My Bio">
+<meta property="og:description" content="Somewhere between silence and chaos.">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Doldie/Mybio/1c409666facfbd27e54285f7c371241e.jpg">
+<meta property="og:url" content="https://doldie.github.io/Mybio">
+<meta property="og:type" content="website">
+
+<meta name="theme-color" content="#0d0d0d">
+<meta name="twitter:card" content="summary_large_image">
+
+
+  <style>
+
+.facts-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.music-btn {
+  margin-left: auto;
+}
+
+.profile-pic {
+  position: relative;
+  width: 160px;
+  height: 160px;
+}
+
+/* avatar */
+.avatar-mask {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+#avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* decoração */
+.decoration-mask {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: visible;
+  z-index: 3;
+  pointer-events: none;
+}
+
+#avatar-decoration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  transform: translate(-50%, -50%);
+}
+
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      background: radial-gradient(circle at top, #1b1f3b, #05010a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: #dcdcff;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      transition: opacity 1.2s ease, transform 1.4s ease, filter 1.4s ease;
+    }
+
+    #loading-screen.exit {
+      opacity: 0;
+      transform: scale(1.25);
+      filter: blur(25px);
+      pointer-events: none;
+    }
+
+    /* IMAGEM DE FUNDO */
+    .loading-bg-image {
+      position: absolute;
+      inset: 0;
+      background-image: url("https://i.imgur.com/3KHoe6a.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.18;
+      transform: scale(1.15);
+      animation: bgZoom 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgZoom {
+      from { transform: scale(1.15); }
+      to { transform: scale(1.25); }
+    }
+
+    /* estrelas */
+    .loading-stars {
+      position: absolute;
+      inset: 0;
+      background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
+      opacity: 0.35;
+      animation: starDrift 25s linear infinite;
+    }
+
+    @keyframes starDrift {
+      from { background-position: 0 0; }
+      to { background-position: 400px 800px; }
+    }
+
+    /* neblina */
+    .loading-fog {
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+      animation: fogMove 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes fogMove {
+      from { transform: translateX(-10%) translateY(0); }
+      to { transform: translateX(10%) translateY(-6%); }
+    }
+
+    /* lua */
+    .loading-moon {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #cfcfe6);
+      margin-bottom: 30px;
+      animation: moonGlow 5s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    @keyframes moonGlow {
+      0% {
+        box-shadow:
+          0 0 25px rgba(220,220,255,0.3),
+          0 0 50px rgba(220,220,255,0.15);
+      }
+      50% {
+        box-shadow:
+          0 0 70px rgba(220,220,255,0.85),
+          0 0 140px rgba(220,220,255,0.55);
+      }
+      100% {
+        box-shadow:
+          0 0 25px rgba(220,220,255,0.3),
+          0 0 50px rgba(220,220,255,0.15);
+      }
+    }
+
+    .loading-text {
+      letter-spacing: 4px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      z-index: 2;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.25);
+      border-top: 3px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 25px;
+      z-index: 2;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-bar {
+      width: 200px;
+      height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 10px;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .loading-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #cfd2ff, #ffffff);
+      animation: loadProgress 8s linear forwards;
+    }
+
+    @keyframes loadProgress {
+      to { width: 100%; }
+    }
+
+body {
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(
+    135deg,
+    #0b0014,
+    #1a0029,
+    #2b003d,
+    #120018
+  );
+  background-size: 300% 300%;
+  animation: bgShift 30s ease-in-out infinite;
+  color: white;
+  overflow-x: hidden;
+}
+
+@keyframes bgShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+ </style>
+</head>
+<body>
+
+
+
+  <div id="loading-screen">
+
+    <div class="loading-bg-image"></div>
+    <div class="loading-stars"></div>
+    <div class="loading-fog"></div>
+
+    <div class="loading-moon"></div>
+    <div class="loading-text">LOADING</div>
+    <div class="loading-spinner"></div>
+
+    <div class="loading-bar">
+      <div class="loading-bar-fill"></div>
+    </div>
+
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading-screen").classList.add("exit");
+      }, 8000);
+    });
+  </script>
+
+  
+
+
+<style>
+
+
+#music-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.65);
+  padding: 6px 14px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: lowercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+#music-btn:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+#music-btn.playing {
+  opacity: 0.4;
+  cursor: default;
+}
+
+    /* ================= ESTILOS ORIGINAIS DO SITE ================= */
+    .banner {
+      background-image: url('https://i.imgur.com/p2UeL6u.jpeg');
+      background-size: cover;
+      background-position: center;
+      height: 250px;
+      position: relative;
+      border-bottom: 5px solid #e60054;
+      box-shadow: 0 4px 15px rgba(230,0,84,0.4);
+    }
+    .content {
+  max-width: 800px;
+  margin: 100px auto 50px auto;
+  padding: 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(40, 0, 60, 0.35),
+    rgba(10, 0, 20, 0.55)
+  );
+  border-radius: 15px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 1;
+  transition: opacity 1s;
+}
+    h2 {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 5px;
+    }
+    ul { list-style: none; padding: 0; }
+    ul li::before {
+      content: "•";
+      color: #ff6ec7;
+      margin-right: 8px;
+    }
+    .toggle-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(
+    135deg,
+    #e60054,
+    #9b003a,
+    #3a0018
+  );
+  color: white;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-weight: bold;
+  box-shadow:
+    0 0 10px rgba(230,0,84,0.4),
+    0 4px 15px rgba(0,0,0,0.6);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+}
+    .toggle-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.35s ease;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+    .toggle-content.open { opacity: 1; }
+    .fun-facts { display: flex; flex-direction: column; gap: 10px; }
+    .fact {
+      background: rgba(255,255,255,0.15);
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .shuffle-btn {
+  background: linear-gradient(
+    135deg,
+    #ff005d,
+    #b80042,
+    #4a001a
+  );
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 15px;
+  box-shadow:
+    0 0 12px rgba(255,0,93,0.4),
+    0 4px 12px rgba(0,0,0,0.5);
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+    .shuffle-btn:active {
+      transform: scale(0.92);
+      background: #b80042;
+    }
+    .social-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 12px; border-radius: 8px;
+      text-decoration: none; color: white; font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .social-btn:hover,
+.toggle-btn:hover,
+.shuffle-btn:hover {
+  background: linear-gradient(
+    135deg,
+    #ff1f75,
+    #b80042,
+    #5a001f
+  );
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+    .social-btn img { width: 20px; height: 20px; }
+    .love-list li, .text-block {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    @keyframes glowName {
+      0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
+      50% { text-shadow: 2px 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(230,0,84,1); }
+      100% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
+    }
+</style>
+
+  <div class="banner">
+    <div class="profile-wrapper" style="display:flex; align-items:flex-end; gap:20px; background: linear-gradient(135deg, rgba(230, 0, 84, 0.25), rgba(10, 8, 30, 0.95)); padding:18px 22px; border-radius:25px; box-shadow: 0 0 20px rgba(230, 0, 84, 0.4), 0 0 40px rgba(230, 0, 84, 0.2); border: 2px solid rgba(230, 0, 84, 0.8); position:absolute; bottom:-80px; left:20px;">
+
+      <div class="profile-pic">
+  <div class="avatar-mask">
+    <img id="avatar-img" src="https://cdn.discordapp.com/avatars/634505467183235085/89170e2effa76130ca20c6d99c08a1e9.png?size=512">
+  </div>
+
+  <div class="decoration-mask">
+    <img id="avatar-decoration">
+  </div>
+</div>
+
+
+      <div class="profile-name" style="font-size:40px; font-weight:bold; background: linear-gradient(90deg, #e60054, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); animation: glowName 2s ease-in-out infinite; padding-bottom:10px;">Doldie</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <h2>About Me</h2>
+    <button class="toggle-btn" onclick="toggleSection('likes')">Things I Love</button>
+    <div id="likes" class="toggle-content">
+      <ul class="love-list">
+        <li>Cars that push the limits...</li>
+        <li>Fighter jets, especially the Mirage 2000-5F</li>
+        <li>Games: War Thunder, Phantom Forces, Phasmophobia</li>
+        <li>Subtle gothic aesthetics: black clothes, eyeliner, fishnets...</li>
+        <li>Anime like Yofukashi no Uta, Berserk, Chainsaw Man...</li>
+        <li>Loona. Yes, Loona, from Helluva Boss</li>
+        <li>Cheetahs. Fast, graceful, cute.</li>
+        <li>Quiet nights, soft music, moments to just… exist.</li>
+      </ul>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('dislikes')">Things I Don’t Like</button>
+    <div id="dislikes" class="toggle-content">
+      <div class="text-block"><p>I’m not really into people who ignore obvious truths, play the victim, use manipulation, or people that don’t admit they’re wrong.</p></div>
+      <div class="text-block"><p>Waking up early</p></div>
+      <div class="text-block"><p>Insects in general</p></div>
+      <div class="text-block"><p>Sports, except for E-sports, and specially football</p></div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('about')">Who I Am</button>
+    <div id="about" class="toggle-content">
+      <div class="text-block"><p>I’m the type who feels alive when the world slows down...</p></div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('obsessions')">Things I Get Obsessed With</button>
+    <div id="obsessions" class="toggle-content">
+      <div class="text-block"><p>I am obsessed with Loona, speed, horror movies, gambling, cars, jets, tanks, games, drawing...</p></div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('dreams')">Dreams</button>
+    <div id="dreams" class="toggle-content">
+      <div class="text-block"><p>I want to become a professional pilot and a professional digital artist...</p></div>
+    </div>
+
+    <button class="toggle-btn" onclick="toggleSection('friends')">Friends</button>
+    <div id="friends" class="toggle-content">
+      <div class="text-block"><p>My dear friends:</p>
+        <ul>
+          <li>Clear</li><li>Dragon</li><li>Drakko</li><li>Fakezalem?</li>
+          <li>Matheusbleck21</li><li>Nikko</li><li>Nitidez</li>
+          <li>Skittle</li><li>Yingloomy</li><li>Yoserius</li><li>Zilirian</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Social Media</h2>
+    <div class="social-links">
+      <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank"><img src="https://i.imgur.com/Mf3ATZj.png"> Roblox</a>
+      <a class="social-btn" href="https://steamcommunity.com/profiles/76561199031088390" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg"> Steam</a>
+      <a class="social-btn" href="https://www.youtube.com/channel/UCb33G1UKxmxe-23q-bvFDDQ" target="_blank"><img src="https://i.imgur.com/gfTqX0r.png"> YouTube</a>
+      <a class="social-btn" href="https://github.com/Doldie" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"> GitHub</a>
+    </div>
+
+    <h2>Fun Facts</h2>
+    <div class="fun-facts" id="funFactsContainer">
+      <div class="fact">I can spend hours perfecting an anime sketch.</div>
+      <div class="fact">Nighttime is my favorite time to be outside.</div>
+      <div class="fact">I’ve memorized specs of my favorite cars.</div>
+      <div class="fact">I love learning random aviation trivia.</div>
+    </div>
+    <div class="facts-actions">
+  <button class="shuffle-btn" onclick="shuffleFacts(this)">Shuffle Facts</button>
+  <button id="music-btn" class="shuffle-btn music-btn">Sound</button>
+</div>
+  </div>
+
+  <script>
+    // --- SCRIPT DO SITE ORIGINAL ---
+    function toggleSection(id) {
+      const section = document.getElementById(id);
+      const isOpen = section.classList.contains('open');
+      section.style.transition = 'none';
+      if (isOpen) {
+        if (section.style.maxHeight === '' || section.style.maxHeight === 'none') {
+          section.style.maxHeight = section.scrollHeight + 'px';
+        }
+        void section.offsetHeight;
+        section.style.transition = 'max-height 0.35s ease, opacity 0.35s ease';
+        section.style.maxHeight = '0px';
+        section.classList.remove('open');
+      } else {
+        section.style.maxHeight = '0px';
+        void section.offsetHeight;
+        section.style.transition = 'max-height 0.35s ease, opacity 0.35s ease';
+        section.classList.add('open');
+        section.style.maxHeight = section.scrollHeight + 'px';
+      }
+      const onEnd = (e) => {
+        if (e.propertyName !== 'max-height') return;
+        if (section.classList.contains('open')) {
+          section.style.transition = 'none';
+          section.style.maxHeight = 'none';
+        }
+        section.removeEventListener('transitionend', onEnd);
+      };
+      section.addEventListener('transitionend', onEnd);
+    }
+
+    function shuffleFacts(btn) {
+      btn.style.transform = "scale(0.9)";
+      setTimeout(() => { btn.style.transform = "scale(1)"; }, 120);
+      const facts = [
+        "I have two cats that chill with me while I game.", "My favorite anime is Yofukashi no Uta.",
+        "I can name almost every Mirage 2000 variant.", "I track crazy car 0-400 km/h times for fun.",
+        "War Thunder is life", "I’m obsessed with cars like the Rimac Nevera R and Koenigsegg Jesko.",
+        "I enjoy drawing characters late at night.", "I can spend hours comparing aircraft designs just for fun.",
+        "My fav color is Rose red", "The Challenger 2 British MBT is my fav tank",
+        "I’m obsessed with jet engine sounds.", "I draw better at 2 AM than during the day.",
+        "I once played War Thunder for 12 hours straight.", "I can identify fighter jets just by silhouette.",
+        "My fav song is 911 by Ellise", "My fav artist is Melanie Martinez", "My fav food is savory pie",
+        "Cheetahs are my fav animal", "I have more than 3000 hours of Sol's RNG", "France is my fav nation",
+        "Tomboys over femboys", "1+1 = 2", "Loona? perfection", "🥀", "Amd > Intel", "Reshiram best pokemon",
+        "Cats > dogs", "I'm lazy asf 💔", "V8 > V12", "Lamborghini Murcielago best sounding car ever made",
+        "Unpopular opinion, Sousou no Frieren is Mid", "Monster energy is great", "Kiwi my fav fruit",
+        "Wannabe extrovert", "Yaps a lot about things i'm obsessed with", "Passionfruit the best to make juice with",
+        "I like to argue about something irrelevant all day"
+      ];
+      const container = document.getElementById('funFactsContainer');
+      container.innerHTML = '';
+      let selected = facts.sort(() => 0.5 - Math.random()).slice(0, 4);
+      selected.forEach(fact => {
+        let div = document.createElement('div');
+        div.className = 'fact';
+        div.textContent = fact; 
+        container.appendChild(div);
+      });
+      }
+
+ // Avatar decoration via CDN (SEM API, SEM FETCH)
+const decorationUrl =
+  "https://cdn.discordapp.com/avatar-decoration-presets/a_be111e4303d634c55500202a61656e0b.png?size=512";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const deco = document.getElementById("avatar-decoration");
+  if (!deco) return;
+
+  deco.src = decorationUrl;
+  deco.style.display = "block";
+  deco.onerror = () => {
+    deco.style.display = "none";
+  };
+});
+
+    
+  </script>
+
+<audio id="bg-music" preload="none" loop>
+  <source src="https://github.com/Doldie/Mybio/raw/refs/heads/main/music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const music = document.getElementById("bg-music");
+  const btn = document.getElementById("music-btn");
+
+  music.volume = 0.12;
+
+  btn.addEventListener("click", () => {
+    if (music.paused) {
+      music.currentTime = 0;
+      music.muted = false;
+      music.play();
+      btn.textContent = "Playing";
+      btn.classList.add("playing");
+    } else {
+      music.pause();
+      btn.textContent = "Sound";
+      btn.classList.remove("playing");
+    }
+  });
+</script>
+
+</body>
+</html>
