@@ -31,8 +31,7 @@ content="
 <meta name="theme-color" content="#0d0d0d">
 <meta name="twitter:card" content="summary_large_image">
 
-
-  <style>
+<style>
 
 .facts-actions {
   display: flex;
@@ -223,20 +222,48 @@ content="
       to { width: 100%; }
     }
 
+
+/*=====================BG animation==================*/
+
 body {
   margin: 0;
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(
-    135deg,
-    #0b0014,
-    #1a0029,
-    #2b003d,
-    #120018
-  );
-  background-size: 300% 300%;
-  animation: bgShift 30s ease-in-out infinite;
   color: white;
   overflow-x: hidden;
+  background: #000; /* fallback */
+}
+
+
+body {
+  background-attachment: fixed;
+  background-position: center 0px;
+}
+
+#bg-parallax {
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+
+  background: linear-gradient(
+    135deg,
+    #0a0a0f,
+    #1a0030,
+    #3a004d,
+    #003040,
+    #0a0a0f,
+    #260000
+  );
+
+  background-size: 400% 400%;
+  background-position: 50% 50%;
+
+  animation: bgShift 45s ease-in-out infinite;
+  will-change: background-position;
+}
+
+body.loading {
+  overflow: hidden;
 }
 
 @keyframes bgShift {
@@ -245,10 +272,90 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+
+.profile-modal {
+  width: 320px;
+  background: #0f0f14;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  position: relative;
+  animation: popIn 0.25s ease;
+}
+
+.mini-profile {
+  position: fixed;
+  width: 260px;
+  background: #0f1115;
+  border-radius: 12px;
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.8),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+  padding: 12px;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.mini-profile.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mini-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mini-header img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ff3c8a;
+}
+
+.mini-name {
+  font-size: 18px;
+  font-weight: 600;
+  background: linear-gradient(120deg, #fff, #ff8fb8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mini-body {
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+}
+
+.hidden {
+  display: none;
+}
+
+.fake-terminal {
+  margin-top: 60px;        /* separa do conteúdo */
+  margin-right: 6px;
+  margin-bottom: 6px;
+
+  text-align: right;       /* canto direito */
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  color: #ff4fa3;
+
+  display: block;
+  width: 100%;
+  pointer-events: none;
+}
+
  </style>
 </head>
-<body>
+<body class="loading">
 
+<div id="bg-parallax"></div>
 
 
   <div id="loading-screen">
@@ -268,18 +375,16 @@ body {
   </div>
 
   <script>
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("loading-screen").classList.add("exit");
-      }, 8000);
-    });
-  </script>
-
-  
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("loading-screen").classList.add("exit");
+      document.body.classList.remove("loading");
+    }, 8000);
+  });
+</script>
 
 
 <style>
-
 
 #music-btn {
   background: transparent;
@@ -335,7 +440,7 @@ body {
     ul { list-style: none; padding: 0; }
     ul li::before {
       content: "•";
-      color: #ff6ec7;
+      color: #e30039;
       margin-right: 8px;
     }
     .toggle-btn {
@@ -425,15 +530,206 @@ body {
       border-radius: 10px;
       margin-bottom: 8px;
     }
+    
+    .friends-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.friend-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.friend-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
+}
+
+    
+    .friends-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0 0 12px 0;
+  list-style: none;
+}
+
+.friends-list li {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+    
+    .hate-list li, .text-block {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    
     @keyframes glowName {
       0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
       50% { text-shadow: 2px 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(230,0,84,1); }
       100% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
     }
+    
+
+
+.profile-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(230, 0, 84, 0.25),
+    rgba(10, 8, 30, 0.95)
+  );
+
+  padding: 18px 22px;
+  border-radius: 25px;
+  border: 2px solid rgba(230, 0, 84, 0.8);
+
+  box-shadow:
+    0 0 20px rgba(230, 0, 84, 0.4),
+    0 0 40px rgba(230, 0, 84, 0.2);
+
+  position: absolute;
+  bottom: -80px;
+  left: 20px;
+
+  overflow: visible; /* TEM QUE SER visible */
+
+    z-index: 10;
+    isolation: isolate;
+}
+.profile-name {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  background: linear-gradient(
+    120deg,
+    #ffffff,
+    #ff8fb8,
+    #e60054
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.35),
+    0 0 18px rgba(255,143,184,0.45);
+}
+
+
+.profile-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -2px; /* COLADO NA BORDA */
+  border-radius: 27px;
+
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0deg,
+    rgba(255,255,255,0.9) 30deg,
+    #ffffff 50deg,
+    #ffb3d1 80deg,
+    #ff3c8a 120deg,
+    #e60054 180deg,
+    rgba(255,255,255,0.8) 230deg,
+    transparent 360deg
+  );
+
+  padding: 2px;
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  z-index: -1;
+  opacity: 0;
+
+  filter:
+    blur(4px)
+    drop-shadow(0 0 10px rgba(255,255,255,1))
+    drop-shadow(0 0 18px #ff8fb8)
+    drop-shadow(0 0 32px #e60054);
+
+  pointer-events: none;
+}
+/*========================================================*/
+.profile-wrapper.neon-active::before {
+  animation: neonBorderSpinFade 0.85s linear forwards;
+}
+
+
+@keyframes neonPulse {
+  0%   { filter: blur(100px) brightness(0.9); }
+  50%  { filter: blur(140px) brightness(1.4); }
+  100% { filter: blur(100px) brightness(1); }
+}
+
+
+@property --neon-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.profile-wrapper {
+  --neon-angle: 0deg;
+}
+
+@keyframes neonBorderSpin {
+  from {
+    --neon-angle: 0deg;
+  }
+  to {
+    --neon-angle: 360deg;
+  }
+}
+/*=============================keyframes=============================*/
+@keyframes neonBorderSpinFade {
+  0% {
+    --neon-angle: 0deg;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    --neon-angle: 360deg;
+    opacity: 0;
+  }
+}
+    
 </style>
 
   <div class="banner">
-    <div class="profile-wrapper" style="display:flex; align-items:flex-end; gap:20px; background: linear-gradient(135deg, rgba(230, 0, 84, 0.25), rgba(10, 8, 30, 0.95)); padding:18px 22px; border-radius:25px; box-shadow: 0 0 20px rgba(230, 0, 84, 0.4), 0 0 40px rgba(230, 0, 84, 0.2); border: 2px solid rgba(230, 0, 84, 0.8); position:absolute; bottom:-80px; left:20px;">
+<div class="profile-wrapper">
 
       <div class="profile-pic">
   <div class="avatar-mask">
@@ -446,7 +742,7 @@ body {
 </div>
 
 
-      <div class="profile-name" style="font-size:40px; font-weight:bold; background: linear-gradient(90deg, #e60054, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); animation: glowName 2s ease-in-out infinite; padding-bottom:10px;">Doldie</div>
+<div class="profile-name">Doldie</div>
     </div>
   </div>
 
@@ -468,15 +764,21 @@ body {
 
     <button class="toggle-btn" onclick="toggleSection('dislikes')">Things I Don’t Like</button>
     <div id="dislikes" class="toggle-content">
-      <div class="text-block"><p>I’m not really into people who ignore obvious truths, play the victim, use manipulation, or people that don’t admit they’re wrong.</p></div>
-      <div class="text-block"><p>Waking up early</p></div>
-      <div class="text-block"><p>Insects in general</p></div>
-      <div class="text-block"><p>Sports, except for E-sports, and specially football</p></div>
+      <ul class="hate-list">
+            <li>I’m not really into people who ignore obvious truths, play the victim, use manipulation, or people that don’t admit they’re wrong.</li>
+            <li>Waking up early</li>
+            <li>Insects in general</li>
+            <li>Brainrot</li>
+            <li>Hipocrisy</li>
+            <li>Bitching</li>
+            <li>Untruth</li>
+            <li>Sports, except for E-sports, and specially football</li>
+      </ul>
     </div>
 
     <button class="toggle-btn" onclick="toggleSection('about')">Who I Am</button>
     <div id="about" class="toggle-content">
-      <div class="text-block"><p>I’m the type who feels alive when the world slows down...</p></div>
+      <div class="text-block"><p>Myself. Who'd you excpect me to be?</p></div>
     </div>
 
     <button class="toggle-btn" onclick="toggleSection('obsessions')">Things I Get Obsessed With</button>
@@ -486,16 +788,38 @@ body {
 
     <button class="toggle-btn" onclick="toggleSection('dreams')">Dreams</button>
     <div id="dreams" class="toggle-content">
-      <div class="text-block"><p>I want to become a professional pilot and a professional digital artist...</p></div>
+      <div class="text-block"><p>Become a professional pilot</p></div>
+    <div class="text-block"><p>Become a professional digital artist</p></div>
+    <div class="text-block"><p>Become a professional programmer</p></div>  
     </div>
+    
 
     <button class="toggle-btn" onclick="toggleSection('friends')">Friends</button>
     <div id="friends" class="toggle-content">
       <div class="text-block"><p>My dear friends:</p>
+
+<div class="friends-grid">
+  
+  <div class="friend-card" data-id="clear">Clear</div>
+  <div class="friend-card" data-id="thedragonplayer">thedragonplayer</div>
+  <div class="friend-card" data-id="Drakkoo">Drakkoo</div>
+  <div class="friend-card" data-id="Fakezalem">Fakezalem</div>
+  <div class="friend-card" data-id="matheusbleck21">matheusbleck21</div>
+  <div class="friend-card" data-id="Nikko">Nikko</div>
+  <div class="friend-card" data-id="nitidez">nitidez</div>
+  <div class="friend-card" data-id="susielaser">susielaser</div>
+  <div class="friend-card" data-id="Yingloomy">Yingloomy</div>
+  <div class="friend-card" data-id="yoserius">yoserius</div>
+  <div class="friend-card" data-id="Zilirian">Zilirian</div>
+  <div class="friend-card" data-id="jpxwf12">jpxwf12</div>
+  <div class="friend-card" data-id="jann">jann</div>
+  
+      </div>
+         </div>
+         
+          <div class="text-block"><p>Honorable mentions</p>
         <ul>
-          <li>Clear</li><li>Dragon</li><li>Drakko</li><li>Fakezalem?</li>
-          <li>Matheusbleck21</li><li>Nikko</li><li>Nitidez</li>
-          <li>Skittle</li><li>Yingloomy</li><li>Yoserius</li><li>Zilirian</li>
+          <li>kirit_ls</li><li>Thunder</li><li>Zimrico</li><li>Lks²</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>impisb.</li><li>hz4troz</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
         </ul>
       </div>
     </div>
@@ -597,19 +921,17 @@ document.addEventListener("DOMContentLoaded", () => {
     deco.style.display = "none";
   };
 });
-
-    
-  </script>
+</script>
 
 <audio id="bg-music" preload="none" loop>
-  <source src="https://github.com/Doldie/Mybio/raw/refs/heads/main/music.mp3" type="audio/mpeg">
+  <source src="https://raw.githubusercontent.com/Doldie/Mybio/main/music.mp3" type="audio/mpeg">
 </audio>
 
 <script>
   const music = document.getElementById("bg-music");
   const btn = document.getElementById("music-btn");
 
-  music.volume = 0.12;
+  music.volume = 0.16;
 
   btn.addEventListener("click", () => {
     if (music.paused) {
@@ -624,7 +946,246 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.remove("playing");
     }
   });
+
+
 </script>
 
+<script>
+  const bg = document.getElementById("bg-parallax");
+
+  window.addEventListener("scroll", () => {
+    const offset = window.scrollY * 0.025; // ~2px a cada 100px
+    bg.style.backgroundPosition = `50% calc(50% + ${offset}px)`;
+  });
+</script>
+
+<div id="mini-profile" class="mini-profile hidden">
+  <div class="mini-header">
+    <img id="mini-avatar" src="">
+    <div class="mini-name" id="mini-name"></div>
+  </div>
+  <div class="mini-body" id="mini-desc">
+    Friend
+  </div>
+</div>
+
+<script>
+  /*==================================profiles==========================*/
+const friendsData = {
+  clear: {
+    name: "Clear",
+    avatar: "https://i.imgur.com/JnjU9hO.png",
+    desc: "An 18y Brazilian, better known as Clear, or as Charthool by some people. I like to see the people he loves happy and sometimes takes things too seriously.",
+    status: "online"
+  },
+
+  thedragonplayer: {
+    name: "thedragonplayer",
+    avatar: "https://i.imgur.com/1YJoXTY.jpeg",
+    desc: "The Dragon Galaxy, Dragon894, The Dragon Player! Enfim, me chame de Dragon. Gosto de jogos de rpg, estratégia, ação e puzzle (alguns). Minha música favorita é sky full of stars de coldplay. Gosto de ver artes fofas como furries e kemonomimis. Franquia favorita: Assassins Creed",
+    status: "dnd"
+  },
+
+  Drakkoo: {
+    name: "Drakkoo",
+    avatar: "https://i.imgur.com/gJBo5It.png",
+    desc: "Pessoa mais reservada e direta, mas que se empolga fácil falando do que gosta. Nascido em Natal/RN 🇧🇷 (Cidade do Sol), valorizo respeito, boas conversas e pequenos gestos. Tenho investido mais em mim, estudando e explorando novos hobbies. Curto jogos, desenho, natação e surf, por enquanto no bodyboard, mas a prancha vem aí 🌊",
+    status: "dnd"
+  },
+
+  Fakezalem: {
+    name: "Fakezalem",
+    avatar: "https://i.imgur.com/V7MMQWb.png",
+    desc: "💍STARC0LLECT0R 💙 💫 Universum totum duobus tantum numeris servare possumus... SAPERE AUDE!!! Eu gosto de matemática, física, e tecnologia, de mexer em eletrônicos , computadores e reparar-los, minha meta é fazer faculdade de engenharia da computação",
+    status: "dnd"
+  },
+  
+    matheusbleck21: {
+    name: "matheusbleck21",
+    avatar: "https://i.imgur.com/BxjILM7.png",
+    desc: "as vozes não param",
+    status: "dnd"
+  },
+  
+    Nikko: {
+    name: "Nikko",
+    avatar: "https://i.imgur.com/AAhjYkX.png",
+    desc: "Gosto de conversar sobre assuntos militares e de guerra em geral. Aposentado do war thunder 🧑‍🦯 , jogo world of tanks, hoi4, roblox e pretendo jogar DCS no futuro",
+    status: "dnd"
+  },
+  
+    nitidez: {
+    name: "nitidez",
+    avatar: "https://i.imgur.com/sdQOetg.jpeg",
+    desc: "Eu sou Nitidez, sigma e propreier em jogos, curto anime/série/filme/mangá/manhwa/fanfic\n/dorama/seu rabo e sou desenvolvedor nas horas vagas. (Bolinha bolão uwu) 🥴",
+    status: "dnd"
+  },
+  
+    susielaser: {
+    name: "susielaser",
+    avatar: "https://i.imgur.com/Ad4sTiX.png",
+    desc: "ㅤㅤㅤ    https://guns.lol/susiexz",
+    status: "dnd"
+  },
+  
+    Yingloomy: {
+    name: "Yingloomy",
+    avatar: "https://i.imgur.com/1JFqjPp.png",
+    desc: "Assombração",
+    status: "dnd"
+  },
+  
+    yoserius: {
+    name: "yoserius",
+    avatar: "https://cdn.imgchest.com/files/8524d3e0e4eb.png",
+    desc: "O ser humano quase perfeito",
+    status: "dnd"
+  },
+  
+    Zilirian: {
+    name: "Zilirian",
+    avatar: "https://i.imgur.com/3R7sQVb.png",
+    desc: "Undecided",
+    status: "dnd"
+  },
+  
+    jpxwf12: {
+    name: "jpxwf12",
+    avatar: "https://i.imgur.com/Qc9S9bX.png",
+    desc: "Maníaco por carros, estudante de programação, introvertido,hetero,apreciador de asiáticas",
+    status: "dnd"
+  },
+  
+    jann: {
+    name: "jann",
+    avatar: "https://i.imgur.com/2wfpG1n.png",
+    desc: "Meu nome é Janderson, porém sou conhecido como Jamilson ou Jamal. Tenho 17 anos, gosto de praticar esportes, ler mangás, assistir anime e estudar.",
+    status: "dnd"
+  },
+  
+};
+</script>
+
+<script>
+const mini = document.getElementById("mini-profile");
+const miniAvatar = document.getElementById("mini-avatar");
+const miniName = document.getElementById("mini-name");
+const miniDesc = document.getElementById("mini-desc");
+
+let holdTimeout = null;
+let hideTimeout = null;
+let activeCard = null;
+
+document.querySelectorAll(".friend-card").forEach(card => {
+const id = card.dataset.id;
+
+  const show = (x, y) => {
+    // cancela qualquer hide pendente
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+
+    activeCard = card;
+
+    const data = friendsData[id] || {};
+    miniAvatar.src = data.avatar || "https://cdn.discordapp.com/embed/avatars/5.png";
+    miniName.textContent = data.name || card.textContent.trim();
+    miniDesc.textContent = data.desc || "Friend";
+
+    mini.style.left = x + 15 + "px";
+    mini.style.top = y + 15 + "px";
+
+    mini.classList.remove("hidden");
+    requestAnimationFrame(() => mini.classList.add("show"));
+  };
+
+  const hide = () => {
+    hideTimeout = setTimeout(() => {
+      mini.classList.remove("show");
+      setTimeout(() => mini.classList.add("hidden"), 120);
+      activeCard = null;
+    }, 40); // delay curto só pra permitir troca entre cards
+  };
+
+  /* DESKTOP */
+  card.addEventListener("mouseenter", e => {
+    show(e.clientX, e.clientY);
+  });
+
+  card.addEventListener("mousemove", e => {
+    if (activeCard !== card) return;
+    mini.style.left = e.clientX + 15 + "px";
+    mini.style.top = e.clientY + 15 + "px";
+  });
+
+  card.addEventListener("mouseleave", hide);
+
+  /* MOBILE */
+  card.addEventListener("touchstart", e => {
+    const t = e.touches[0];
+    holdTimeout = setTimeout(() => {
+      show(t.clientX, t.clientY);
+    }, 300);
+  });
+
+  card.addEventListener("touchend", () => {
+    clearTimeout(holdTimeout);
+    hide();
+  });
+});
+</script>
+
+<div class="fake-terminal">
+  system: alive<br>
+  signal: stable
+</div>
+
+<audio id="btn-click-sound" preload="auto">
+  <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const clickSound = document.getElementById("btn-click-sound");
+clickSound.volume = 0.09; // 🔉 volume baixo (15%)
+
+const clickableButtons = document.querySelectorAll(
+  "button, .social-btn, .friend-card"
+);
+
+clickableButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    clickSound.currentTime = 0;
+    clickSound.play().catch(() => {});
+  });
+});
+</script>
+
+<audio id="neon-sound" preload="auto">
+  <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const profileWrapper = document.querySelector(".profile-wrapper");
+  const neonSound = document.getElementById("neon-sound");
+
+  let neonCooldown = false;
+  neonSound.volume = 0.14;
+
+  profileWrapper.addEventListener("mouseenter", () => {
+    if (neonCooldown) return;
+
+    neonCooldown = true;
+    profileWrapper.classList.add("neon-active");
+
+    neonSound.currentTime = 0;
+    neonSound.play().catch(() => {});
+
+    setTimeout(() => {
+      profileWrapper.classList.remove("neon-active");
+      neonCooldown = false;
+    }, 1400);
+  });
+</script>
 </body>
 </html>
