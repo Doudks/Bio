@@ -755,7 +755,7 @@ body.loading {
         <li>Fighter jets, especially the Mirage 2000-5F</li>
         <li>Games: War Thunder, Phantom Forces, Phasmophobia</li>
         <li>Subtle gothic aesthetics: black clothes, eyeliner, fishnets...</li>
-        <li>Anime like Yofukashi no Uta, Berserk, Chainsaw Man...</li>
+        <li>Anime like Yofukashi no Uta, Berserk, Chainsaw Man, Made in Abyss...</li>
         <li>Loona. Yes, Loona, from Helluva Boss</li>
         <li>Cheetahs. Fast, graceful, cute.</li>
         <li>Quiet nights, soft music, moments to just… exist.</li>
@@ -765,12 +765,15 @@ body.loading {
     <button class="toggle-btn" onclick="toggleSection('dislikes')">Things I Don’t Like</button>
     <div id="dislikes" class="toggle-content">
       <ul class="hate-list">
-            <li>I’m not really into people who ignore obvious truths, play the victim, use manipulation, or people that don’t admit they’re wrong.</li>
+            <li>People who ignore obvious truths
+            <li>People who play the victim</li>
+            <li>People who use manipulation</li>
+            <li>people that don’t admit that they’re wrong.</li>
+            <li>People who keep bitching on the internet</li>
             <li>Waking up early</li>
             <li>Insects in general</li>
             <li>Brainrot</li>
             <li>Hipocrisy</li>
-            <li>Bitching</li>
             <li>Untruth</li>
             <li>Sports, except for E-sports, and specially football</li>
       </ul>
@@ -824,7 +827,7 @@ body.loading {
       </div>
     </div>
 
-<h2>Social Media</h2>
+  <h2>Social Media</h2>
 <div class="social-links">
   <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank">
     <img src="https://i.imgur.com/Mf3ATZj.png"> Roblox
@@ -855,6 +858,7 @@ body.loading {
     <img src="https://i.imgur.com/XS658rc.png"> X
   </a>
 </div>
+
 
     <h2>Fun Facts</h2>
     <div class="fun-facts" id="funFactsContainer">
@@ -999,7 +1003,7 @@ const friendsData = {
   clear: {
     name: "Clear",
     avatar: "https://i.imgur.com/JnjU9hO.png",
-    desc: "An 18y Brazilian, better known as Clear, or as Charthool by some people. I like to see the people he loves happy and sometimes takes things too seriously.",
+    desc: "An 18y Brazilian, better known as Clear, or as Charthool by some people. I like to see the people they love happy and sometimes takes things too seriously.",
     status: "online"
   },
 
@@ -1048,7 +1052,7 @@ const friendsData = {
     susielaser: {
     name: "susielaser",
     avatar: "https://i.imgur.com/Ad4sTiX.png",
-    desc: "ㅤㅤㅤ    https://guns.lol/susiexz",
+    desc: "ㅤㅤㅤ           https://guns.lol/susiexz",
     status: "dnd"
   },
   
@@ -1101,10 +1105,9 @@ let hideTimeout = null;
 let activeCard = null;
 
 document.querySelectorAll(".friend-card").forEach(card => {
-const id = card.dataset.id;
+  const id = card.dataset.id;
 
   const show = (x, y) => {
-    // cancela qualquer hide pendente
     if (hideTimeout) {
       clearTimeout(hideTimeout);
       hideTimeout = null;
@@ -1117,11 +1120,37 @@ const id = card.dataset.id;
     miniName.textContent = data.name || card.textContent.trim();
     miniDesc.textContent = data.desc || "Friend";
 
-    mini.style.left = x + 15 + "px";
-    mini.style.top = y + 15 + "px";
-
     mini.classList.remove("hidden");
-    requestAnimationFrame(() => mini.classList.add("show"));
+    mini.style.visibility = "hidden"; // evita flicker na medição
+    requestAnimationFrame(() => {
+      mini.classList.add("show");
+
+      const padding = 12;
+      const miniRect = mini.getBoundingClientRect();
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+
+      let left = x + 15;
+      let top = y + 15;
+
+      // 👉 se estourar à direita, joga pra esquerda
+      if (left + miniRect.width > viewportW - padding) {
+        left = x - miniRect.width - 15;
+      }
+
+      // 👉 se estourar embaixo, sobe
+      if (top + miniRect.height > viewportH - padding) {
+        top = y - miniRect.height - 15;
+      }
+
+      // 👉 trava pra não sair da tela em hipótese nenhuma
+      left = Math.max(padding, left);
+      top = Math.max(padding, top);
+
+      mini.style.left = left + "px";
+      mini.style.top = top + "px";
+      mini.style.visibility = "visible";
+    });
   };
 
   const hide = () => {
@@ -1129,7 +1158,7 @@ const id = card.dataset.id;
       mini.classList.remove("show");
       setTimeout(() => mini.classList.add("hidden"), 120);
       activeCard = null;
-    }, 40); // delay curto só pra permitir troca entre cards
+    }, 40);
   };
 
   /* DESKTOP */
@@ -1139,8 +1168,7 @@ const id = card.dataset.id;
 
   card.addEventListener("mousemove", e => {
     if (activeCard !== card) return;
-    mini.style.left = e.clientX + 15 + "px";
-    mini.style.top = e.clientY + 15 + "px";
+    show(e.clientX, e.clientY);
   });
 
   card.addEventListener("mouseleave", hide);
@@ -1159,6 +1187,7 @@ const id = card.dataset.id;
   });
 });
 </script>
+
 
 <div class="fake-terminal">
   system: alive<br>
@@ -1211,5 +1240,9 @@ clickableButtons.forEach(btn => {
     }, 1400);
   });
 </script>
+
+
+
+
 </body>
 </html>
