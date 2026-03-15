@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="loading">
 <head>
 
 
@@ -12,7 +12,7 @@ content="
   media-src 'self' https:;
   font-src 'self' https: data:;
 ">
-  
+
 
   <meta charset="UTF-8">
 
@@ -113,11 +113,20 @@ content="
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.2;
+  opacity: 0.18;
   transform: scale(1.15);
   animation: bgZoom 18s ease-in-out infinite alternate;
-}
     }
+
+@media (max-width: 768px) {
+  .loading-bg-image {
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.30;
+    transform: scale(1.22);
+    animation: none;
+  }
+}
 
     @keyframes bgZoom {
       from { transform: scale(1.15); }
@@ -225,12 +234,23 @@ content="
 
 /*=====================BG animation==================*/
 
+:root {
+  --bg-darkness: 0.65;
+}
+
+  html.loading,
+body.loading {
+  overflow: hidden;
+  height: 100%;
+  touch-action: none;
+}
+  
 body {
   margin: 0;
   font-family: 'Quicksand', sans-serif;
   color: white;
   overflow-x: hidden;
-  background: #000; /* fallback */
+  background: transparent; /* fallback */
 }
 
 
@@ -241,29 +261,62 @@ body {
 
 #bg-parallax {
   position: fixed;
-  inset: -20%;
-  z-index: -1;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
+  overflow: hidden;
 
-  background: linear-gradient(
-    135deg,
-    #0a0a0f,
-    #1a0030,
-    #3a004d,
-    #003040,
-    #0a0a0f,
-    #260000
-  );
+  background-image:
+    linear-gradient(
+      135deg,
+      #0a0a0f,
+      #1a0030,
+      #3a004d,
+      #003040,
+      #0a0a0f,
+      #260000
+    ),
+    url("https://i.imgur.com/xtzaH3v.png");
 
-  background-size: 400% 400%;
-  background-position: 50% 50%;
+  background-size:
+    400% 400%,
+    cover;
+
+  background-position:
+    50% 50%,
+    center;
+
+  background-repeat:
+    no-repeat,
+    no-repeat;
+
+  background-blend-mode:
+    screen,
+    normal;
 
   animation: bgShift 45s ease-in-out infinite;
   will-change: background-position;
 }
 
-body.loading {
-  overflow: hidden;
+@media (max-width: 768px) {
+  #bg-parallax {
+    animation: none;
+    background-position: center, center;
+  }
+}
+  
+  #bg-parallax::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  opacity: 1;
+  transition: opacity 0.9s ease;
+}
+
+body.hover-bg #bg-parallax::before {
+  opacity: 0.35;
+  transition: opacity 2s ease 0.35s;
 }
 
 @keyframes bgShift {
@@ -351,43 +404,175 @@ body.loading {
   pointer-events: none;
 }
 
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+  margin-bottom: 20px;
+  align-items: start;
+}
+
+.game-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(255,255,255,0.04);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+  aspect-ratio: 2 / 3;
+  width: 100%;
+}
+
+.game-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.45),
+    0 0 18px rgba(230,0,84,0.22);
+}
+
+.game-card:hover img {
+  transform: scale(1.06);
+}
+
+.game-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-modal.hidden {
+  display: none;
+}
+
+.game-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(8px);
+}
+
+.game-modal-content {
+  position: relative;
+  z-index: 2;
+  width: min(92vw, 420px);
+  background: linear-gradient(
+    180deg,
+    rgba(35, 0, 30, 0.92),
+    rgba(10, 0, 20, 0.96)
+  );
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.65),
+    0 0 24px rgba(230,0,84,0.2);
+  transform: scale(0.88);
+  opacity: 0;
+  animation: gameModalPop 0.28s ease forwards;
+}
+
+.game-modal-content img {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+}
+
+.game-modal-title {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #ffd1e4;
+}
+
+.game-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.game-modal-close:hover {
+  transform: scale(1.08);
+  background: rgba(255,255,255,0.16);
+}
+
+@keyframes gameModalPop {
+  from {
+    transform: scale(0.88);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+  
  </style>
 
   <script>
   const loadingBgImages = [
-    'https://i.imgur.com/RRF2YIU.png',
-    'https://i.imgur.com/E48oiig.jpeg',
-    'https://i.imgur.com/P88EubR.jpeg',
-    'https://i.imgur.com/rOXOteX.png',
-    'https://i.imgur.com/gBqkPqC.jpeg',
-    'https://i.imgur.com/9NLeL2B.jpeg',
-    'https://i.imgur.com/95Yp2my.jpeg',
-    'https://i.imgur.com/WW0eJG8.png',
-    'https://i.imgur.com/xn2CgWS.jpeg',
-    'https://i.imgur.com/9U95k22.jpeg',
-    'https://i.imgur.com/PO59aaO.jpeg',
-    'https://i.imgur.com/XaH869f.jpeg',
-    'https://i.imgur.com/AoEvWwW.jpeg',
-    'https://i.imgur.com/fgJAhuO.jpeg',
-    'https://i.imgur.com/1wfj9ON.jpeg',
-    'https://i.imgur.com/dDP2K2r.jpeg',
-    'https://i.imgur.com/Z3q5uoE.jpeg',
-    'https://i.imgur.com/9K74LnT.jpeg',
-    'https://i.imgur.com/g3dT9Fy.jpeg',
-    'https://i.imgur.com/RfgVDoD.jpeg',
-    'https://i.imgur.com/ajA0Tlt.jpeg',
-    'https://i.imgur.com/Gi4cQKq.jpeg',
-    'https://i.imgur.com/cfDT9wq.jpeg',
-    'https://i.imgur.com/T0eANrS.jpeg',
-    'https://i.imgur.com/8KflWHf.jpeg',
-    'https://i.imgur.com/aVify0x.jpeg',
-    'https://i.imgur.com/BR1KKrv.jpeg',
-    'https://i.imgur.com/OwyXcON.jpeg',
-    'https://i.imgur.com/JnPdk20.jpeg',
-    'https://i.imgur.com/LPgba1U.jpeg',
-    'https://i.imgur.com/v5ZbWNF.jpeg',
-    'https://i.imgur.com/xUOdq2w.jpeg',
-    'https://i.imgur.com/n2pWxY6.jpeg'
+'https://i.imgur.com/E48oiig.jpeg',
+'https://i.imgur.com/P88EubR.jpeg',
+'https://i.imgur.com/rOXOteX.png',
+'https://i.imgur.com/gBqkPqC.jpeg',
+'https://i.imgur.com/9NLeL2B.jpeg',
+'https://i.imgur.com/95Yp2my.jpeg',
+'https://i.imgur.com/WW0eJG8.png',
+'https://i.imgur.com/xn2CgWS.jpeg',
+'https://i.imgur.com/9U95k22.jpeg',
+'https://i.imgur.com/PO59aaO.jpeg',
+'https://i.imgur.com/XaH869f.jpeg',
+'https://i.imgur.com/AoEvWwW.jpeg',
+'https://i.imgur.com/fgJAhuO.jpeg',
+'https://i.imgur.com/1wfj9ON.jpeg',
+'https://i.imgur.com/dDP2K2r.jpeg',
+'https://i.imgur.com/Z3q5uoE.jpeg',
+'https://i.imgur.com/9K74LnT.jpeg',
+'https://i.imgur.com/g3dT9Fy.jpeg',
+'https://i.imgur.com/RfgVDoD.jpeg',
+'https://i.imgur.com/ajA0Tlt.jpeg',
+'https://i.imgur.com/Gi4cQKq.jpeg',
+'https://i.imgur.com/cfDT9wq.jpeg',
+'https://i.imgur.com/T0eANrS.jpeg',
+'https://i.imgur.com/8KflWHf.jpeg',
+'https://i.imgur.com/aVify0x.jpeg',
+'https://i.imgur.com/BR1KKrv.jpeg',
+'https://i.imgur.com/OwyXcON.jpeg',
+'https://i.imgur.com/JnPdk20.jpeg',
+'https://i.imgur.com/LPgba1U.jpeg',
+'https://i.imgur.com/v5ZbWNF.jpeg',
+'https://i.imgur.com/xUOdq2w.jpeg',
+'https://i.imgur.com/n2pWxY6.jpeg'
   ];
   const randomLoadingBg = loadingBgImages[Math.floor(Math.random() * loadingBgImages.length)];
   document.addEventListener('DOMContentLoaded', () => {
@@ -397,7 +582,7 @@ body.loading {
     }
   });
 </script>
-  
+
 </head>
 <body class="loading">
 
@@ -420,13 +605,15 @@ body.loading {
 
   </div>
 
-  <script>
-  window.addEventListener("load", () => {
-    setTimeout(() => {
-      document.getElementById("loading-screen").classList.add("exit");
-      document.body.classList.remove("loading");
-    }, 8000);
-  });
+<script>
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    document.getElementById("loading-screen").classList.add("exit");
+    document.body.classList.remove("loading");
+    document.documentElement.classList.remove("loading");
+    document.getElementById("bg-parallax").style.opacity = "1";
+  }, 8000);
+});
 </script>
 
 
@@ -570,13 +757,49 @@ body.loading {
   filter: brightness(1.1);
 }
     .social-btn img { width: 20px; height: 20px; }
+
+.toggle-btn,
+.shuffle-btn,
+.social-btn,
+.friend-card,
+.text-block,
+.fact,
+.love-list li,
+.hate-list li,
+.friends-list li,
+.profile-wrapper,
+.content {
+  transition:
+    opacity 1s ease,
+    background 1s ease,
+    transform 0.25s ease,
+    box-shadow 1s ease,
+    filter 1s ease;
+}
+
+body.hover-bg .toggle-btn,
+body.hover-bg .shuffle-btn,
+body.hover-bg .social-btn,
+body.hover-bg .friend-card,
+body.hover-bg .text-block,
+body.hover-bg .fact,
+body.hover-bg .love-list li,
+body.hover-bg .hate-list li,
+body.hover-bg .friends-list li,
+body.hover-bg .profile-wrapper,
+body.hover-bg .content {
+  opacity: 0.22;
+  box-shadow: none !important;
+  filter: saturate(0.8);
+}
+
     .love-list li, .text-block {
       background: rgba(255, 255, 255, 0.08);
       padding: 8px 12px;
       border-radius: 10px;
       margin-bottom: 8px;
     }
-    
+
     .friends-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -599,7 +822,7 @@ body.loading {
   transform: translateY(-2px);
 }
 
-    
+
     .friends-list {
   display: flex;
   flex-wrap: wrap;
@@ -618,20 +841,20 @@ body.loading {
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-    
+
     .hate-list li, .text-block {
       background: rgba(255, 255, 255, 0.08);
       padding: 8px 12px;
       border-radius: 10px;
       margin-bottom: 8px;
     }
-    
+
     @keyframes glowName {
       0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
       50% { text-shadow: 2px 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(230,0,84,1); }
       100% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
     }
-    
+
 
 
 .profile-wrapper {
@@ -771,7 +994,7 @@ body.loading {
     opacity: 0;
   }
 }
-    
+
 </style>
 
   <div class="banner">
@@ -811,7 +1034,7 @@ body.loading {
     <button class="toggle-btn" onclick="toggleSection('dislikes')">Things I Don’t Like</button>
     <div id="dislikes" class="toggle-content">
       <ul class="hate-list">
-            <li>People who ignore obvious truths
+            <li>People who ignore obvious truths</li>
             <li>People who play the victim</li>
             <li>People who use manipulation</li>
             <li>people that don’t admit that they’re wrong.</li>
@@ -841,14 +1064,14 @@ body.loading {
     <div class="text-block"><p>Become a professional digital artist</p></div>
     <div class="text-block"><p>Become a professional programmer</p></div>  
     </div>
-    
+
 
     <button class="toggle-btn" onclick="toggleSection('friends')">Friends</button>
     <div id="friends" class="toggle-content">
       <div class="text-block"><p>My dear friends:</p>
 
 <div class="friends-grid">
-  
+
   <div class="friend-card" data-id="clear">Clear</div>
   <div class="friend-card" data-id="thedragonplayer">thedragonplayer</div>
   <div class="friend-card" data-id="Drakkoo">Drakkoo</div>
@@ -861,10 +1084,10 @@ body.loading {
   <div class="friend-card" data-id="Zilirian">Zilirian</div>
   <div class="friend-card" data-id="jpxwf12">jpxwf12</div>
   <div class="friend-card" data-id="jann">jann</div>
-  
+
       </div>
          </div>
-         
+
           <div class="text-block"><p>Honorable mentions</p>
         <ul>
           <li>kirit_ls</li><li>our.rumi</li><li>susielaser</li><li>Thunder</li><li>fl4king</li><li>Zimrico</li><li>Lks²</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>hz4troz</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
@@ -872,6 +1095,250 @@ body.loading {
       </div>
     </div>
 
+    
+  <button class="toggle-btn" onclick="toggleSection('favorite-games')">Favorite Games</button>
+
+<div id="favorite-games" class="toggle-content">
+  <div class="games-grid">
+    
+    <div class="game-card" data-title="War Thunder">
+      <img src="https://i.imgur.com/I4eq4p7.jpeg" alt="War Thunder">
+    </div>
+
+    <div class="game-card" data-title="Forza Horizon 5">
+      <img src="https://i.imgur.com/bWlYfOu.jpeg" alt="Forza Horizon 5">
+    </div>
+
+    <div class="game-card" data-title="Phasmophobia">
+      <img src="https://i.imgur.com/s3QdIAv.jpeg" alt="Phasmophobia">
+    </div>
+
+    <div class="game-card" data-title="Hollow Knight">
+      <img src="https://i.imgur.com/KPR6teq.jpeg" alt="Hollow Knight">
+    </div>
+
+    <div class="game-card" data-title="Terraria">
+      <img src="https://i.imgur.com/9jEhRde.jpeg" alt="Terraria">
+    </div>
+
+    <div class="game-card" data-title="BeamNG.drive">
+      <img src="https://i.imgur.com/vadNBBj.png" alt="BeamNG.drive">
+    </div>
+    
+    <div class="game-card" data-title="The Coffin of Andy & Leyley">
+      <img src="https://i.imgur.com/f4xeD5B.png" alt="The coffin of Andy and Leyley">
+</div>
+        <div class="game-card" data-title="ULTRAKILL">
+      <img src="https://i.imgur.com/JtPZsmF.png" alt="ULTRAKILL">
+</div>
+            <div class="game-card" data-title="Dead Cells">
+      <img src="https://i.imgur.com/XgG95OP.png" alt="Dead Cells">
+</div>
+            <div class="game-card" data-title="Undertale">
+      <img src="https://i.imgur.com/vQ3MY6T.png" alt="Undertale">
+              </div>
+            <div class="game-card" data-title="Battlefield 4">
+      <img src="https://i.imgur.com/tqlI7TU.jpeg" alt="Battlefield 4">
+              </div>
+            <div class="game-card" data-title="Factorio">
+      <img src="https://i.imgur.com/X2nVd0B.png" alt="Factorio">
+    
+    </div>
+  </div>
+</div>
+
+<!--====================================== FAVORITE ANIMES SECTION ======================================== -->
+    
+      <button class="toggle-btn" onclick="toggleSection('favorite-anime')">Favorite Animes</button>
+
+<div id="favorite-anime" class="toggle-content">
+  <div class="games-grid">
+
+<!-- ===================================== ACTUAL LIST ==================================================== -->
+
+    <div class="game-card" data-title="Yofukashi no Uta">
+      <img src="https://cdn.imgchest.com/files/9de8e632b54a.webp" alt="Yofuhashi no Uta">
+    </div>
+    
+    <div class="game-card" data-title="Shibou Yuugi de Meshi wo Kuu">
+      <img src="https://i.imgur.com/OUgTeUp.jpeg" alt="Shibou Yuugi de Meshi wo Kuu">
+    </div>
+
+        <div class="game-card" data-title="Chainsaw Man">
+      <img src="https://i.imgur.com/tUlLSVq.png" alt="Chainsaw Man">
+    </div>
+
+        <div class="game-card" data-title="Evangelion">
+      <img src="https://i.imgur.com/1HT6aTD.jpeg" alt="Evangelion">
+    </div>
+
+        <div class="game-card" data-title="Fate Zero">
+      <img src="https://i.imgur.com/8aniwIH.jpeg" alt="Fate Zero">
+    </div>
+
+        <div class="game-card" data-title="Mahou Shoujo ni Akogarete">
+      <img src="https://cdn.imgchest.com/files/96e64dc0c3e1.webp" alt="Mahou Shoujo ni Akogarete">
+    </div>
+
+        <div class="game-card" data-title="Fullmetal Alchemist Brotherhood">
+      <img src="https://cdn.imgchest.com/files/f7105209e3eb.webp" alt="Fullmetal Alchemist Brotherhood">
+    </div>
+
+        <div class="game-card" data-title="Highschool DXD">
+      <img src="https://cdn.imgchest.com/files/aa4e655c6995.webp" alt="Highschool DXD">
+    </div>
+
+            <div class="game-card" data-title="JoJo's Bizarre Adventure: Golden Wind">
+      <img src="https://cdn.imgchest.com/files/819a0c7d5a22.webp" alt="JoJo's Bizarre Adventure: Golden Wind">
+    </div>
+
+            <div class="game-card" data-title="Jujutsu Kaisen">
+      <img src="https://cdn.imgchest.com/files/3b2d3b51b27c.webp" alt="Jujutsu Kaisen">
+    </div>
+
+            <div class="game-card" data-title="Kage no Jitsuryokusha ni Naritakute!">
+      <img src="https://cdn.imgchest.com/files/b09cb1600052.webp" alt="Kage no Jitsuryokusha ni Naritakute!">
+    </div>
+
+            <div class="game-card" data-title="Mushoku Tensei">
+      <img src="https://cdn.imgchest.com/files/0a05cab3fdb4.webp" alt="Mushoku Tensei">
+    </div>
+
+            <div class="game-card" data-title="Tensei Shitara Slime Datta Ken">
+      <img src="https://cdn.imgchest.com/files/be06551b13ea.webp" alt="Tensei Shitara Slime Datta Ken">
+    </div>
+
+            <div class="game-card" data-title="Tate no Yuusha no Nariagari">
+      <img src="https://cdn.imgchest.com/files/037fff5647ee.webp" alt="Tate no Yuusha no Nariagari">
+    </div>
+
+            <div class="game-card" data-title="Kimetsu no Yaiba">
+      <img src="https://cdn.imgchest.com/files/162f43691158.webp" alt="Kimetsu no Yaiba">
+    </div>
+                                      <!--====== pt2 ======-->
+    
+                <div class="game-card" data-title="Made in Abyss">
+      <img src="https://cdn.imgchest.com/files/ef03966015a7.webp" alt="Made in Abyss">
+    </div>
+
+                <div class="game-card" data-title="Kimetsu no Yaiba">
+      <img src="https://cdn.imgchest.com/files/162f43691158.webp" alt="Kimetsu no Yaiba">
+    </div>
+
+                <div class="game-card" data-title="No Game no Life">
+      <img src="https://cdn.imgchest.com/files/83a021ab3222.webp" alt="No Game no Life">
+    </div>
+
+                <div class="game-card" data-title="One Piece">
+      <img src="https://cdn.imgchest.com/files/d0b85503d568.webp" alt="One Piece">
+    </div>
+
+                <div class="game-card" data-title="One Punch Man">
+      <img src="https://cdn.imgchest.com/files/72f46b21b2e1.webp" alt="One Punch Man">
+    </div>
+
+                <div class="game-card" data-title="Seishun Buta Yarou">
+      <img src="https://cdn.imgchest.com/files/32cb30b9b76f.webp" alt="Seishun Buta Yarou">
+    </div>
+
+                <div class="game-card" data-title="Sword Art Online">
+      <img src="https://cdn.imgchest.com/files/3fe0e3d4216f.webp" alt="Sword Art Online">
+    </div>
+
+                <div class="game-card" data-title="Shuumatsu no Valkyrie">
+      <img src="https://cdn.imgchest.com/files/117890e7c3fa.webp" alt="Shuumatsu no Walkure">
+    </div>
+
+                <div class="game-card" data-title="Overlord">
+      <img src="https://cdn.imgchest.com/files/58d1eb970bde.webp" alt="Overlord">
+    </div>
+
+                <div class="game-card" data-title="Solo Leveling">
+      <img src="https://cdn.imgchest.com/files/55f413328ee8.webp" alt="Solo Leveling">
+    </div>
+
+                <div class="game-card" data-title="Darwin's Game">
+      <img src="https://cdn.imgchest.com/files/701df77393de.webp" alt="Darwin's Game">
+    </div>
+
+                <div class="game-card" data-title="Gachiakuta">
+      <img src="https://cdn.imgchest.com/files/4826cc8117c2.webp" alt="Gachiakuta">
+    </div>
+
+<!-- ========================                 PART 3              ======================== -->
+    
+                    <div class="game-card" data-title="Blue Lock">
+      <img src="https://cdn.imgchest.com/files/507a8bee314d.webp" alt="Blue Lock">
+    </div>
+
+                    <div class="game-card" data-title="Serial Experiments Lain">
+      <img src="https://cdn.imgchest.com/files/afc547d4f788.webp" alt="Serial Experiments Lain">
+    </div>
+  </div>
+</div>
+
+    <!-- ================================   MANGA LIST ================================-->
+
+          <button class="toggle-btn" onclick="toggleSection('favorite-manga')">Favorite Mangas</button>
+
+<div id="favorite-manga" class="toggle-content">
+  <div class="games-grid">
+
+<!-- ===================================== ACTUAL LIST ==================================================== -->
+
+    <div class="game-card" data-title="One Punch Man">
+      <img src="https://cdn.imgchest.com/files/3d79884edb7f.jpg" alt="One Punch Man">
+    </div>
+
+        <div class="game-card" data-title="Berserk">
+      <img src="https://cdn.imgchest.com/files/12fcede15e73.jpg" alt="Berserk">
+    </div>
+
+        <div class="game-card" data-title="One Piece">
+      <img src="https://cdn.imgchest.com/files/95b809b31e42.jpg" alt="One Piece">
+    </div>
+
+        <div class="game-card" data-title="Yofukashi no Uta">
+      <img src="https://cdn.imgchest.com/files/62a61b8e4cfd.png" alt="Yofuhashi no Uta">
+    </div>
+
+        <div class="game-card" data-title="Chainsaw Man">
+      <img src="https://cdn.imgchest.com/files/50e36ab63230.jpg" alt="Chainsaw Man">
+    </div>
+
+        <div class="game-card" data-title="Jujutsu Kaisen">
+      <img src="https://cdn.imgchest.com/files/fe858b528246.jpg" alt="Jujutsu Kaisen">
+    </div>
+
+<!-- ====================================== PART 2 ========================================== -->
+    
+            <div class="game-card" data-title="JoJo's Bizarre Adventure Part 7: Steel Ball Run">
+      <img src="https://cdn.imgchest.com/files/2e940e2dabea.jpg" alt="JoJo's Bizarre Adventure Part 7: Steel Ball Run">
+    </div>
+
+            <div class="game-card" data-title="Fullmetal Alchemist">
+      <img src="https://cdn.imgchest.com/files/103106e8f361.jpg" alt="Fullmetal Alchemist">
+    </div>
+
+            <div class="game-card" data-title="Blue Lock">
+      <img src="https://cdn.imgchest.com/files/c5f007d6ea02.jpg" alt="Blue Lock">
+    </div>
+
+            <div class="game-card" data-title="Neon Genesis Evangelion">
+      <img src="https://cdn.imgchest.com/files/e9edf8d7be43.jpg" alt="Neon Genesis Evangelion">
+    </div>
+
+                    <div class="game-card" data-title="Hellsing">
+      <img src="https://cdn.imgchest.com/files/18a21458639c.jpg" alt="Hellsing">
+    </div>
+    
+        
+  </div>
+  </div>
+
+<!-- ========================================================================================================= -->
+
+    
   <h2>Social Media</h2>
 <div class="social-links">
   <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank">
@@ -905,6 +1372,7 @@ body.loading {
 </div>
 
 
+    
     <h2>Fun Facts</h2>
     <div class="fun-facts" id="funFactsContainer">
       <div class="fact">I can spend hours perfecting an anime sketch.</div>
@@ -1025,11 +1493,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script>
   const bg = document.getElementById("bg-parallax");
+  const isDesktopParallax = window.matchMedia("(min-width: 769px) and (hover: hover) and (pointer: fine)").matches;
 
-  window.addEventListener("scroll", () => {
-    const offset = window.scrollY * 0.025; // ~2px a cada 100px
-    bg.style.backgroundPosition = `50% calc(50% + ${offset}px)`;
-  });
+  if (isDesktopParallax) {
+    window.addEventListener("scroll", () => {
+      const offset = window.scrollY * 0.025;
+      bg.style.backgroundPosition = `50% calc(50% + ${offset}px), center`;
+    });
+  }
 </script>
 
 <div id="mini-profile" class="mini-profile hidden">
@@ -1072,63 +1543,63 @@ const friendsData = {
     desc: "💍STARC0LLECT0R 💙 💫 Universum totum duobus tantum numeris servare possumus... SAPERE AUDE!!! Eu gosto de matemática, física, e tecnologia, de mexer em eletrônicos , computadores e reparar-los, minha meta é fazer faculdade de engenharia da computação",
     status: "dnd"
   },
-  
+
     matheusbleck21: {
     name: "matheusbleck21",
     avatar: "https://i.imgur.com/BxjILM7.png",
     desc: "as vozes não param",
     status: "dnd"
   },
-  
+
     Nikko: {
     name: "Nikko",
     avatar: "https://i.imgur.com/AAhjYkX.png",
     desc: "Gosto de conversar sobre assuntos militares e de guerra em geral. Aposentado do war thunder 🧑‍🦯 , jogo world of tanks, hoi4, roblox e pretendo jogar DCS no futuro",
     status: "dnd"
   },
-  
+
     nitidez: {
     name: "nitidez",
     avatar: "https://i.imgur.com/sdQOetg.jpeg",
     desc: "Eu sou Nitidez, sigma e propreier em jogos, curto anime/série/filme/mangá/manhwa/fanfic\n/dorama/seu rabo e sou desenvolvedor nas horas vagas. (Bolinha bolão uwu) 🥴",
     status: "dnd"
   },
-  
+
     Yingloomy: {
     name: "Yingloomy",
     avatar: "https://i.imgur.com/10DtG0n.png",
     desc: "Meu nome é Yingloomy, muitos estranhamente não gostam de mim (por que será), mas eu gosto da interação e de todos em geral. Você pode me chamar de Ying também. Eu gosto de jogos de Estratégia em Tempo Real (RTS), FPS e principalmente jogos sandbox, normalmente a pessoa com jogos desconhecidos ou muito desvalorizados, além de gostar das matérias envolvendo história e geografia.",
     status: "dnd"
   },
-  
+
     yoserius: {
     name: "yoserius",
     avatar: "https://cdn.imgchest.com/files/8524d3e0e4eb.png",
     desc: "O ser humano quase perfeito",
     status: "dnd"
   },
-  
+
     Zilirian: {
     name: "Zilirian",
     avatar: "https://i.imgur.com/3R7sQVb.png",
     desc: "Undecided",
     status: "dnd"
   },
-  
+
     jpxwf12: {
     name: "jpxwf12",
     avatar: "https://i.imgur.com/Qc9S9bX.png",
     desc: "Maníaco por carros, estudante de programação, introvertido,hetero,apreciador de asiáticas",
     status: "dnd"
   },
-  
+
     jann: {
     name: "jann",
     avatar: "https://i.imgur.com/2wfpG1n.png",
     desc: "Meu nome é Janderson, porém sou conhecido como Jamilson ou Jamal. Tenho 17 anos, gosto de praticar esportes, ler mangás, assistir anime e estudar.",
     status: "dnd"
   },
-  
+
 };
 </script>
 
@@ -1225,13 +1696,7 @@ document.querySelectorAll(".friend-card").forEach(card => {
   });
 });
 </script>
-
-
-<div class="fake-terminal">
-  system: alive<br>
-  signal: stable
-</div>
-
+  
 <audio id="btn-click-sound" preload="auto">
   <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
 </audio>
@@ -1279,8 +1744,93 @@ clickableButtons.forEach(btn => {
   });
 </script>
 
+<script>
+  const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  if (supportsHover) {
+    const interactiveSelectors = [
+      "button",
+      ".social-btn",
+      ".friend-card",
+      ".toggle-btn",
+      ".shuffle-btn",
+      "#music-btn",
+      ".profile-wrapper",
+      "a"
+    ].join(",");
 
+    function activateBGHover() {
+      document.body.classList.add("hover-bg");
+    }
 
+    function clearHoverState() {
+      document.body.classList.remove("hover-bg");
+    }
+
+    document.addEventListener("mousemove", (e) => {
+      const overInteractive = e.target.closest(interactiveSelectors);
+      const insideContent = e.target.closest(".content, .banner, .mini-profile");
+
+      if (!overInteractive && !insideContent) {
+        activateBGHover();
+      } else {
+        clearHoverState();
+      }
+    });
+
+    document.addEventListener("mouseleave", () => {
+      clearHoverState();
+    });
+  } else {
+    document.body.classList.remove("hover-bg");
+  }
+</script>
+
+  <div id="game-modal" class="game-modal hidden">
+  <div class="game-modal-overlay"></div>
+
+  <div class="game-modal-content">
+    <button id="close-game-modal" class="game-modal-close">✕</button>
+    <img id="game-modal-img" src="" alt="">
+    <div id="game-modal-title" class="game-modal-title"></div>
+  </div>
+</div>
+
+<script>
+  const gameCards = document.querySelectorAll(".game-card");
+  const gameModal = document.getElementById("game-modal");
+  const gameModalImg = document.getElementById("game-modal-img");
+  const gameModalTitle = document.getElementById("game-modal-title");
+  const closeGameModal = document.getElementById("close-game-modal");
+  const gameModalOverlay = document.querySelector(".game-modal-overlay");
+
+  gameCards.forEach(card => {
+    card.addEventListener("click", () => {
+      const img = card.querySelector("img");
+
+      gameModalImg.src = img.src;
+      gameModalImg.alt = img.alt;
+      gameModalTitle.textContent = card.dataset.title;
+
+      gameModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  function closeModal() {
+    gameModal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  closeGameModal.addEventListener("click", closeModal);
+  gameModalOverlay.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !gameModal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
+</script>
+  
 </body>
 </html>
