@@ -106,17 +106,17 @@ content="
       pointer-events: none;
     }
 
-    /* IMAGEM DE FUNDO */
-    .loading-bg-image {
-      position: absolute;
-      inset: 0;
-      background-image: url("https://i.imgur.com/3KHoe6a.jpeg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.18;
-      transform: scale(1.15);
-      animation: bgZoom 18s ease-in-out infinite alternate;
+/* IMAGEM DE FUNDO */
+.loading-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.18;
+  transform: scale(1.15);
+  animation: bgZoom 18s ease-in-out infinite alternate;
+}
     }
 
     @keyframes bgZoom {
@@ -352,6 +352,24 @@ body.loading {
 }
 
  </style>
+
+  <script>
+  const loadingBgImages = [
+    'https://i.imgur.com/RRF2YIU.png',
+    'https://i.imgur.com/E48oiig.jpeg',
+    'https://i.imgur.com/P88EubR.jpeg',
+    'https://i.imgur.com/NxKH983.jpeg',
+    'https://i.imgur.com/gBqkPqC.jpeg'
+  ];
+  const randomLoadingBg = loadingBgImages[Math.floor(Math.random() * loadingBgImages.length)];
+  document.addEventListener('DOMContentLoaded', () => {
+    const loadingBgElement = document.querySelector('.loading-bg-image');
+    if (loadingBgElement) {
+      loadingBgElement.style.backgroundImage = `url("${randomLoadingBg}")`;
+    }
+  });
+</script>
+  
 </head>
 <body class="loading">
 
