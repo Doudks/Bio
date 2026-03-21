@@ -1,89 +1,137 @@
 <!DOCTYPE html>
 <html lang="pt-br" class="loading">
 <head>
-
-
-<meta http-equiv="Content-Security-Policy"
-content="
-  default-src 'self' https: data:;
-  script-src 'self' https: 'unsafe-inline';
-  style-src 'self' https: 'unsafe-inline';
-  img-src 'self' https: data:;
-  media-src 'self' https:;
-  font-src 'self' https: data:;
-">
-
-
+  
+  
+  <!-- ===============================META / SEO / CONFIG ================================================== -->
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy"
+    content="
+      default-src 'self' https: data:;
+      script-src 'self' https: 'unsafe-inline';
+      style-src 'self' https: 'unsafe-inline';
+      img-src 'self' https: data:;
+      media-src 'self' https:;
+      font-src 'self' https: data:;
+    ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d0d0d">
+  <meta name="twitter:card" content="summary_large_image">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nosifer&family=Rubik+Glitch&family=Metal+Mania&display=swap" rel="stylesheet">
-<title>My Personal Site</title>
+  <title>My Personal Site</title>
 
-<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Doudks/Bio/e433d3c4654a2e2900eb9cebb2055e7228cefdea/favicon-removebg-preview.png">
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Doudks/Bio/e433d3c4654a2e2900eb9cebb2055e7228cefdea/favicon-removebg-preview.png">
 
-<meta property="og:title" content="My Bio">
-<meta property="og:description" content="Just my bio, for you curious to know about my personality">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/Doldie/Mybio/1c409666facfbd27e54285f7c371241e.jpg">
-<meta property="og:url" content="https://doldie.github.io/Mybio">
-<meta property="og:type" content="website">
+  <meta property="og:title" content="Doldie’s Profile">
+  <meta property="og:description" content="A dark personal profile with favorites, FAQ, aesthetics and more.">
+  <meta property="og:image" content="https://i.imgur.com/U6secL3.jpeg">
+  <meta property="og:url" content="https://doldie.github.io/Mybio">
+  <meta property="og:type" content="website">
 
-<meta name="theme-color" content="#0d0d0d">
-<meta name="twitter:card" content="summary_large_image">
+  <!-- ==================================================| FONTS |========================================================== -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nosifer&family=Rubik+Glitch&family=Metal+Mania&display=swap" rel="stylesheet">
 
-<style>
+  <!-- =========================================================
+    STYLES
+    Ordem:
+    1) Base / reset
+    2) Background e loading
+    3) Layout principal
+    4) Componentes
+    5) Efeitos / animações
+    6) Responsivo
+  ========================================================== -->
+  
+  <style>
+    /* ==================================================| ROOT / BASE / RESET |========================================================== */
+    :root {
+      --bg-darkness: 0.65;
+      --neon-angle: 0deg;
+    }
 
-.facts-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.music-btn {
-  margin-left: auto;
-}
+    html.loading,
+    body.loading {
+      overflow: hidden;
+      height: 100%;
+      touch-action: none;
+    }
 
-.profile-pic {
-  position: relative;
-  width: 160px;
-  height: 160px;
-}
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      color: white;
+      overflow-x: hidden;
+      background: transparent;
+      background-attachment: fixed;
+      background-position: center 0px;
+    }
 
-/* avatar */
-.avatar-mask {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  overflow: hidden;
-  z-index: 2;
-}
+    h2 {
+      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 5px;
+    }
 
-#avatar-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+    ul {
+      list-style: none;
+      padding: 0;
+    }
 
-/* decoração */
-.decoration-mask {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  overflow: visible;
-  z-index: 3;
-  pointer-events: none;
-}
+    ul li::before {
+      content: "•";
+      color: #e30039;
+      margin-right: 8px;
+    }
 
-#avatar-decoration {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  height: 120%;
-  transform: translate(-50%, -50%);
-}
+    .hidden {
+      display: none;
+    }
 
+    /* ==================================================| BACKGROUND / PARALLAX |==========================================================*/
+    #bg-parallax {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      background-image:
+        linear-gradient(
+          135deg,
+          #0a0a0f,
+          #1a0030,
+          #3a004d,
+          #003040,
+          #0a0a0f,
+          #260000
+        ),
+        url("https://i.imgur.com/xtzaH3v.png");
+      background-size: 400% 400%, cover;
+      background-position: 50% 50%, center;
+      background-repeat: no-repeat, no-repeat;
+      background-blend-mode: screen, normal;
+      animation: bgShift 45s ease-in-out infinite;
+      will-change: background-position;
+    }
+
+    #bg-parallax::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      opacity: 1;
+      transition: opacity 0.9s ease;
+    }
+
+    body.hover-bg #bg-parallax::before {
+      opacity: 0.35;
+      transition: opacity 2s ease 0.35s;
+    }
+
+    /* ==================================================| LOADING SCREEN |========================================================== */
+    
     #loading-screen {
       position: fixed;
       inset: 0;
@@ -106,34 +154,17 @@ content="
       pointer-events: none;
     }
 
-/* IMAGEM DE FUNDO */
-.loading-bg-image {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.18;
-  transform: scale(1.15);
-  animation: bgZoom 18s ease-in-out infinite alternate;
+    .loading-bg-image {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.18;
+      transform: scale(1.15);
+      animation: bgZoom 18s ease-in-out infinite alternate;
     }
 
-@media (max-width: 768px) {
-  .loading-bg-image {
-    background-size: cover;
-    background-position: center center;
-    opacity: 0.30;
-    transform: scale(1.22);
-    animation: none;
-  }
-}
-
-    @keyframes bgZoom {
-      from { transform: scale(1.15); }
-      to { transform: scale(1.25); }
-    }
-
-    /* estrelas */
     .loading-stars {
       position: absolute;
       inset: 0;
@@ -142,12 +173,6 @@ content="
       animation: starDrift 25s linear infinite;
     }
 
-    @keyframes starDrift {
-      from { background-position: 0 0; }
-      to { background-position: 400px 800px; }
-    }
-
-    /* neblina */
     .loading-fog {
       position: absolute;
       inset: -30%;
@@ -155,12 +180,6 @@ content="
       animation: fogMove 18s ease-in-out infinite alternate;
     }
 
-    @keyframes fogMove {
-      from { transform: translateX(-10%) translateY(0); }
-      to { transform: translateX(10%) translateY(-6%); }
-    }
-
-    /* lua */
     .loading-moon {
       width: 120px;
       height: 120px;
@@ -169,24 +188,6 @@ content="
       margin-bottom: 30px;
       animation: moonGlow 5s ease-in-out infinite;
       z-index: 2;
-    }
-
-    @keyframes moonGlow {
-      0% {
-        box-shadow:
-          0 0 25px rgba(220,220,255,0.3),
-          0 0 50px rgba(220,220,255,0.15);
-      }
-      50% {
-        box-shadow:
-          0 0 70px rgba(220,220,255,0.85),
-          0 0 140px rgba(220,220,255,0.55);
-      }
-      100% {
-        box-shadow:
-          0 0 25px rgba(220,220,255,0.3),
-          0 0 50px rgba(220,220,255,0.15);
-      }
     }
 
     .loading-text {
@@ -207,10 +208,6 @@ content="
       z-index: 2;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
     .loading-bar {
       width: 200px;
       height: 6px;
@@ -227,370 +224,679 @@ content="
       animation: loadProgress 8s linear forwards;
     }
 
+    /* ==================================================| MAIN LAYOUT |========================================================== */
+    .banner {
+      position: relative;
+      height: 250px;
+      background-image: url('https://i.imgur.com/5JaJwBk.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center 84%;
+      border-bottom: 5px solid #bfbfbf;
+      box-shadow: 0 4px 15px rgba(191, 191, 191, 0.35);
+      overflow: visible;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 100px auto 50px auto;
+      padding: 20px;
+      background: linear-gradient(
+        180deg,
+        rgba(55, 55, 55, 0.45),
+        rgba(20, 20, 20, 0.7)
+      );
+      border-radius: 15px;
+      backdrop-filter: blur(12px);
+      position: relative;
+      z-index: 1;
+      transition: opacity 1s;
+    }
+
+    .fake-terminal {
+      margin-top: 60px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      text-align: right;
+      font-family: "Courier New", monospace;
+      font-size: 11px;
+      color: #ff4fa3;
+      display: block;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    /* ==================================================| PROFILE HEADER |========================================================== */
+    .profile-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      background: linear-gradient(
+        135deg,
+        rgba(191, 191, 191, 0.18),
+        rgba(10, 8, 30, 0.95)
+      );
+      padding: 18px 22px;
+      border-radius: 25px;
+      border: 2px solid #bfbfbf;
+      box-shadow:
+        0 0 20px rgba(191, 191, 191, 0.28),
+        0 0 40px rgba(191, 191, 191, 0.14);
+      position: absolute;
+      bottom: -80px;
+      left: 20px;
+      overflow: visible;
+      z-index: 10;
+      isolation: isolate;
+      --neon-angle: 0deg;
+    }
+
+    .profile-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 27px;
+      background: conic-gradient(
+        from var(--neon-angle),
+        transparent 0deg,
+        rgba(255,255,255,0.9) 30deg,
+        #ffffff 50deg,
+        #d9d9d9 80deg,
+        #a6a6a6 120deg,
+        #737373 180deg,
+        rgba(255,255,255,0.8) 230deg,
+        transparent 360deg
+      );
+      padding: 2px;
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: 1;
+      opacity: 0;
+      filter:
+        blur(4px)
+        drop-shadow(0 0 10px rgba(255,255,255,1))
+        drop-shadow(0 0 18px #bfbfbf)
+        drop-shadow(0 0 32px #7a7a7a);
+      pointer-events: none;
+    }
+
+    .profile-wrapper.neon-active::before {
+      animation: neonBorderSpinFade 0.85s linear forwards;
+    }
+
+    .profile-pic {
+      position: relative;
+      z-index: 2;
+      width: 160px;
+      height: 160px;
+    }
+
+    .avatar-mask {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 2;
+      border: 2.3px solid #bfbfbf;
+    }
+
+    #avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+    }
+
+    .decoration-mask {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      overflow: visible;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    #avatar-decoration {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120%;
+      height: 120%;
+      transform: translate(-50%, -50%);
+    }
+
+    .profile-name {
+      position: relative;
+      z-index: 2;
+      font-size: 34px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      background: linear-gradient(to bottom, #ffffff 0%, #d9d9d9 40%, #000000 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      text-shadow:
+        0 0 10px rgba(255,255,255,0.35),
+        0 0 18px rgba(200,200,200,0.35);
+    }
+
+    /* ==================================================| BUTTONS / TOGGLES / FACTS |========================================================== */
+    .toggle-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #e60054, #9b003a, #3a0018);
+      color: white;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      font-weight: bold;
+      box-shadow:
+        0 0 10px rgba(230,0,84,0.4),
+        0 4px 15px rgba(0,0,0,0.6);
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+    }
+
+    .toggle-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.35s ease;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    .toggle-content.open {
+      opacity: 1;
+    }
+
+    .fun-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .fact {
+      background: rgba(255,255,255,0.15);
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .facts-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .shuffle-btn,
+    #music-btn {
+      background: linear-gradient(135deg, #ff005d, #b80042, #4a001a);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+      box-shadow:
+        0 0 12px rgba(255,0,93,0.4),
+        0 4px 12px rgba(0,0,0,0.5);
+      transition: transform 0.15s ease, filter 0.2s ease, opacity 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+
+    .music-btn {
+      margin-left: auto;
+    }
+
+    #music-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.65);
+      padding: 6px 14px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+      box-shadow: none;
+    }
+
+    #music-btn:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    #music-btn.playing {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .shuffle-btn:active {
+      transform: scale(0.92);
+      background: #b80042;
+    }
+
+    /* ==================================================| TEXT BLOCKS / LISTS |========================================================== */
+    .love-list li,
+    .hate-list li,
+    .text-block {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    /* ==================================================| SOCIAL BUTTONS |========================================================== */
+    .social-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .social-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ==================================================| FRIENDS |========================================================== */
+    .friends-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .friend-card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 10px;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 14px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .friend-card:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-2px);
+    }
+
+    .friends-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 0;
+      margin: 0 0 12px 0;
+      list-style: none;
+    }
+
+    .friends-list li {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      white-space: nowrap;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+
+    .mini-profile {
+      position: fixed;
+      width: 260px;
+      background: #0f1115;
+      border-radius: 12px;
+      box-shadow:
+        0 10px 40px rgba(0,0,0,0.8),
+        inset 0 0 0 1px rgba(255,255,255,0.08);
+      padding: 12px;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .mini-profile.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .mini-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mini-header img {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ff3c8a;
+    }
+
+    .mini-name {
+      font-size: 18px;
+      font-weight: 600;
+      display: inline-block;
+      background: linear-gradient(to bottom, #ffffff 0%, #bfbfbf 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .mini-body {
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ==================================================| GAMES / MODAL |========================================================== */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+      margin-bottom: 20px;
+      align-items: start;
+    }
+
+    .game-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      background: rgba(255,255,255,0.04);
+      box-shadow:
+        0 8px 24px rgba(0,0,0,0.35),
+        inset 0 0 0 1px rgba(255,255,255,0.06);
+      transition: transform 0.22s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      aspect-ratio: 2 / 3;
+      width: 100%;
+    }
+
+    .game-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.25s ease;
+    }
+
+    .game-card:hover {
+      transform: scale(1.04);
+      box-shadow:
+        0 12px 30px rgba(0,0,0,0.45),
+        0 0 18px rgba(230,0,84,0.22);
+    }
+
+    .game-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .game-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-modal.hidden {
+      display: none;
+    }
+
+    .game-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(8px);
+    }
+
+    .game-modal-content {
+      position: relative;
+      z-index: 2;
+      width: min(92vw, 420px);
+      background: linear-gradient(180deg, rgba(35, 0, 30, 0.92), rgba(10, 0, 20, 0.96));
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.65),
+        0 0 24px rgba(230,0,84,0.2);
+      transform: scale(0.88);
+      opacity: 0;
+      animation: gameModalPop 0.28s ease forwards;
+    }
+
+    .game-modal-content img {
+      width: 100%;
+      max-height: 70vh;
+      object-fit: cover;
+      border-radius: 14px;
+      display: block;
+    }
+
+    .game-modal-title {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ffd1e4;
+    }
+
+    .game-modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 3;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .game-modal-close:hover {
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.16);
+    }
+
+    /* ==================================================| HOVER / SHARED TRANSITIONS |========================================================== */
+    .social-btn:hover,
+    .toggle-btn:hover,
+    .shuffle-btn:hover {
+      background: linear-gradient(135deg, #ff1f75, #b80042, #5a001f);
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+
+    .toggle-btn,
+    .shuffle-btn,
+    .social-btn,
+    .friend-card,
+    .text-block,
+    .fact,
+    .love-list li,
+    .hate-list li,
+    .friends-list li,
+    .profile-wrapper,
+    .content {
+      transition:
+        opacity 1s ease,
+        background 1s ease,
+        transform 0.25s ease,
+        box-shadow 1s ease,
+        filter 1s ease;
+    }
+
+    body.hover-bg .toggle-btn,
+    body.hover-bg .shuffle-btn,
+    body.hover-bg .social-btn,
+    body.hover-bg .friend-card,
+    body.hover-bg .text-block,
+    body.hover-bg .fact,
+    body.hover-bg .love-list li,
+    body.hover-bg .hate-list li,
+    body.hover-bg .friends-list li,
+    body.hover-bg .profile-wrapper,
+    body.hover-bg .content {
+      opacity: 0.22;
+      box-shadow: none !important;
+      filter: saturate(0.8);
+    }
+
+    /* ==================================================| ANIMATIONS |========================================================== */
+    @property --neon-angle {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: 0deg;
+    }
+
+    @keyframes bgZoom {
+      from { transform: scale(1.15); }
+      to { transform: scale(1.25); }
+    }
+
+    @keyframes starDrift {
+      from { background-position: 0 0; }
+      to { background-position: 400px 800px; }
+    }
+
+    @keyframes fogMove {
+      from { transform: translateX(-10%) translateY(0); }
+      to { transform: translateX(10%) translateY(-6%); }
+    }
+
+    @keyframes moonGlow {
+      0% {
+        box-shadow:
+          0 0 25px rgba(220,220,255,0.3),
+          0 0 50px rgba(220,220,255,0.15);
+      }
+      50% {
+        box-shadow:
+          0 0 70px rgba(220,220,255,0.85),
+          0 0 140px rgba(220,220,255,0.55);
+      }
+      100% {
+        box-shadow:
+          0 0 25px rgba(220,220,255,0.3),
+          0 0 50px rgba(220,220,255,0.15);
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     @keyframes loadProgress {
       to { width: 100%; }
     }
 
-
-/*=====================BG animation==================*/
-
-:root {
-  --bg-darkness: 0.65;
-}
-
-  html.loading,
-body.loading {
-  overflow: hidden;
-  height: 100%;
-  touch-action: none;
-}
-  
-body {
-  margin: 0;
-  font-family: 'Quicksand', sans-serif;
-  color: white;
-  overflow-x: hidden;
-  background: transparent; /* fallback */
-}
-
-
-body {
-  background-attachment: fixed;
-  background-position: center 0px;
-}
-
-#bg-parallax {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-
-  background-image:
-    linear-gradient(
-      135deg,
-      #0a0a0f,
-      #1a0030,
-      #3a004d,
-      #003040,
-      #0a0a0f,
-      #260000
-    ),
-    url("https://i.imgur.com/xtzaH3v.png");
-
-  background-size:
-    400% 400%,
-    cover;
-
-  background-position:
-    50% 50%,
-    center;
-
-  background-repeat:
-    no-repeat,
-    no-repeat;
-
-  background-blend-mode:
-    screen,
-    normal;
-
-  animation: bgShift 45s ease-in-out infinite;
-  will-change: background-position;
-}
-
-@media (max-width: 768px) {
-  #bg-parallax {
-    animation: none;
-    background-position: center, center;
-  }
-}
-  
-  #bg-parallax::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.65);
-  opacity: 1;
-  transition: opacity 0.9s ease;
-}
-
-body.hover-bg #bg-parallax::before {
-  opacity: 0.35;
-  transition: opacity 2s ease 0.35s;
-}
-
-@keyframes bgShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-
-.profile-modal {
-  width: 320px;
-  background: #0f0f14;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  position: relative;
-  animation: popIn 0.25s ease;
-}
-
-.mini-profile {
-  position: fixed;
-  width: 260px;
-  background: #0f1115;
-  border-radius: 12px;
-  box-shadow:
-    0 10px 40px rgba(0,0,0,0.8),
-    inset 0 0 0 1px rgba(255,255,255,0.08);
-  padding: 12px;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-.mini-profile.show {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.mini-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.mini-header img {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ff3c8a;
-}
-
-.mini-name {
-  font-size: 18px;
-  font-weight: 600;
-  background: linear-gradient(120deg, #fff, #ff8fb8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.mini-body {
-  margin-top: 10px;
-  font-size: 13px;
-  color: rgba(255,255,255,0.65);
-}
-
-.hidden {
-  display: none;
-}
-
-.fake-terminal {
-  margin-top: 60px;        /* separa do conteúdo */
-  margin-right: 6px;
-  margin-bottom: 6px;
-
-  text-align: right;       /* canto direito */
-  font-family: "Courier New", monospace;
-  font-size: 11px;
-  color: #ff4fa3;
-
-  display: block;
-  width: 100%;
-  pointer-events: none;
-}
-
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 12px;
-  margin-bottom: 20px;
-  align-items: start;
-}
-
-.game-card {
-  position: relative;
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  background: rgba(255,255,255,0.04);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(255,255,255,0.06);
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
-  aspect-ratio: 2 / 3;
-  width: 100%;
-}
-
-.game-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.25s ease;
-}
-
-.game-card:hover {
-  transform: scale(1.04);
-  box-shadow:
-    0 12px 30px rgba(0,0,0,0.45),
-    0 0 18px rgba(230,0,84,0.22);
-}
-
-.game-card:hover img {
-  transform: scale(1.06);
-}
-
-.game-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 30000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.game-modal.hidden {
-  display: none;
-}
-
-.game-modal-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.72);
-  backdrop-filter: blur(8px);
-}
-
-.game-modal-content {
-  position: relative;
-  z-index: 2;
-  width: min(92vw, 420px);
-  background: linear-gradient(
-    180deg,
-    rgba(35, 0, 30, 0.92),
-    rgba(10, 0, 20, 0.96)
-  );
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow:
-    0 20px 60px rgba(0,0,0,0.65),
-    0 0 24px rgba(230,0,84,0.2);
-  transform: scale(0.88);
-  opacity: 0;
-  animation: gameModalPop 0.28s ease forwards;
-}
-
-.game-modal-content img {
-  width: 100%;
-  max-height: 70vh;
-  object-fit: cover;
-  border-radius: 14px;
-  display: block;
-}
-
-.game-modal-title {
-  margin-top: 14px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #ffd1e4;
-}
-
-.game-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.08);
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 3;
-  transition: transform 0.2s ease, background 0.2s ease;
-}
-
-.game-modal-close:hover {
-  transform: scale(1.08);
-  background: rgba(255,255,255,0.16);
-}
-
-@keyframes gameModalPop {
-  from {
-    transform: scale(0.88);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-  
- </style>
-
-  <script>
-  const loadingBgImages = [
-'https://i.imgur.com/E48oiig.jpeg',
-'https://i.imgur.com/P88EubR.jpeg',
-'https://i.imgur.com/rOXOteX.png',
-'https://i.imgur.com/gBqkPqC.jpeg',
-'https://i.imgur.com/9NLeL2B.jpeg',
-'https://i.imgur.com/95Yp2my.jpeg',
-'https://i.imgur.com/WW0eJG8.png',
-'https://i.imgur.com/xn2CgWS.jpeg',
-'https://i.imgur.com/9U95k22.jpeg',
-'https://i.imgur.com/PO59aaO.jpeg',
-'https://i.imgur.com/XaH869f.jpeg',
-'https://i.imgur.com/AoEvWwW.jpeg',
-'https://i.imgur.com/fgJAhuO.jpeg',
-'https://i.imgur.com/1wfj9ON.jpeg',
-'https://i.imgur.com/dDP2K2r.jpeg',
-'https://i.imgur.com/Z3q5uoE.jpeg',
-'https://i.imgur.com/9K74LnT.jpeg',
-'https://i.imgur.com/g3dT9Fy.jpeg',
-'https://i.imgur.com/RfgVDoD.jpeg',
-'https://i.imgur.com/ajA0Tlt.jpeg',
-'https://i.imgur.com/Gi4cQKq.jpeg',
-'https://i.imgur.com/cfDT9wq.jpeg',
-'https://i.imgur.com/T0eANrS.jpeg',
-'https://i.imgur.com/8KflWHf.jpeg',
-'https://i.imgur.com/aVify0x.jpeg',
-'https://i.imgur.com/BR1KKrv.jpeg',
-'https://i.imgur.com/OwyXcON.jpeg',
-'https://i.imgur.com/JnPdk20.jpeg',
-'https://i.imgur.com/LPgba1U.jpeg',
-'https://i.imgur.com/v5ZbWNF.jpeg',
-'https://i.imgur.com/xUOdq2w.jpeg',
-'https://i.imgur.com/n2pWxY6.jpeg'
-  ];
-  const randomLoadingBg = loadingBgImages[Math.floor(Math.random() * loadingBgImages.length)];
-  document.addEventListener('DOMContentLoaded', () => {
-    const loadingBgElement = document.querySelector('.loading-bg-image');
-    if (loadingBgElement) {
-      loadingBgElement.style.backgroundImage = `url("${randomLoadingBg}")`;
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-  });
-</script>
 
+    @keyframes glowName {
+      0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
+      50% { text-shadow: 2px 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(230,0,84,1); }
+      100% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
+    }
+
+    @keyframes neonPulse {
+      0%   { filter: blur(100px) brightness(0.9); }
+      50%  { filter: blur(140px) brightness(1.4); }
+      100% { filter: blur(100px) brightness(1); }
+    }
+
+    @keyframes neonBorderSpin {
+      from { --neon-angle: 0deg; }
+      to { --neon-angle: 360deg; }
+    }
+
+    @keyframes neonBorderSpinFade {
+      0% {
+        --neon-angle: 0deg;
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        --neon-angle: 360deg;
+        opacity: 0;
+      }
+    }
+
+    @keyframes gameModalPop {
+      from {
+        transform: scale(0.88);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* ==================================================| RESPONSIVE |========================================================== */
+    @media (max-width: 768px) {
+      #bg-parallax {
+        animation: none;
+        background-position: center, center;
+      }
+
+      .loading-bg-image {
+        background-size: cover;
+        background-position: center center;
+        opacity: 0.30;
+        transform: scale(1.22);
+        animation: none;
+      }
+    }
+
+  </style>
+  
+  <link rel="stylesheet" href="faq.css">
+  
 </head>
+
 <body class="loading">
+  <!-- ==================================================| FIXED BACKGROUND |========================================================== -->
+  <div id="bg-parallax"></div>
 
-<div id="bg-parallax"></div>
-
-
+  <!-- ==================================================| LOADING SCREEN |========================================================== -->
   <div id="loading-screen">
-
     <div class="loading-bg-image"></div>
     <div class="loading-stars"></div>
     <div class="loading-fog"></div>
@@ -602,421 +908,30 @@ body.hover-bg #bg-parallax::before {
     <div class="loading-bar">
       <div class="loading-bar-fill"></div>
     </div>
-
   </div>
 
-<script>
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.getElementById("loading-screen").classList.add("exit");
-    document.body.classList.remove("loading");
-    document.documentElement.classList.remove("loading");
-    document.getElementById("bg-parallax").style.opacity = "1";
-  }, 8000);
-});
-</script>
-
-
-<style>
-
-#music-btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.25);
-  color: rgba(255,255,255,0.65);
-  padding: 6px 14px;
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: lowercase;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-#music-btn:hover {
-  color: #fff;
-  border-color: #fff;
-}
-
-#music-btn.playing {
-  opacity: 0.4;
-  cursor: default;
-}
-
-    /* ================= ESTILOS ORIGINAIS DO SITE ================= */
-    .banner {
-      background-image: url('https://i.imgur.com/p2UeL6u.jpeg');
-      background-size: cover;
-      background-position: center;
-      height: 250px;
-      position: relative;
-      border-bottom: 5px solid #e60054;
-      box-shadow: 0 4px 15px rgba(230,0,84,0.4);
-    }
-    .content {
-  max-width: 800px;
-  margin: 100px auto 50px auto;
-  padding: 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(40, 0, 60, 0.35),
-    rgba(10, 0, 20, 0.55)
-  );
-  border-radius: 15px;
-  backdrop-filter: blur(12px);
-  position: relative;
-  z-index: 1;
-  transition: opacity 1s;
-}
-    h2 {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 5px;
-    }
-    ul { list-style: none; padding: 0; }
-    ul li::before {
-      content: "•";
-      color: #e30039;
-      margin-right: 8px;
-    }
-    .toggle-btn {
-  display: block;
-  width: 100%;
-  background: linear-gradient(
-    135deg,
-    #e60054,
-    #9b003a,
-    #3a0018
-  );
-  color: white;
-  padding: 12px 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-bottom: 6px;
-  font-weight: bold;
-  box-shadow:
-    0 0 10px rgba(230,0,84,0.4),
-    0 4px 15px rgba(0,0,0,0.6);
-  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
-}
-    .toggle-content {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height 0.35s ease, opacity 0.35s ease;
-      margin-bottom: 15px;
-      width: 100%;
-    }
-    .toggle-content.open { opacity: 1; }
-    .fun-facts { display: flex; flex-direction: column; gap: 10px; }
-    .fact {
-      background: rgba(255,255,255,0.15);
-      padding: 10px 15px;
-      border-radius: 10px;
-      text-align: center;
-    }
-    .shuffle-btn {
-  background: linear-gradient(
-    135deg,
-    #ff005d,
-    #b80042,
-    #4a001a
-  );
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 15px;
-  box-shadow:
-    0 0 12px rgba(255,0,93,0.4),
-    0 4px 12px rgba(0,0,0,0.5);
-  transition: transform 0.15s ease, filter 0.2s ease;
-}
-    .shuffle-btn:active {
-      transform: scale(0.92);
-      background: #b80042;
-    }
-    .social-links { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
-    .social-btn {
-      display: flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.1);
-      padding: 8px 12px; border-radius: 8px;
-      text-decoration: none; color: white; font-weight: bold;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .social-btn:hover,
-.toggle-btn:hover,
-.shuffle-btn:hover {
-  background: linear-gradient(
-    135deg,
-    #ff1f75,
-    #b80042,
-    #5a001f
-  );
-  transform: scale(1.03);
-  filter: brightness(1.1);
-}
-    .social-btn img { width: 20px; height: 20px; }
-
-.toggle-btn,
-.shuffle-btn,
-.social-btn,
-.friend-card,
-.text-block,
-.fact,
-.love-list li,
-.hate-list li,
-.friends-list li,
-.profile-wrapper,
-.content {
-  transition:
-    opacity 1s ease,
-    background 1s ease,
-    transform 0.25s ease,
-    box-shadow 1s ease,
-    filter 1s ease;
-}
-
-body.hover-bg .toggle-btn,
-body.hover-bg .shuffle-btn,
-body.hover-bg .social-btn,
-body.hover-bg .friend-card,
-body.hover-bg .text-block,
-body.hover-bg .fact,
-body.hover-bg .love-list li,
-body.hover-bg .hate-list li,
-body.hover-bg .friends-list li,
-body.hover-bg .profile-wrapper,
-body.hover-bg .content {
-  opacity: 0.22;
-  box-shadow: none !important;
-  filter: saturate(0.8);
-}
-
-    .love-list li, .text-block {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 8px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-    }
-
-    .friends-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.friend-card {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 8px 10px;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 14px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.friend-card:hover {
-  background: rgba(255, 255, 255, 0.14);
-  transform: translateY(-2px);
-}
-
-
-    .friends-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 0;
-  margin: 0 0 12px 0;
-  list-style: none;
-}
-
-.friends-list li {
-  background: rgba(255, 255, 255, 0.08);
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 14px;
-  white-space: nowrap;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-}
-
-
-    .hate-list li, .text-block {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 8px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-    }
-
-    @keyframes glowName {
-      0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
-      50% { text-shadow: 2px 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(230,0,84,1); }
-      100% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
-    }
-
-
-
-.profile-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 20px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(230, 0, 84, 0.25),
-    rgba(10, 8, 30, 0.95)
-  );
-
-  padding: 18px 22px;
-  border-radius: 25px;
-  border: 2px solid rgba(230, 0, 84, 0.8);
-
-  box-shadow:
-    0 0 20px rgba(230, 0, 84, 0.4),
-    0 0 40px rgba(230, 0, 84, 0.2);
-
-  position: absolute;
-  bottom: -80px;
-  left: 20px;
-
-  overflow: visible; /* TEM QUE SER visible */
-
-    z-index: 10;
-    isolation: isolate;
-}
-.profile-name {
-  font-size: 34px;
-  font-weight: 600;
-  letter-spacing: 2px;
-
-  background: linear-gradient(
-    120deg,
-    #ffffff,
-    #ff8fb8,
-    #e60054
-  );
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 0 10px rgba(255,255,255,0.35),
-    0 0 18px rgba(255,143,184,0.45);
-}
-
-
-.profile-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: -2px; /* COLADO NA BORDA */
-  border-radius: 27px;
-
-  background: conic-gradient(
-    from var(--neon-angle),
-    transparent 0deg,
-    rgba(255,255,255,0.9) 30deg,
-    #ffffff 50deg,
-    #ffb3d1 80deg,
-    #ff3c8a 120deg,
-    #e60054 180deg,
-    rgba(255,255,255,0.8) 230deg,
-    transparent 360deg
-  );
-
-  padding: 2px;
-
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-
-  z-index: -1;
-  opacity: 0;
-
-  filter:
-    blur(4px)
-    drop-shadow(0 0 10px rgba(255,255,255,1))
-    drop-shadow(0 0 18px #ff8fb8)
-    drop-shadow(0 0 32px #e60054);
-
-  pointer-events: none;
-}
-/*========================================================*/
-.profile-wrapper.neon-active::before {
-  animation: neonBorderSpinFade 0.85s linear forwards;
-}
-
-
-@keyframes neonPulse {
-  0%   { filter: blur(100px) brightness(0.9); }
-  50%  { filter: blur(140px) brightness(1.4); }
-  100% { filter: blur(100px) brightness(1); }
-}
-
-
-@property --neon-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-.profile-wrapper {
-  --neon-angle: 0deg;
-}
-
-@keyframes neonBorderSpin {
-  from {
-    --neon-angle: 0deg;
-  }
-  to {
-    --neon-angle: 360deg;
-  }
-}
-/*=============================keyframes=============================*/
-@keyframes neonBorderSpinFade {
-  0% {
-    --neon-angle: 0deg;
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 1;
-  }
-
-  100% {
-    --neon-angle: 360deg;
-    opacity: 0;
-  }
-}
-
-</style>
-
+  <!-- ==================================================| HEADER / PROFILE |========================================================== -->
   <div class="banner">
-<div class="profile-wrapper">
-
+    <div class="profile-wrapper">
       <div class="profile-pic">
-  <div class="avatar-mask">
-    <img id="avatar-img" src="https://cdn.discordapp.com/avatars/634505467183235085/89170e2effa76130ca20c6d99c08a1e9.png?size=512">
-  </div>
+        <div class="avatar-mask">
+          <img id="avatar-img" src="https://i.imgur.com/DX81yVk.png" alt="Avatar">
+        </div>
 
-  <div class="decoration-mask">
-    <img id="avatar-decoration">
-  </div>
-</div>
+        <div class="decoration-mask">
+          <img id="avatar-decoration" alt="Avatar decoration">
+        </div>
+      </div>
 
-
-<div class="profile-name">Doldie</div>
+      <div class="profile-name">Doldie</div>
     </div>
   </div>
 
+  <!-- ==================================================| MAIN CONTENT |========================================================== -->
   <div class="content">
+    <!-- ABOUT ME -->
     <h2>About Me</h2>
+
     <button class="toggle-btn" onclick="toggleSection('likes')">Things I Love</button>
     <div id="likes" class="toggle-content">
       <ul class="love-list">
@@ -1034,17 +949,17 @@ body.hover-bg .content {
     <button class="toggle-btn" onclick="toggleSection('dislikes')">Things I Don’t Like</button>
     <div id="dislikes" class="toggle-content">
       <ul class="hate-list">
-            <li>People who ignore obvious truths</li>
-            <li>People who play the victim</li>
-            <li>People who use manipulation</li>
-            <li>people that don’t admit that they’re wrong.</li>
-            <li>People who keep bitching on the internet</li>
-            <li>Waking up early</li>
-            <li>Insects in general</li>
-            <li>Brainrot</li>
-            <li>Hipocrisy</li>
-            <li>Untruth</li>
-            <li>Sports, except for E-sports, and specially football</li>
+        <li>People who ignore obvious truths</li>
+        <li>People who play the victim</li>
+        <li>People who use manipulation</li>
+        <li>people that don’t admit that they’re wrong.</li>
+        <li>People who keep bitching on the internet</li>
+        <li>Waking up early</li>
+        <li>Insects in general</li>
+        <li>Brainrot</li>
+        <li>Hipocrisy</li>
+        <li>Untruth</li>
+        <li>Sports, except for E-sports, and specially football</li>
       </ul>
     </div>
 
@@ -1061,341 +976,193 @@ body.hover-bg .content {
     <button class="toggle-btn" onclick="toggleSection('dreams')">Dreams</button>
     <div id="dreams" class="toggle-content">
       <div class="text-block"><p>Become a professional pilot</p></div>
-    <div class="text-block"><p>Become a professional digital artist</p></div>
-    <div class="text-block"><p>Become a professional programmer</p></div>  
+      <div class="text-block"><p>Become a professional digital artist</p></div>
+      <div class="text-block"><p>Become a professional programmer</p></div>
     </div>
-
 
     <button class="toggle-btn" onclick="toggleSection('friends')">Friends</button>
     <div id="friends" class="toggle-content">
-      <div class="text-block"><p>My dear friends:</p>
+      <div class="text-block">
+        <p>My dear friends:</p>
 
-<div class="friends-grid">
-
-  <div class="friend-card" data-id="clear">Clear</div>
-  <div class="friend-card" data-id="thedragonplayer">thedragonplayer</div>
-  <div class="friend-card" data-id="Drakkoo">Drakkoo</div>
-  <div class="friend-card" data-id="Fakezalem">Fakezalem</div>
-  <div class="friend-card" data-id="matheusbleck21">matheusbleck21</div>
-  <div class="friend-card" data-id="Nikko">Nikko</div>
-  <div class="friend-card" data-id="nitidez">nitidez</div>
-  <div class="friend-card" data-id="Yingloomy">Yingloomy</div>
-  <div class="friend-card" data-id="yoserius">yoserius</div>
-  <div class="friend-card" data-id="Zilirian">Zilirian</div>
-  <div class="friend-card" data-id="jpxwf12">jpxwf12</div>
-  <div class="friend-card" data-id="jann">jann</div>
-
+<div class="friends-grid" id="friends-grid"></div>
       </div>
-         </div>
 
-          <div class="text-block"><p>Honorable mentions</p>
+      <div class="text-block">
+        <p>Honorable mentions</p>
         <ul>
           <li>kirit_ls</li><li>our.rumi</li><li>susielaser</li><li>Thunder</li><li>fl4king</li><li>Zimrico</li><li>Lks²</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>hz4troz</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
         </ul>
       </div>
     </div>
 
-      <!-- =============================================== FAVORITE STUFF ==================================================== -->
-    
-      <h2>Favorite Stuff</h2>
-    
-  <button class="toggle-btn" onclick="toggleSection('favorite-games')">Favorite Games</button>
+    <!-- FAVORITE STUFF -->
+    <h2>Favorite Stuff</h2>
+    <div id="favorites-root"></div>
 
-<div id="favorite-games" class="toggle-content">
-  <div class="games-grid">
-    
-    <div class="game-card" data-title="War Thunder">
-      <img src="https://i.imgur.com/I4eq4p7.jpeg" alt="War Thunder">
+    <!-- SOCIAL MEDIA -->
+    <h2>Social Media</h2>
+    <div class="social-links">
+      <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank">
+        <img src="https://i.imgur.com/Mf3ATZj.png" alt="Roblox"> Roblox
+      </a>
+
+      <a class="social-btn" href="https://steamcommunity.com/profiles/76561199031088390" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"> Steam
+      </a>
+
+      <a class="social-btn" href="https://www.youtube.com/channel/UCb33G1UKxmxe-23q-bvFDDQ" target="_blank">
+        <img src="https://i.imgur.com/gfTqX0r.png" alt="YouTube"> YouTube
+      </a>
+
+      <a class="social-btn" href="https://github.com/Doldie" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub"> GitHub
+      </a>
+
+      <a class="social-btn" href="https://open.spotify.com/user/kxkkezbsyn617tgu1fk3oumr9?si=OCO3uiwkQD2nQh9qO1TKSA" target="_blank">
+        <img src="https://i.imgur.com/EolHL8t.png" alt="Spotify"> Spotify
+      </a>
+
+      <a class="social-btn" href="https://www.reddit.com/u/Doldieks/s/GmmUkl1spr" target="_blank">
+        <img src="https://i.imgur.com/mFWWo1t.png" alt="Reddit"> Reddit
+      </a>
+
+      <a class="social-btn" href="https://x.com/Douldd_" target="_blank">
+        <img src="https://i.imgur.com/XS658rc.png" alt="X"> X
+      </a>
     </div>
 
-    <div class="game-card" data-title="Forza Horizon 5">
-      <img src="https://i.imgur.com/bWlYfOu.jpeg" alt="Forza Horizon 5">
+    <!-- FUN FACTS / FAQ -->
+    <h2>Not so FAQ / Fun Facts</h2>
+    <!-- FAQ -->
+<section class="faq-section">
+
+  <div class="faq-box">
+    <button class="faq-arrow" id="faq-prev" aria-label="Pergunta anterior">
+      &#10094;
+    </button>
+
+    <div class="faq-content">
+      <p class="faq-line">
+        <span class="faq-label">Q:</span>
+        <span id="faq-question">Loading question...</span>
+      </p>
+
+      <p class="faq-line">
+        <span class="faq-label">R:</span>
+        <span id="faq-answer">Loading answer...</span>
+      </p>
     </div>
 
-    <div class="game-card" data-title="Phasmophobia">
-      <img src="https://i.imgur.com/s3QdIAv.jpeg" alt="Phasmophobia">
-    </div>
-
-    <div class="game-card" data-title="Hollow Knight">
-      <img src="https://i.imgur.com/KPR6teq.jpeg" alt="Hollow Knight">
-    </div>
-
-    <div class="game-card" data-title="Terraria">
-      <img src="https://i.imgur.com/9jEhRde.jpeg" alt="Terraria">
-    </div>
-
-    <div class="game-card" data-title="BeamNG.drive">
-      <img src="https://i.imgur.com/vadNBBj.png" alt="BeamNG.drive">
-    </div>
-    
-    <div class="game-card" data-title="The Coffin of Andy & Leyley">
-      <img src="https://i.imgur.com/f4xeD5B.png" alt="The coffin of Andy and Leyley">
-</div>
-        <div class="game-card" data-title="ULTRAKILL">
-      <img src="https://i.imgur.com/JtPZsmF.png" alt="ULTRAKILL">
-</div>
-            <div class="game-card" data-title="Dead Cells">
-      <img src="https://i.imgur.com/XgG95OP.png" alt="Dead Cells">
-</div>
-            <div class="game-card" data-title="Undertale">
-      <img src="https://i.imgur.com/vQ3MY6T.png" alt="Undertale">
-              </div>
-            <div class="game-card" data-title="Battlefield 4">
-      <img src="https://i.imgur.com/tqlI7TU.jpeg" alt="Battlefield 4">
-              </div>
-            <div class="game-card" data-title="Factorio">
-      <img src="https://i.imgur.com/X2nVd0B.png" alt="Factorio">
-    
-    </div>
+    <button class="faq-arrow" id="faq-next" aria-label="Próxima pergunta">
+      &#10095;
+    </button>
   </div>
-</div>
+</section>
 
-<!--====================================== FAVORITE ANIMES SECTION ======================================== -->
+    <!-- FUN FACTS -->
     
-      <button class="toggle-btn" onclick="toggleSection('favorite-anime')">Favorite Animes</button>
-
-<div id="favorite-anime" class="toggle-content">
-  <div class="games-grid">
-
-<!-- ===================================== ACTUAL LIST ==================================================== -->
-
-    <div class="game-card" data-title="Yofukashi no Uta">
-      <img src="https://cdn.imgchest.com/files/9de8e632b54a.webp" alt="Yofuhashi no Uta">
-    </div>
-    
-    <div class="game-card" data-title="Shibou Yuugi de Meshi wo Kuu">
-      <img src="https://i.imgur.com/OUgTeUp.jpeg" alt="Shibou Yuugi de Meshi wo Kuu">
-    </div>
-
-        <div class="game-card" data-title="Chainsaw Man">
-      <img src="https://i.imgur.com/tUlLSVq.png" alt="Chainsaw Man">
-    </div>
-
-        <div class="game-card" data-title="Evangelion">
-      <img src="https://cdn.imgchest.com/files/9ff5cff889b8.jpeg" alt="Evangelion">
-    </div>
-
-        <div class="game-card" data-title="Fate Zero">
-      <img src="https://i.imgur.com/8aniwIH.jpeg" alt="Fate Zero">
-    </div>
-
-        <div class="game-card" data-title="Mahou Shoujo ni Akogarete">
-      <img src="https://cdn.imgchest.com/files/96e64dc0c3e1.webp" alt="Mahou Shoujo ni Akogarete">
-    </div>
-
-        <div class="game-card" data-title="Fullmetal Alchemist Brotherhood">
-      <img src="https://cdn.imgchest.com/files/f7105209e3eb.webp" alt="Fullmetal Alchemist Brotherhood">
-    </div>
-
-        <div class="game-card" data-title="Highschool DXD">
-      <img src="https://cdn.imgchest.com/files/688b4a17aa4c.jpg" alt="Highschool DXD">
-    </div>
-
-            <div class="game-card" data-title="JoJo's Bizarre Adventure: Golden Wind">
-      <img src="https://cdn.imgchest.com/files/819a0c7d5a22.webp" alt="JoJo's Bizarre Adventure: Golden Wind">
-    </div>
-
-            <div class="game-card" data-title="Jujutsu Kaisen">
-      <img src="https://cdn.imgchest.com/files/3b2d3b51b27c.webp" alt="Jujutsu Kaisen">
-    </div>
-
-            <div class="game-card" data-title="Kage no Jitsuryokusha ni Naritakute!">
-      <img src="https://cdn.imgchest.com/files/b09cb1600052.webp" alt="Kage no Jitsuryokusha ni Naritakute!">
-    </div>
-
-            <div class="game-card" data-title="Mushoku Tensei">
-      <img src="https://cdn.imgchest.com/files/0a05cab3fdb4.webp" alt="Mushoku Tensei">
-    </div>
-
-            <div class="game-card" data-title="Tensei Shitara Slime Datta Ken">
-      <img src="https://cdn.imgchest.com/files/be06551b13ea.webp" alt="Tensei Shitara Slime Datta Ken">
-    </div>
-
-            <div class="game-card" data-title="Tate no Yuusha no Nariagari">
-      <img src="https://cdn.imgchest.com/files/037fff5647ee.webp" alt="Tate no Yuusha no Nariagari">
-    </div>
-
-            <div class="game-card" data-title="Kimetsu no Yaiba">
-      <img src="https://cdn.imgchest.com/files/162f43691158.webp" alt="Kimetsu no Yaiba">
-    </div>
-                                      <!--====== pt2 ======-->
-    
-                <div class="game-card" data-title="Made in Abyss">
-      <img src="https://cdn.imgchest.com/files/ef03966015a7.webp" alt="Made in Abyss">
-    </div>
-
-                <div class="game-card" data-title="No Game no Life">
-      <img src="https://cdn.imgchest.com/files/83a021ab3222.webp" alt="No Game no Life">
-    </div>
-
-                <div class="game-card" data-title="One Piece">
-      <img src="https://cdn.imgchest.com/files/d0b85503d568.webp" alt="One Piece">
-    </div>
-
-                <div class="game-card" data-title="One Punch Man">
-      <img src="https://cdn.imgchest.com/files/72f46b21b2e1.webp" alt="One Punch Man">
-    </div>
-
-
-    <div class="game-card" data-title="Prison School">
-      <img src="https://cdn.imgchest.com/files/532f948f049c.jpg" alt="Prison School">
-    </div>
-
-                <div class="game-card" data-title="Seishun Buta Yarou">
-      <img src="https://cdn.imgchest.com/files/32cb30b9b76f.webp" alt="Seishun Buta Yarou">
-    </div>
-
-                <div class="game-card" data-title="Sword Art Online">
-      <img src="https://cdn.imgchest.com/files/3fe0e3d4216f.webp" alt="Sword Art Online">
-    </div>
-
-                <div class="game-card" data-title="Shuumatsu no Valkyrie">
-      <img src="https://cdn.imgchest.com/files/117890e7c3fa.webp" alt="Shuumatsu no Walkure">
-    </div>
-
-                <div class="game-card" data-title="Overlord">
-      <img src="https://cdn.imgchest.com/files/58d1eb970bde.webp" alt="Overlord">
-    </div>
-
-                <div class="game-card" data-title="Solo Leveling">
-      <img src="https://cdn.imgchest.com/files/55f413328ee8.webp" alt="Solo Leveling">
-    </div>
-
-                <div class="game-card" data-title="Darwin's Game">
-      <img src="https://cdn.imgchest.com/files/701df77393de.webp" alt="Darwin's Game">
-    </div>
-
-                <div class="game-card" data-title="Gachiakuta">
-      <img src="https://cdn.imgchest.com/files/4826cc8117c2.webp" alt="Gachiakuta">
-    </div>
-
-<!-- ========================                 PART 3              ======================== -->
-    
-                    <div class="game-card" data-title="Blue Lock">
-      <img src="https://cdn.imgchest.com/files/507a8bee314d.webp" alt="Blue Lock">
-    </div>
-
-                    <div class="game-card" data-title="Serial Experiments Lain">
-      <img src="https://cdn.imgchest.com/files/afc547d4f788.webp" alt="Serial Experiments Lain">
-    </div>
-  </div>
-</div>
-
-    <!-- ================================   MANGA LIST ================================-->
-
-          <button class="toggle-btn" onclick="toggleSection('favorite-manga')">Favorite Mangas</button>
-
-<div id="favorite-manga" class="toggle-content">
-  <div class="games-grid">
-
-<!-- ===================================== ACTUAL LIST ==================================================== -->
-
-    <div class="game-card" data-title="One Punch Man">
-      <img src="https://cdn.imgchest.com/files/3d79884edb7f.jpg" alt="One Punch Man">
-    </div>
-
-        <div class="game-card" data-title="Berserk">
-      <img src="https://cdn.imgchest.com/files/12fcede15e73.jpg" alt="Berserk">
-    </div>
-
-        <div class="game-card" data-title="One Piece">
-      <img src="https://cdn.imgchest.com/files/95b809b31e42.jpg" alt="One Piece">
-    </div>
-
-        <div class="game-card" data-title="Yofukashi no Uta">
-      <img src="https://cdn.imgchest.com/files/62a61b8e4cfd.png" alt="Yofuhashi no Uta">
-    </div>
-
-        <div class="game-card" data-title="Chainsaw Man">
-      <img src="https://cdn.imgchest.com/files/50e36ab63230.jpg" alt="Chainsaw Man">
-    </div>
-
-        <div class="game-card" data-title="Jujutsu Kaisen">
-      <img src="https://cdn.imgchest.com/files/fe858b528246.jpg" alt="Jujutsu Kaisen">
-    </div>
-
-<!-- ====================================== PART 2 ========================================== -->
-    
-            <div class="game-card" data-title="JoJo's Bizarre Adventure Part 7: Steel Ball Run">
-      <img src="https://cdn.imgchest.com/files/2e940e2dabea.jpg" alt="JoJo's Bizarre Adventure Part 7: Steel Ball Run">
-    </div>
-
-            <div class="game-card" data-title="Fullmetal Alchemist">
-      <img src="https://cdn.imgchest.com/files/103106e8f361.jpg" alt="Fullmetal Alchemist">
-    </div>
-
-            <div class="game-card" data-title="Blue Lock">
-      <img src="https://cdn.imgchest.com/files/c5f007d6ea02.jpg" alt="Blue Lock">
-    </div>
-
-            <div class="game-card" data-title="Neon Genesis Evangelion">
-      <img src="https://cdn.imgchest.com/files/1d9cc376c141.jpg" alt="Neon Genesis Evangelion">
-    </div>
-
-                    <div class="game-card" data-title="Hellsing">
-      <img src="https://cdn.imgchest.com/files/18a21458639c.jpg" alt="Hellsing">
-    </div>
-    
-        
-  </div>
-  </div>
-
-<!-- ========================================================================================================= -->
-
-    
-  <h2>Social Media</h2>
-<div class="social-links">
-  <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank">
-    <img src="https://i.imgur.com/Mf3ATZj.png"> Roblox
-  </a>
-
-  <a class="social-btn" href="https://steamcommunity.com/profiles/76561199031088390" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg"> Steam
-  </a>
-
-  <a class="social-btn" href="https://www.youtube.com/channel/UCb33G1UKxmxe-23q-bvFDDQ" target="_blank">
-    <img src="https://i.imgur.com/gfTqX0r.png"> YouTube
-  </a>
-
-  <a class="social-btn" href="https://github.com/Doldie" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg"> GitHub
-  </a>
-
-  <!-- NOVOS -->
-  <a class="social-btn" href="https://open.spotify.com/user/kxkkezbsyn617tgu1fk3oumr9?si=OCO3uiwkQD2nQh9qO1TKSA" target="_blank">
-    <img src="https://i.imgur.com/EolHL8t.png"> Spotify
-  </a>
-
-  <a class="social-btn" href="https://www.reddit.com/u/Doldieks/s/GmmUkl1spr" target="_blank">
-    <img src="https://i.imgur.com/mFWWo1t.png"> Reddit
-  </a>
-
-  <a class="social-btn" href="https://x.com/Douldd_" target="_blank">
-    <img src="https://i.imgur.com/XS658rc.png"> X
-  </a>
-</div>
-
-
-    
-    <h2>Fun Facts</h2>
     <div class="fun-facts" id="funFactsContainer">
       <div class="fact">I can spend hours perfecting an anime sketch.</div>
       <div class="fact">Nighttime is my favorite time to be outside.</div>
       <div class="fact">I’ve memorized specs of my favorite cars.</div>
       <div class="fact">I love learning random aviation trivia.</div>
     </div>
+
     <div class="facts-actions">
-  <button class="shuffle-btn" onclick="shuffleFacts(this)">Shuffle Facts</button>
-  <button id="music-btn" class="shuffle-btn music-btn">Sound</button>
-</div>
+      <button class="shuffle-btn" onclick="shuffleFacts(this)">Shuffle Facts</button>
+      <button id="music-btn" class="shuffle-btn music-btn">Sound</button>
+    </div>
   </div>
 
+  <!-- ==================================================| MINI PROFILE HOVER CARD |==========================================================  -->
+  <div id="mini-profile" class="mini-profile hidden">
+    <div class="mini-header">
+      <img id="mini-avatar" src="" alt="Friend avatar">
+      <div class="mini-name" id="mini-name"></div>
+    </div>
+    <div class="mini-body" id="mini-desc">Friend</div>
+  </div>
+
+  <!-- ==================================================| AUDIO ELEMENTS |==========================================================  -->
+  <audio id="bg-music" preload="none" loop>
+    <source src="https://raw.githubusercontent.com/Doldie/Mybio/main/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="btn-click-sound" preload="auto">
+    <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="neon-sound" preload="auto">
+    <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ==================================================| GAME MODAL |==========================================================  -->
+  <div id="game-modal" class="game-modal hidden">
+    <div class="game-modal-overlay"></div>
+
+    <div class="game-modal-content">
+      <button id="close-game-modal" class="game-modal-close">✕</button>
+      <img id="game-modal-img" src="" alt="">
+      <div id="game-modal-title" class="game-modal-title"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================| EXTERNAL SCRIPT |==========================================================  -->
+  <script src="favorites.js"></script>
+  <script src="faq.js"></script>
+  <script src="friends.js"></script>
+  <!-- ==================================================| DATA / CONFIG SCRIPTS |==========================================================  -->
   <script>
-    // --- SCRIPT DO SITE ORIGINAL ---
+    const loadingBgImages = [
+      'https://i.imgur.com/E48oiig.jpeg',
+      'https://i.imgur.com/P88EubR.jpeg',
+      'https://i.imgur.com/rOXOteX.png',
+      'https://i.imgur.com/gBqkPqC.jpeg',
+      'https://i.imgur.com/9NLeL2B.jpeg',
+      'https://i.imgur.com/95Yp2my.jpeg',
+      'https://i.imgur.com/WW0eJG8.png',
+      'https://i.imgur.com/xn2CgWS.jpeg',
+      'https://i.imgur.com/9U95k22.jpeg',
+      'https://i.imgur.com/PO59aaO.jpeg',
+      'https://i.imgur.com/XaH869f.jpeg',
+      'https://i.imgur.com/AoEvWwW.jpeg',
+      'https://i.imgur.com/fgJAhuO.jpeg',
+      'https://i.imgur.com/1wfj9ON.jpeg',
+      'https://i.imgur.com/dDP2K2r.jpeg',
+      'https://i.imgur.com/Z3q5uoE.jpeg',
+      'https://i.imgur.com/9K74LnT.jpeg',
+      'https://i.imgur.com/g3dT9Fy.jpeg',
+      'https://i.imgur.com/RfgVDoD.jpeg',
+      'https://i.imgur.com/ajA0Tlt.jpeg',
+      'https://i.imgur.com/Gi4cQKq.jpeg',
+      'https://i.imgur.com/cfDT9wq.jpeg',
+      'https://i.imgur.com/T0eANrS.jpeg',
+      'https://i.imgur.com/8KflWHf.jpeg',
+      'https://i.imgur.com/aVify0x.jpeg',
+      'https://i.imgur.com/BR1KKrv.jpeg',
+      'https://i.imgur.com/OwyXcON.jpeg',
+      'https://i.imgur.com/JnPdk20.jpeg',
+      'https://i.imgur.com/LPgba1U.jpeg',
+      'https://i.imgur.com/v5ZbWNF.jpeg',
+      'https://i.imgur.com/xUOdq2w.jpeg',
+      'https://i.imgur.com/n2pWxY6.jpeg'
+    ];
+
+    const randomLoadingBg = loadingBgImages[Math.floor(Math.random() * loadingBgImages.length)];
+
+    const decorationUrl =
+      "https://cdn.discordapp.com/avatar-decoration-presets/a_c7d0b92c2c06bbb3fed297b34a51d5e5.png?size=160";
+  </script>
+
+  <!-- ==================================================| MAIN SITE SCRIPT |==========================================================  -->
+  <script>
     function toggleSection(id) {
       const section = document.getElementById(id);
       const isOpen = section.classList.contains('open');
+
       section.style.transition = 'none';
+
       if (isOpen) {
         if (section.style.maxHeight === '' || section.style.maxHeight === 'none') {
           section.style.maxHeight = section.scrollHeight + 'px';
@@ -1411,6 +1178,7 @@ body.hover-bg .content {
         section.classList.add('open');
         section.style.maxHeight = section.scrollHeight + 'px';
       }
+
       const onEnd = (e) => {
         if (e.propertyName !== 'max-height') return;
         if (section.classList.contains('open')) {
@@ -1419,422 +1187,327 @@ body.hover-bg .content {
         }
         section.removeEventListener('transitionend', onEnd);
       };
+
       section.addEventListener('transitionend', onEnd);
     }
 
     function shuffleFacts(btn) {
       btn.style.transform = "scale(0.9)";
       setTimeout(() => { btn.style.transform = "scale(1)"; }, 120);
+
       const facts = [
-        "I have two cats that chill with me while I game.", "My favorite anime is Yofukashi no Uta.",
-        "I can name almost every Mirage 2000 variant.", "I track crazy car 0-400 km/h times for fun.",
-        "War Thunder is life", "I’m obsessed with cars like the Rimac Nevera R and Koenigsegg Jesko.",
-        "I enjoy drawing characters late at night.", "I can spend hours comparing aircraft designs just for fun.",
-        "My fav color is Rose red", "The Challenger 2 British MBT is my fav tank",
-        "I’m obsessed with jet engine sounds.", "I draw better at 2 AM than during the day.",
-        "I once played War Thunder for 12 hours straight.", "I can identify fighter jets just by silhouette.",
-        "My fav song is exit music (for a film) by Radiohead", "My fav artist is Melanie Martinez", "My fav food is savory pie",
-        "Cheetahs are my fav animal", "I have more than 3000 hours of Sol's RNG", "France is my fav nation",
-        "Tomboys over femboys", "1+1 = 2", "Loona? perfection", "🥀", "Amd > Intel", "Reshiram best pokemon",
-        "Cats > dogs", "I'm lazy asf 💔", "V8 > V12", "Lamborghini Murcielago best sounding car ever made",
-        "Unpopular opinion, Sousou no Frieren is Mid", "Monster energy is great", "Kiwi my fav fruit",
-        "Wannabe extrovert", "Yaps a lot about things i'm obsessed with", "Passionfruit the best to make juice with",
+        "I have two cats that chill with me while I game.",
+        "My favorite anime is Yofukashi no Uta.",
+        "I can name almost every Mirage 2000 variant.",
+        "I track crazy car 0-400 km/h times for fun.",
+        "War Thunder is life",
+        "I’m obsessed with cars like the Rimac Nevera R and Koenigsegg Jesko.",
+        "I enjoy drawing characters late at night.",
+        "I can spend hours comparing aircraft designs just for fun.",
+        "My fav color is Rose red",
+        "The Challenger 2 British MBT is my fav tank",
+        "I’m obsessed with jet engine sounds.",
+        "I draw better at 2 AM than during the day.",
+        "I once played War Thunder for 12 hours straight.",
+        "I can identify fighter jets just by silhouette.",
+        "My fav song is exit music (for a film) by Radiohead",
+        "My fav artist is Melanie Martinez",
+        "My fav food is savory pie",
+        "Cheetahs are my fav animal",
+        "I have more than 3000 hours of Sol's RNG",
+        "France is my fav nation",
+        "Tomboys over femboys",
+        "1+1 = 2",
+        "Loona? perfection",
+        "🥀",
+        "Amd > Intel",
+        "Reshiram best pokemon",
+        "Cats > dogs",
+        "I'm lazy asf 💔",
+        "V8 > V12",
+        "Lamborghini Murcielago best sounding car ever made",
+        "Unpopular opinion, Sousou no Frieren is Mid",
+        "Monster energy is great",
+        "Kiwi my fav fruit",
+        "Wannabe extrovert",
+        "Yaps a lot about things i'm obsessed with",
+        "Passionfruit the best to make juice with",
         "I like to argue about something irrelevant all day"
       ];
+
       const container = document.getElementById('funFactsContainer');
       container.innerHTML = '';
-      let selected = facts.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+      const selected = facts.sort(() => 0.5 - Math.random()).slice(0, 4);
       selected.forEach(fact => {
-        let div = document.createElement('div');
+        const div = document.createElement('div');
         div.className = 'fact';
-        div.textContent = fact; 
+        div.textContent = fact;
         container.appendChild(div);
       });
+    }
+  </script>
+
+  <!-- ==================================================| DOM READY / LOADING / DECORATION |==========================================================  -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loadingBgElement = document.querySelector('.loading-bg-image');
+      if (loadingBgElement) {
+        loadingBgElement.style.backgroundImage = `url("${randomLoadingBg}")`;
       }
 
- // Avatar decoration via CDN (SEM API, SEM FETCH)
-const decorationUrl =
-  "https://cdn.discordapp.com/avatar-decoration-presets/a_be111e4303d634c55500202a61656e0b.png?size=512";
+      const deco = document.getElementById("avatar-decoration");
+      if (deco) {
+        deco.src = decorationUrl;
+        deco.style.display = "block";
+        deco.onerror = () => {
+          deco.style.display = "none";
+        };
+      }
+    });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const deco = document.getElementById("avatar-decoration");
-  if (!deco) return;
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading-screen").classList.add("exit");
+        document.body.classList.remove("loading");
+        document.documentElement.classList.remove("loading");
+        document.getElementById("bg-parallax").style.opacity = "1";
+      }, 8000);
+    });
+  </script>
 
-  deco.src = decorationUrl;
-  deco.style.display = "block";
-  deco.onerror = () => {
-    deco.style.display = "none";
-  };
-});
-</script>
+  <!-- ==================================================| MUUSIC |==========================================================  -->
+  <script>
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
 
-<audio id="bg-music" preload="none" loop>
-  <source src="https://raw.githubusercontent.com/Doldie/Mybio/main/music.mp3" type="audio/mpeg">
-</audio>
+    music.volume = 0.16;
 
-<script>
-  const music = document.getElementById("bg-music");
-  const btn = document.getElementById("music-btn");
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.currentTime = 0;
+        music.muted = false;
+        music.play();
+        musicBtn.textContent = "Playing";
+        musicBtn.classList.add("playing");
+      } else {
+        music.pause();
+        musicBtn.textContent = "Sound";
+        musicBtn.classList.remove("playing");
+      }
+    });
+  </script>
+  <!-- ==================================================| FRIEND MINI PROFILE |==========================================================  -->
+  <script>
+    const mini = document.getElementById("mini-profile");
+    const miniAvatar = document.getElementById("mini-avatar");
+    const miniName = document.getElementById("mini-name");
+    const miniDesc = document.getElementById("mini-desc");
 
-  music.volume = 0.16;
+    let holdTimeout = null;
+    let hideTimeout = null;
+    let activeCard = null;
 
-  btn.addEventListener("click", () => {
-    if (music.paused) {
-      music.currentTime = 0;
-      music.muted = false;
-      music.play();
-      btn.textContent = "Playing";
-      btn.classList.add("playing");
+    document.querySelectorAll(".friend-card").forEach(card => {
+      const id = card.dataset.id;
+
+      const show = (x, y) => {
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+
+        activeCard = card;
+
+        const data = friendsData[id] || {};
+        miniAvatar.src = data.avatar || "https://cdn.discordapp.com/embed/avatars/5.png";
+        miniName.textContent = data.name || card.textContent.trim();
+        miniDesc.textContent = data.desc || "Friend";
+
+        mini.classList.remove("hidden");
+        mini.style.visibility = "hidden";
+
+        requestAnimationFrame(() => {
+          mini.classList.add("show");
+
+          const padding = 12;
+          const miniRect = mini.getBoundingClientRect();
+          const viewportW = window.innerWidth;
+          const viewportH = window.innerHeight;
+
+          let left = x + 15;
+          let top = y + 15;
+
+          if (left + miniRect.width > viewportW - padding) {
+            left = x - miniRect.width - 15;
+          }
+
+          if (top + miniRect.height > viewportH - padding) {
+            top = y - miniRect.height - 15;
+          }
+
+          left = Math.max(padding, left);
+          top = Math.max(padding, top);
+
+          mini.style.left = left + "px";
+          mini.style.top = top + "px";
+          mini.style.visibility = "visible";
+        });
+      };
+
+      const hide = () => {
+        hideTimeout = setTimeout(() => {
+          mini.classList.remove("show");
+          setTimeout(() => mini.classList.add("hidden"), 120);
+          activeCard = null;
+        }, 40);
+      };
+
+      card.addEventListener("mouseenter", e => {
+        show(e.clientX, e.clientY);
+      });
+
+      card.addEventListener("mousemove", e => {
+        if (activeCard !== card) return;
+        show(e.clientX, e.clientY);
+      });
+
+      card.addEventListener("mouseleave", hide);
+
+      card.addEventListener("touchstart", e => {
+        const t = e.touches[0];
+        holdTimeout = setTimeout(() => {
+          show(t.clientX, t.clientY);
+        }, 300);
+      });
+
+      card.addEventListener("touchend", () => {
+        clearTimeout(holdTimeout);
+        hide();
+      });
+    });
+  </script>
+
+  <!-- ==================================================| CLICK SOUND |==========================================================  -->
+  <script>
+    const clickSound = document.getElementById("btn-click-sound");
+    clickSound.volume = 0.09;
+
+    const clickableButtons = document.querySelectorAll(
+      "button, .social-btn, .friend-card"
+    );
+
+    clickableButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        clickSound.currentTime = 0;
+        clickSound.play().catch(() => {});
+      });
+    });
+  </script>
+
+  <!-- ==================================================| PROFILE NEON SOUND / EFFECT |==========================================================  -->
+  <script>
+    const profileWrapper = document.querySelector(".profile-wrapper");
+    const neonSound = document.getElementById("neon-sound");
+
+    let neonCooldown = false;
+    neonSound.volume = 0.14;
+
+    profileWrapper.addEventListener("mouseenter", () => {
+      if (neonCooldown) return;
+
+      neonCooldown = true;
+      profileWrapper.classList.add("neon-active");
+
+      neonSound.currentTime = 0;
+      neonSound.play().catch(() => {});
+
+      setTimeout(() => {
+        profileWrapper.classList.remove("neon-active");
+        neonCooldown = false;
+      }, 1400);
+    });
+  </script>
+
+  <!-- ==================================================| BACKGROUND HOVER DIMMING |==========================================================  -->
+  <script>
+    const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    if (supportsHover) {
+      const interactiveSelectors = [
+        "button",
+        ".social-btn",
+        ".friend-card",
+        ".toggle-btn",
+        ".shuffle-btn",
+        "#music-btn",
+        ".profile-wrapper",
+        "a"
+      ].join(",");
+
+      function activateBGHover() {
+        document.body.classList.add("hover-bg");
+      }
+
+      function clearHoverState() {
+        document.body.classList.remove("hover-bg");
+      }
+
+      document.addEventListener("mousemove", (e) => {
+        const overInteractive = e.target.closest(interactiveSelectors);
+        const insideContent = e.target.closest(".content, .banner, .mini-profile");
+
+        if (!overInteractive && !insideContent) {
+          activateBGHover();
+        } else {
+          clearHoverState();
+        }
+      });
+
+      document.addEventListener("mouseleave", () => {
+        clearHoverState();
+      });
     } else {
-      music.pause();
-      btn.textContent = "Sound";
-      btn.classList.remove("playing");
-    }
-  });
-
-
-</script>
-
-<script>
-  const bg = document.getElementById("bg-parallax");
-  const isDesktopParallax = window.matchMedia("(min-width: 769px) and (hover: hover) and (pointer: fine)").matches;
-
-  if (isDesktopParallax) {
-    window.addEventListener("scroll", () => {
-      const offset = window.scrollY * 0.025;
-      bg.style.backgroundPosition = `50% calc(50% + ${offset}px), center`;
-    });
-  }
-</script>
-
-<div id="mini-profile" class="mini-profile hidden">
-  <div class="mini-header">
-    <img id="mini-avatar" src="">
-    <div class="mini-name" id="mini-name"></div>
-  </div>
-  <div class="mini-body" id="mini-desc">
-    Friend
-  </div>
-</div>
-
-<script>
-  /*==================================profiles==========================*/
-const friendsData = {
-  clear: {
-    name: "Clear",
-    avatar: "https://i.imgur.com/JnjU9hO.png",
-    desc: "An 18y Brazilian, better known as Clear, or as Charthool by some people. I like to see the people they love happy and sometimes takes things too seriously.",
-    status: "online"
-  },
-
-  thedragonplayer: {
-    name: "thedragonplayer",
-    avatar: "https://i.imgur.com/1YJoXTY.jpeg",
-    desc: "The Dragon Galaxy, Dragon894, The Dragon Player! Enfim, me chame de Dragon. Gosto de jogos de rpg, estratégia, ação e puzzle (alguns). Minha música favorita é sky full of stars de coldplay. Gosto de ver artes fofas como furries e kemonomimis. Franquia favorita: Assassins Creed",
-    status: "dnd"
-  },
-
-  Drakkoo: {
-    name: "Drakkoo",
-    avatar: "https://i.imgur.com/gJBo5It.png",
-    desc: "Pessoa mais reservada e direta, mas que se empolga fácil falando do que gosta. Nascido em Natal/RN 🇧🇷 (Cidade do Sol), valorizo respeito, boas conversas e pequenos gestos. Tenho investido mais em mim, estudando e explorando novos hobbies. Curto jogos, desenho, natação e surf, por enquanto no bodyboard, mas a prancha vem aí 🌊",
-    status: "dnd"
-  },
-
-  Fakezalem: {
-    name: "Fakezalem",
-    avatar: "https://i.imgur.com/jUiuNSr.png",
-    desc: "💍STARC0LLECT0R 💙 💫 Universum totum duobus tantum numeris servare possumus... SAPERE AUDE!!! Eu gosto de matemática, física, e tecnologia, de mexer em eletrônicos , computadores e reparar-los, minha meta é fazer faculdade de engenharia da computação",
-    status: "dnd"
-  },
-
-    matheusbleck21: {
-    name: "matheusbleck21",
-    avatar: "https://i.imgur.com/BxjILM7.png",
-    desc: "as vozes não param",
-    status: "dnd"
-  },
-
-    Nikko: {
-    name: "Nikko",
-    avatar: "https://i.imgur.com/AAhjYkX.png",
-    desc: "Gosto de conversar sobre assuntos militares e de guerra em geral. Aposentado do war thunder 🧑‍🦯 , jogo world of tanks, hoi4, roblox e pretendo jogar DCS no futuro",
-    status: "dnd"
-  },
-
-    nitidez: {
-    name: "nitidez",
-    avatar: "https://i.imgur.com/sdQOetg.jpeg",
-    desc: "Eu sou Nitidez, sigma e propreier em jogos, curto anime/série/filme/mangá/manhwa/fanfic\n/dorama/seu rabo e sou desenvolvedor nas horas vagas. (Bolinha bolão uwu) 🥴",
-    status: "dnd"
-  },
-
-    Yingloomy: {
-    name: "Yingloomy",
-    avatar: "https://i.imgur.com/10DtG0n.png",
-    desc: "Meu nome é Yingloomy, muitos estranhamente não gostam de mim (por que será), mas eu gosto da interação e de todos em geral. Você pode me chamar de Ying também. Eu gosto de jogos de Estratégia em Tempo Real (RTS), FPS e principalmente jogos sandbox, normalmente a pessoa com jogos desconhecidos ou muito desvalorizados, além de gostar das matérias envolvendo história e geografia.",
-    status: "dnd"
-  },
-
-    yoserius: {
-    name: "yoserius",
-    avatar: "https://cdn.imgchest.com/files/8524d3e0e4eb.png",
-    desc: "O ser humano quase perfeito",
-    status: "dnd"
-  },
-
-    Zilirian: {
-    name: "Zilirian",
-    avatar: "https://i.imgur.com/3R7sQVb.png",
-    desc: "Undecided",
-    status: "dnd"
-  },
-
-    jpxwf12: {
-    name: "jpxwf12",
-    avatar: "https://i.imgur.com/Qc9S9bX.png",
-    desc: "Maníaco por carros, estudante de programação, introvertido,hetero,apreciador de asiáticas",
-    status: "dnd"
-  },
-
-    jann: {
-    name: "jann",
-    avatar: "https://i.imgur.com/2wfpG1n.png",
-    desc: "Meu nome é Janderson, porém sou conhecido como Jamilson ou Jamal. Tenho 17 anos, gosto de praticar esportes, ler mangás, assistir anime e estudar.",
-    status: "dnd"
-  },
-
-};
-</script>
-
-<script>
-const mini = document.getElementById("mini-profile");
-const miniAvatar = document.getElementById("mini-avatar");
-const miniName = document.getElementById("mini-name");
-const miniDesc = document.getElementById("mini-desc");
-
-let holdTimeout = null;
-let hideTimeout = null;
-let activeCard = null;
-
-document.querySelectorAll(".friend-card").forEach(card => {
-  const id = card.dataset.id;
-
-  const show = (x, y) => {
-    if (hideTimeout) {
-      clearTimeout(hideTimeout);
-      hideTimeout = null;
-    }
-
-    activeCard = card;
-
-    const data = friendsData[id] || {};
-    miniAvatar.src = data.avatar || "https://cdn.discordapp.com/embed/avatars/5.png";
-    miniName.textContent = data.name || card.textContent.trim();
-    miniDesc.textContent = data.desc || "Friend";
-
-    mini.classList.remove("hidden");
-    mini.style.visibility = "hidden"; // evita flicker na medição
-    requestAnimationFrame(() => {
-      mini.classList.add("show");
-
-      const padding = 12;
-      const miniRect = mini.getBoundingClientRect();
-      const viewportW = window.innerWidth;
-      const viewportH = window.innerHeight;
-
-      let left = x + 15;
-      let top = y + 15;
-
-      // 👉 se estourar à direita, joga pra esquerda
-      if (left + miniRect.width > viewportW - padding) {
-        left = x - miniRect.width - 15;
-      }
-
-      // 👉 se estourar embaixo, sobe
-      if (top + miniRect.height > viewportH - padding) {
-        top = y - miniRect.height - 15;
-      }
-
-      // 👉 trava pra não sair da tela em hipótese nenhuma
-      left = Math.max(padding, left);
-      top = Math.max(padding, top);
-
-      mini.style.left = left + "px";
-      mini.style.top = top + "px";
-      mini.style.visibility = "visible";
-    });
-  };
-
-  const hide = () => {
-    hideTimeout = setTimeout(() => {
-      mini.classList.remove("show");
-      setTimeout(() => mini.classList.add("hidden"), 120);
-      activeCard = null;
-    }, 40);
-  };
-
-  /* DESKTOP */
-  card.addEventListener("mouseenter", e => {
-    show(e.clientX, e.clientY);
-  });
-
-  card.addEventListener("mousemove", e => {
-    if (activeCard !== card) return;
-    show(e.clientX, e.clientY);
-  });
-
-  card.addEventListener("mouseleave", hide);
-
-  /* MOBILE */
-  card.addEventListener("touchstart", e => {
-    const t = e.touches[0];
-    holdTimeout = setTimeout(() => {
-      show(t.clientX, t.clientY);
-    }, 300);
-  });
-
-  card.addEventListener("touchend", () => {
-    clearTimeout(holdTimeout);
-    hide();
-  });
-});
-</script>
-  
-<audio id="btn-click-sound" preload="auto">
-  <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const clickSound = document.getElementById("btn-click-sound");
-clickSound.volume = 0.09; // 🔉 volume baixo (15%)
-
-const clickableButtons = document.querySelectorAll(
-  "button, .social-btn, .friend-card"
-);
-
-clickableButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {});
-  });
-});
-</script>
-
-<audio id="neon-sound" preload="auto">
-  <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-  const profileWrapper = document.querySelector(".profile-wrapper");
-  const neonSound = document.getElementById("neon-sound");
-
-  let neonCooldown = false;
-  neonSound.volume = 0.14;
-
-  profileWrapper.addEventListener("mouseenter", () => {
-    if (neonCooldown) return;
-
-    neonCooldown = true;
-    profileWrapper.classList.add("neon-active");
-
-    neonSound.currentTime = 0;
-    neonSound.play().catch(() => {});
-
-    setTimeout(() => {
-      profileWrapper.classList.remove("neon-active");
-      neonCooldown = false;
-    }, 1400);
-  });
-</script>
-
-<script>
-  const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-  if (supportsHover) {
-    const interactiveSelectors = [
-      "button",
-      ".social-btn",
-      ".friend-card",
-      ".toggle-btn",
-      ".shuffle-btn",
-      "#music-btn",
-      ".profile-wrapper",
-      "a"
-    ].join(",");
-
-    function activateBGHover() {
-      document.body.classList.add("hover-bg");
-    }
-
-    function clearHoverState() {
       document.body.classList.remove("hover-bg");
     }
+  </script>
 
-    document.addEventListener("mousemove", (e) => {
-      const overInteractive = e.target.closest(interactiveSelectors);
-      const insideContent = e.target.closest(".content, .banner, .mini-profile");
+  <!-- ==================================================| GAME MODAL |==========================================================  -->
+  <script>
+    const gameCards = document.querySelectorAll(".game-card");
+    const gameModal = document.getElementById("game-modal");
+    const gameModalImg = document.getElementById("game-modal-img");
+    const gameModalTitle = document.getElementById("game-modal-title");
+    const closeGameModal = document.getElementById("close-game-modal");
+    const gameModalOverlay = document.querySelector(".game-modal-overlay");
 
-      if (!overInteractive && !insideContent) {
-        activateBGHover();
-      } else {
-        clearHoverState();
+    gameCards.forEach(card => {
+      card.addEventListener("click", () => {
+        const img = card.querySelector("img");
+        if (!img) return;
+
+        gameModalImg.src = img.src;
+        gameModalImg.alt = img.alt;
+        gameModalTitle.textContent = card.dataset.title;
+
+        gameModal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    function closeModal() {
+      gameModal.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+
+    closeGameModal.addEventListener("click", closeModal);
+    gameModalOverlay.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !gameModal.classList.contains("hidden")) {
+        closeModal();
       }
     });
-
-    document.addEventListener("mouseleave", () => {
-      clearHoverState();
-    });
-  } else {
-    document.body.classList.remove("hover-bg");
-  }
-</script>
-
-  <div id="game-modal" class="game-modal hidden">
-  <div class="game-modal-overlay"></div>
-
-  <div class="game-modal-content">
-    <button id="close-game-modal" class="game-modal-close">✕</button>
-    <img id="game-modal-img" src="" alt="">
-    <div id="game-modal-title" class="game-modal-title"></div>
-  </div>
-</div>
-
-<script>
-  const gameCards = document.querySelectorAll(".game-card");
-  const gameModal = document.getElementById("game-modal");
-  const gameModalImg = document.getElementById("game-modal-img");
-  const gameModalTitle = document.getElementById("game-modal-title");
-  const closeGameModal = document.getElementById("close-game-modal");
-  const gameModalOverlay = document.querySelector(".game-modal-overlay");
-
-  gameCards.forEach(card => {
-    card.addEventListener("click", () => {
-      const img = card.querySelector("img");
-
-      gameModalImg.src = img.src;
-      gameModalImg.alt = img.alt;
-      gameModalTitle.textContent = card.dataset.title;
-
-      gameModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-    });
-  });
-
-  function closeModal() {
-    gameModal.classList.add("hidden");
-    document.body.style.overflow = "";
-  }
-
-  closeGameModal.addEventListener("click", closeModal);
-  gameModalOverlay.addEventListener("click", closeModal);
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !gameModal.classList.contains("hidden")) {
-      closeModal();
-    }
-  });
-</script>
-  
+  </script>
 </body>
 </html>
