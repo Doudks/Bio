@@ -82,7 +82,14 @@ const friendsData = {
     avatar: "https://i.imgur.com/2wfpG1n.png",
     desc: "Meu nome é Janderson, porém sou conhecido como Jamilson ou Jamal. Tenho 17 anos, gosto de praticar esportes, ler mangás, assistir anime e estudar.",
     status: "dnd"
+  },
+  lks_rs: {
+    name: "lks_rs",
+    avatar: "https://cdn.imgchest.com/files/7979c2116500.webp",
+    desc: "Cyberpunk e animes de romance da silva",
+    status: "dnd"
   }
+  
 };
 
 // | friends cards order |
@@ -98,7 +105,8 @@ const friendsOrder = [
   "yoserius",
   "Zilirian",
   "jpxwf12",
-  "jann"
+  "jann",
+  "lks_rs"
 ];
 
 // | render friends cards |
