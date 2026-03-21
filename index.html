@@ -1389,21 +1389,19 @@
   </script>
 
   <!-- ==================================================| CLICK SOUND |==========================================================  -->
-  <script>
-    const clickSound = document.getElementById("btn-click-sound");
-    clickSound.volume = 0.09;
+<script>
+const clickSound = document.getElementById("btn-click-sound");
+clickSound.volume = 0.09;
 
-    const clickableButtons = document.querySelectorAll(
-      "button, .social-btn, .friend-card"
-    );
+document.addEventListener("click", (e) => {
+  const clickable = e.target.closest("button, .social-btn, .friend-card");
 
-    clickableButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        clickSound.currentTime = 0;
-        clickSound.play().catch(() => {});
-      });
-    });
-  </script>
+  if (!clickable) return;
+
+  clickSound.currentTime = 0;
+  clickSound.play().catch(() => {});
+});
+</script>
 
   <!-- ==================================================| PROFILE NEON SOUND / EFFECT |==========================================================  -->
   <script>
