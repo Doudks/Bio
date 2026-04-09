@@ -64,12 +64,12 @@ const friendsData = {
     background:"https://cdn.imgchest.com/files/429b1439043a.webp"
   },
 
-  yoserius: {
+  YOserius: {
     name: "yoserius",
     avatar: "https://cdn.imgchest.com/files/8524d3e0e4eb.png",
     desc: "O ser humano quase perfeito",
     status: "dnd",
-    background:""
+    background:"https://cdn.imgchest.com/files/07e29a5d3ca7.webp"
   },
 
   Zilirian: {
