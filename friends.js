@@ -13,7 +13,7 @@ const friendsData = {
     avatar: "https://i.imgur.com/1YJoXTY.jpeg",
     desc: "The Dragon Galaxy, Dragon894, The Dragon Player! Enfim, me chame de Dragon. Gosto de jogos de rpg, estratégia, ação e puzzle (alguns). Minha música favorita é sky full of stars de coldplay. Gosto de ver artes fofas como furries e kemonomimis. Franquia favorita: Assassins Creed",
     status: "dnd",
-    background: "https://media.discordapp.net/attachments/853431429090115594/1489831573888172102/5f95bb2c3c75e489277b8afdb6178d85.jpg?ex=69d1d946&is=69d087c6&hm=b3bd06ed7fa27a07a09738539b9ee4fd45fb706c37833f15abc921a5aae3952e&=&format=webp&width=413&height=583"
+    background: "https://i.imgur.com/PHxMLtd.png"
   },
 
   Drakkoo: {
