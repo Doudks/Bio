@@ -65,7 +65,7 @@ const friendsData = {
   },
 
   YOserius: {
-    name: "yoserius",
+    name: "YOserius",
     avatar: "https://cdn.imgchest.com/files/8524d3e0e4eb.png",
     desc: "O ser humano quase perfeito",
     status: "dnd",
