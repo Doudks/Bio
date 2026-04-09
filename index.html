@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="loading">
+<html lang="pt-BR" class="loading">
 <head>
-  
-  
-  <!-- ===============================META / SEO / CONFIG ================================================== -->
+  <!-- =========================================================
+    META / SEO / CONFIG
+  ========================================================== -->
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy"
     content="
@@ -12,8 +12,7 @@
       style-src 'self' https: 'unsafe-inline';
       img-src 'self' https: data:;
       media-src 'self' https:;
-      font-src 'self' https: data:;
-    ">
+      font-src 'self' https: data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0d0d0d">
   <meta name="twitter:card" content="summary_large_image">
@@ -28,30 +27,35 @@
   <meta property="og:url" content="https://doldie.github.io/Mybio">
   <meta property="og:type" content="website">
 
-  <!-- ==================================================| FONTS |========================================================== -->
+  <!-- =========================================================
+    FONTS
+  ========================================================== -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nosifer&family=Rubik+Glitch&family=Metal+Mania&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="faq.css">
 
   <!-- =========================================================
     STYLES
-    Ordem:
     1) Base / reset
-    2) Background e loading
-    3) Layout principal
-    4) Componentes
-    5) Efeitos / animações
-    6) Responsivo
+    2) Background / loading
+    3) Layout / sections
+    4) Cards / buttons / interactive
+    5) Player
+    6) Animations / responsive
   ========================================================== -->
-  
   <style>
-    /* ==================================================| ROOT / BASE / RESET |========================================================== */
     :root {
       --bg-darkness: 0.65;
       --neon-angle: 0deg;
+      --accent: #c91441;
+      --accent-soft: #ff8fbd;
+      --text-dim: rgba(255, 255, 255, 0.7);
+      --panel: rgba(255, 255, 255, 0.08);
+      --panel-2: rgba(255, 255, 255, 0.12);
+      --border-soft: rgba(255, 255, 255, 0.14);
+      --bg-panel: linear-gradient(180deg, rgba(55, 55, 55, 0.45), rgba(20, 20, 20, 0.7));
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html.loading,
     body.loading {
@@ -63,11 +67,11 @@
     body {
       margin: 0;
       font-family: 'Quicksand', sans-serif;
-      color: white;
+      color: #fff;
       overflow-x: hidden;
       background: transparent;
       background-attachment: fixed;
-      background-position: center 0px;
+      background-position: center 0;
     }
 
     h2 {
@@ -82,15 +86,96 @@
 
     ul li::before {
       content: "•";
-      color: #e30039;
+      color: var(--accent);
       margin-right: 8px;
     }
 
-    .hidden {
-      display: none;
+    .hidden { display: none; }
+
+    /* =========================================================
+      PROFILE STATUS
+    ========================================================== */
+    .profile-text {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
-    /* ==================================================| BACKGROUND / PARALLAX |==========================================================*/
+    .discord-presence {
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .discord-status-indicator {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      right: 145px;
+      display: inline-block;
+      border: 3px solid rgba(20, 20, 20, 0.95);
+      box-sizing: border-box;
+    }
+
+    .discord-status-indicator.online {
+      background: #23a55a;
+      width: 32.5px;
+      height: 32.5px;
+    }
+
+    .discord-status-indicator.online::before {
+      content: "";
+      position: absolute;
+      top: -9.5px;
+      right: -9.5px;
+      width: 45.5px;
+      height: 45.5px;
+      background: rgba(20, 20, 20, 0.98);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .discord-status-indicator.idle { background: #f0b232; }
+    .discord-status-indicator.idle::after {
+      content: "";
+      position: absolute;
+      top: 1px;
+      right: 8.5px;
+      width: 18.5px;
+      height: 18.5px;
+      background: rgba(20, 20, 20, 0.98);
+      border-radius: 50%;
+    }
+
+    .discord-status-indicator.dnd { background: #f23f43; }
+    .discord-status-indicator.dnd::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 19px;
+      height: 6px;
+      background: rgba(20, 20, 20, 0.98);
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+    }
+
+    .discord-status-indicator.offline { background: #80848e; }
+    .discord-status-indicator.offline::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: rgba(20, 20, 20, 0.95);
+    }
+
+    /* =========================================================
+      BACKGROUND / LOADING
+    ========================================================== */
     #bg-parallax {
       position: fixed;
       inset: 0;
@@ -98,39 +183,22 @@
       pointer-events: none;
       overflow: hidden;
       background-image:
-        linear-gradient(
-          135deg,
-          #0a0a0f,
-          #1a0030,
-          #3a004d,
-          #003040,
-          #0a0a0f,
-          #260000
-        ),
+        linear-gradient(135deg, #0a0a0f, #1a0030, #3a004d, #003040, #0a0a0f, #260000),
         url("https://i.imgur.com/xtzaH3v.png");
       background-size: 400% 400%, cover;
       background-position: 50% 50%, center;
       background-repeat: no-repeat, no-repeat;
-      background-blend-mode: screen, normal;
-      animation: bgShift 45s ease-in-out infinite;
-      will-change: background-position;
+      background-blend-mode: multiply;
+      animation: none;
+      background-size: cover;
     }
 
     #bg-parallax::before {
       content: "";
-      position: absolute;
+      position: abolute;
       inset: 0;
       background: rgba(0, 0, 0, 0.65);
-      opacity: 1;
-      transition: opacity 0.9s ease;
     }
-
-    body.hover-bg #bg-parallax::before {
-      opacity: 0.35;
-      transition: opacity 2s ease 0.35s;
-    }
-
-    /* ==================================================| LOADING SCREEN |========================================================== */
     
     #loading-screen {
       position: fixed;
@@ -154,9 +222,14 @@
       pointer-events: none;
     }
 
-    .loading-bg-image {
+    .loading-bg-image,
+    .loading-stars,
+    .loading-fog {
       position: absolute;
       inset: 0;
+    }
+
+    .loading-bg-image {
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -166,15 +239,12 @@
     }
 
     .loading-stars {
-      position: absolute;
-      inset: 0;
       background-image: url("https://www.transparenttextures.com/patterns/stardust.png");
       opacity: 0.35;
       animation: starDrift 25s linear infinite;
     }
 
     .loading-fog {
-      position: absolute;
       inset: -30%;
       background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
       animation: fogMove 18s ease-in-out infinite alternate;
@@ -190,22 +260,26 @@
       z-index: 2;
     }
 
+    .loading-text,
+    .loading-spinner,
+    .loading-bar {
+      z-index: 2;
+    }
+
     .loading-text {
       letter-spacing: 4px;
       font-weight: 600;
       margin-bottom: 20px;
-      z-index: 2;
     }
 
     .loading-spinner {
       width: 40px;
       height: 40px;
       border: 3px solid rgba(255,255,255,0.25);
-      border-top: 3px solid #ffffff;
+      border-top: 3px solid #fff;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin-bottom: 25px;
-      z-index: 2;
     }
 
     .loading-bar {
@@ -214,7 +288,6 @@
       background: rgba(255,255,255,0.25);
       border-radius: 10px;
       overflow: hidden;
-      z-index: 2;
     }
 
     .loading-bar-fill {
@@ -224,7 +297,9 @@
       animation: loadProgress 8s linear forwards;
     }
 
-    /* ==================================================| MAIN LAYOUT |========================================================== */
+    /* =========================================================
+      LAYOUT
+    ========================================================== */
     .banner {
       position: relative;
       height: 250px;
@@ -239,56 +314,31 @@
 
     .content {
       max-width: 800px;
-      margin: 100px auto 50px auto;
+      margin: 100px auto 50px;
       padding: 20px;
-      background: linear-gradient(
-        180deg,
-        rgba(55, 55, 55, 0.45),
-        rgba(20, 20, 20, 0.7)
-      );
+      background: var(--bg-panel);
       border-radius: 15px;
-      backdrop-filter: blur(12px);
+      background; rgba(0,0,0,0,6);
       position: relative;
       z-index: 1;
       transition: opacity 1s;
     }
 
-    .fake-terminal {
-      margin-top: 60px;
-      margin-right: 6px;
-      margin-bottom: 6px;
-      text-align: right;
-      font-family: "Courier New", monospace;
-      font-size: 11px;
-      color: #ff4fa3;
-      display: block;
-      width: 100%;
-      pointer-events: none;
-    }
-
-    /* ==================================================| PROFILE HEADER |========================================================== */
     .profile-wrapper {
       display: flex;
       align-items: flex-end;
       gap: 20px;
-      background: linear-gradient(
-        135deg,
-        rgba(191, 191, 191, 0.18),
-        rgba(10, 8, 30, 0.95)
-      );
+      background: linear-gradient(135deg, rgba(191, 191, 191, 0.18), rgba(10, 8, 30, 0.95));
       padding: 18px 22px;
       border-radius: 25px;
       border: 2px solid #bfbfbf;
-      box-shadow:
-        0 0 20px rgba(191, 191, 191, 0.28),
-        0 0 40px rgba(191, 191, 191, 0.14);
+      box-shadow: 0 0 20px rgba(191, 191, 191, 0.28), 0 0 40px rgba(191, 191, 191, 0.14);
       position: absolute;
       bottom: -80px;
       left: 20px;
       overflow: visible;
       z-index: 10;
       isolation: isolate;
-      --neon-angle: 0deg;
     }
 
     .profile-wrapper::before {
@@ -308,18 +358,12 @@
         transparent 360deg
       );
       padding: 2px;
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
       z-index: 1;
       opacity: 0;
-      filter:
-        blur(4px)
-        drop-shadow(0 0 10px rgba(255,255,255,1))
-        drop-shadow(0 0 18px #bfbfbf)
-        drop-shadow(0 0 32px #7a7a7a);
+      filter: blur(4px) drop-shadow(0 0 10px rgba(255,255,255,1)) drop-shadow(0 0 18px #bfbfbf) drop-shadow(0 0 32px #7a7a7a);
       pointer-events: none;
     }
 
@@ -380,27 +424,47 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
       color: transparent;
-      text-shadow:
-        0 0 10px rgba(255,255,255,0.35),
-        0 0 18px rgba(200,200,200,0.35);
+      text-shadow: 0 0 10px rgba(255,255,255,0.35), 0 0 18px rgba(200,200,200,0.35);
     }
 
-    /* ==================================================| BUTTONS / TOGGLES / FACTS |========================================================== */
+    /* =========================================================
+      TEXT / CARDS / BUTTONS
+    ========================================================== */
+    .toggle-btn,
+    .shuffle-btn,
+    .music-btn,
+    .music-nav-btn,
+    .social-btn,
+    .friend-card,
+    .text-block,
+    .fact,
+    .love-list li,
+    .hate-list li,
+    .friends-list li,
+    .profile-wrapper,
+    .content {
+      transition:
+        opacity 1s ease,
+        background 1s ease,
+        transform 0.25s ease,
+        box-shadow 1s ease,
+        filter 1s ease,
+        border-color 0.22s ease,
+        color 0.22s ease;
+    }
+
     .toggle-btn {
       display: block;
       width: 100%;
       background: linear-gradient(135deg, #e60054, #9b003a, #3a0018);
-      color: white;
+      color: #fff;
       padding: 12px 15px;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       margin-bottom: 6px;
       font-weight: bold;
-      box-shadow:
-        0 0 10px rgba(230,0,84,0.4),
-        0 4px 15px rgba(0,0,0,0.6);
-      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+      box-shadow: 0 0 10px rgba(230,0,84,0.4), 0 4px 15px rgba(0,0,0,0.6);
     }
 
     .toggle-content {
@@ -412,9 +476,7 @@
       width: 100%;
     }
 
-    .toggle-content.open {
-      opacity: 1;
-    }
+    .toggle-content.open { opacity: 1; }
 
     .fun-facts {
       display: flex;
@@ -422,76 +484,21 @@
       gap: 10px;
     }
 
-    .fact {
-      background: rgba(255,255,255,0.15);
-      padding: 10px 15px;
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    .facts-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .shuffle-btn,
-    #music-btn {
-      background: linear-gradient(135deg, #ff005d, #b80042, #4a001a);
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 15px;
-      box-shadow:
-        0 0 12px rgba(255,0,93,0.4),
-        0 4px 12px rgba(0,0,0,0.5);
-      transition: transform 0.15s ease, filter 0.2s ease, opacity 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-    }
-
-    .music-btn {
-      margin-left: auto;
-    }
-
-    #music-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.65);
-      padding: 6px 14px;
-      font-size: 13px;
-      letter-spacing: 2px;
-      text-transform: lowercase;
-      box-shadow: none;
-    }
-
-    #music-btn:hover {
-      color: #fff;
-      border-color: #fff;
-    }
-
-    #music-btn.playing {
-      opacity: 0.4;
-      cursor: default;
-    }
-
-    .shuffle-btn:active {
-      transform: scale(0.92);
-      background: #b80042;
-    }
-
-    /* ==================================================| TEXT BLOCKS / LISTS |========================================================== */
+    .fact,
     .love-list li,
     .hate-list li,
     .text-block {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--panel);
       padding: 8px 12px;
       border-radius: 10px;
       margin-bottom: 8px;
     }
 
-    /* ==================================================| SOCIAL BUTTONS |========================================================== */
+    .fact {
+      padding: 10px 15px;
+      text-align: center;
+    }
+
     .social-links {
       display: flex;
       gap: 10px;
@@ -507,9 +514,8 @@
       padding: 8px 12px;
       border-radius: 8px;
       text-decoration: none;
-      color: white;
+      color: #fff;
       font-weight: bold;
-      transition: background 0.2s, transform 0.2s;
     }
 
     .social-btn img {
@@ -517,7 +523,6 @@
       height: 20px;
     }
 
-    /* ==================================================| FRIENDS |========================================================== */
     .friends-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -526,13 +531,12 @@
     }
 
     .friend-card {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--panel);
       padding: 8px 10px;
       border-radius: 10px;
       text-align: center;
       font-size: 14px;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-      transition: background 0.2s ease, transform 0.2s ease;
     }
 
     .friend-card:hover {
@@ -545,12 +549,12 @@
       flex-wrap: wrap;
       gap: 8px;
       padding: 0;
-      margin: 0 0 12px 0;
+      margin: 0 0 12px;
       list-style: none;
     }
 
     .friends-list li {
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--panel);
       padding: 6px 12px;
       border-radius: 999px;
       font-size: 14px;
@@ -558,21 +562,73 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
     }
 
-    .mini-profile {
+        .mini-profile {
       position: fixed;
       width: 260px;
-      background: #0f1115;
+      background-color: #0f1115;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       border-radius: 12px;
-      box-shadow:
-        0 10px 40px rgba(0,0,0,0.8),
-        inset 0 0 0 1px rgba(255,255,255,0.08);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.08);
       padding: 12px;
       z-index: 9999;
       pointer-events: none;
       opacity: 0;
       transform: scale(0.95);
       transition: opacity 0.15s ease, transform 0.15s ease;
+      overflow: hidden;
     }
+    
+    .mini-profile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.0),
+    rgba(0,0,0,0.02),
+    rgba(0,0,0,0.08)
+  );
+  z-index: 0;
+}
+
+.mini-name {
+  display: inline-block;
+  margin-left: 0;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(8, 8, 12, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  font-size: 18px;
+  font-weight: 600;
+  background-image: linear-gradient(to bottom, #ffffff 0%, #bfbfbf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.mini-body {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(8, 8, 12, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  font-size: 13px;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.35;
+}
+
+.mini-header,
+.mini-body {
+  position: relative;
+  z-index: 1;
+}
 
     .mini-profile.show {
       opacity: 1;
@@ -610,13 +666,11 @@
       color: rgba(255,255,255,0.65);
     }
 
-    /* ==================================================| GAMES / MODAL |========================================================== */
     .games-grid {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 14px;
-      margin-top: 12px;
-      margin-bottom: 20px;
+      margin: 12px 0 20px;
       align-items: start;
     }
 
@@ -626,9 +680,7 @@
       overflow: hidden;
       cursor: pointer;
       background: rgba(255,255,255,0.04);
-      box-shadow:
-        0 8px 24px rgba(0,0,0,0.35),
-        inset 0 0 0 1px rgba(255,255,255,0.06);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.06);
       transition: transform 0.22s ease, box-shadow 0.25s ease, filter 0.25s ease;
       aspect-ratio: 2 / 3;
       width: 100%;
@@ -644,14 +696,10 @@
 
     .game-card:hover {
       transform: scale(1.04);
-      box-shadow:
-        0 12px 30px rgba(0,0,0,0.45),
-        0 0 18px rgba(230,0,84,0.22);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45), 0 0 18px rgba(230,0,84,0.22);
     }
 
-    .game-card:hover img {
-      transform: scale(1.06);
-    }
+    .game-card:hover img { transform: scale(1.06); }
 
     .game-modal {
       position: fixed;
@@ -662,9 +710,7 @@
       justify-content: center;
     }
 
-    .game-modal.hidden {
-      display: none;
-    }
+    .game-modal.hidden { display: none; }
 
     .game-modal-overlay {
       position: absolute;
@@ -680,9 +726,7 @@
       background: linear-gradient(180deg, rgba(35, 0, 30, 0.92), rgba(10, 0, 20, 0.96));
       border-radius: 18px;
       padding: 18px;
-      box-shadow:
-        0 20px 60px rgba(0,0,0,0.65),
-        0 0 24px rgba(230,0,84,0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.65), 0 0 24px rgba(230,0,84,0.2);
       transform: scale(0.88);
       opacity: 0;
       animation: gameModalPop 0.28s ease forwards;
@@ -691,8 +735,8 @@
     .game-modal-content img {
       width: 100%;
       max-height: 70vh;
-      object-fit: cover;
-      border-radius: 14px;
+      object-fit: contain;
+      border-radius: 28px;
       display: block;
     }
 
@@ -726,32 +770,12 @@
       background: rgba(255,255,255,0.16);
     }
 
-    /* ==================================================| HOVER / SHARED TRANSITIONS |========================================================== */
     .social-btn:hover,
     .toggle-btn:hover,
     .shuffle-btn:hover {
       background: linear-gradient(135deg, #ff1f75, #b80042, #5a001f);
       transform: scale(1.03);
       filter: brightness(1.1);
-    }
-
-    .toggle-btn,
-    .shuffle-btn,
-    .social-btn,
-    .friend-card,
-    .text-block,
-    .fact,
-    .love-list li,
-    .hate-list li,
-    .friends-list li,
-    .profile-wrapper,
-    .content {
-      transition:
-        opacity 1s ease,
-        background 1s ease,
-        transform 0.25s ease,
-        box-shadow 1s ease,
-        filter 1s ease;
     }
 
     body.hover-bg .toggle-btn,
@@ -770,7 +794,408 @@
       filter: saturate(0.8);
     }
 
-    /* ==================================================| ANIMATIONS |========================================================== */
+    .facts-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .facts-actions .shuffle-btn { flex: 0 0 auto; }
+
+    .music-controls {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .music-nav-btn,
+    .music-btn,
+    #music-btn,
+    .mini-player-close,
+    .mini-player-volume-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.75);
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    .music-nav-btn,
+    .mini-player-volume-btn,
+    .mini-player-close {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      line-height: 1;
+      font-size: 14px;
+    }
+
+    .music-nav-btn:hover,
+    .music-btn:hover,
+    #music-btn:hover,
+    .mini-player-close:hover,
+    .mini-player-volume-btn:hover {
+      color: #fff;
+      border-color: #fff;
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 0 12px rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .music-nav-btn:active,
+    .mini-player-close:active,
+    .mini-player-volume-btn:active { transform: scale(0.92); }
+    .music-btn:active,
+    #music-btn:active { transform: scale(0.94); }
+
+    #music-btn,
+    .music-btn {
+      height: 36px;
+      padding: 0 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: lowercase;
+    }
+
+    #music-btn {
+      min-width: 72px;
+      letter-spacing: 2px;
+    }
+
+    .music-btn {
+      min-width: 88px;
+      letter-spacing: 1.5px;
+    }
+
+    #music-btn.playing,
+    .music-btn.playing {
+      color: var(--accent-soft);
+      border-color: rgba(255,143,189,0.65);
+    }
+
+    .shuffle-btn {
+      background: linear-gradient(135deg, #ff005d, #b80042, #4a001a);
+      color: #fff;
+      height: 36px;
+      padding: 0 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      box-shadow: 0 0 12px rgba(255,0,93,0.4), 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    /* =========================================================
+      MINI PLAYER
+    ========================================================== */
+    
+.mini-player {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: min(380px, calc(100vw - 32px));
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,0.6),
+    0 0 20px rgba(255,0,93,0.08);
+  background; rgba(0,0,0,0,6);
+  z-index: 40000;
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  pointer-events: none;
+  visibility: hidden;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    visibility 0.28s ease;
+}
+
+.mini-player.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.mini-player.hidden {
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.mini-player-bg,
+.mini-player-bg-next {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  background-image: none;
+}
+
+.mini-player-bg {
+  z-index: 0;
+  opacity: 1;
+}
+
+.mini-player-bg-next {
+  z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.mini-player-bg::after,
+.mini-player-bg-next::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(rgba(8, 8, 12, 0.68), rgba(8, 8, 12, 0.86));
+}
+
+.mini-player-header,
+.mini-player-progress-wrap,
+.mini-player-volume-box,
+.mini-player-controls {
+  position: relative;
+  z-index: 2;
+}
+
+    .mini-player.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .mini-player.hidden {
+      opacity: 0;
+      transform: translateY(16px) scale(0.96);
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .mini-player-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .mini-player-thumb {
+      width: 62px;
+      height: 62px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex: 0 0 62px;
+    }
+
+    .mini-player-meta {
+      min-width: 0;
+      flex: 1;
+    }
+
+      .mini-player-title-wrap {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .mini-player-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: #fff;
+        display: inline-block;
+        white-space: nowrap;
+        min-width: max-content;
+        will-change: transform;
+      }
+      
+      .mini-player-title.is-overflowing {
+        cursor: default;
+      }
+      
+      .mini-player-title.is-overflowing:hover {
+        animation: miniPlayerMarquee var(--marquee-duration, 8s) linear infinite;
+      }
+
+    .mini-player-link {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    .mini-player-link:hover { text-decoration: underline; }
+
+    .mini-player-progress-wrap { margin-top: 14px; }
+
+    .mini-player-progress {
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .mini-player-time {
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .mini-player-controls {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .mini-player-volume-box {
+      position: relative;
+      margin-top: 12px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .mini-player-volume-popup {
+      position: absolute;
+      right: 0;
+      bottom: 46px;
+      width: 42px;
+      height: 132px;
+      padding: 10px 0;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(20,20,26,0.98), rgba(12,12,18,0.98));
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(8px) scale(0.96);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.45), 0 0 18px rgba(227, 0, 57, 0.08);
+    }
+
+    .mini-player-volume-popup.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .mini-player-progress,
+    .mini-player-volume {
+      accent-color: var(--accent);
+      -webkit-appearance: none;
+      appearance: none;
+      background: transparent;
+    }
+
+    .mini-player-progress::-webkit-slider-runnable-track {
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+    }
+
+    .mini-player-progress::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #ffd0dc;
+      margin-top: -5px;
+      box-shadow: 0 0 10px rgba(201, 20, 65, 0.45);
+      cursor: pointer;
+    }
+
+    .mini-player-progress::-moz-range-track {
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+    }
+
+    .mini-player-progress::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(201, 20, 65, 0.45);
+      cursor: pointer;
+    }
+
+    .mini-player-volume {
+      writing-mode: bt-lr;
+      -webkit-appearance: slider-vertical;
+      appearance: slider-vertical;
+      width: 4px;
+      height: 96px;
+      cursor: pointer;
+    }
+
+    .mini-player-volume::-webkit-slider-runnable-track {
+      width: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+    }
+
+    .mini-player-volume::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #ffd0dd;
+      box-shadow: 0 0 10px rgba(201, 20, 65, 0.45);
+      cursor: pointer;
+    }
+
+    .mini-player-volume::-moz-range-track {
+      width: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+    }
+
+    .mini-player-volume::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border: none;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(201, 20, 65, 0.45);
+      cursor: pointer;
+    }
+
+    /* =========================================================
+      ANIMATIONS
+    ========================================================== */
     @property --neon-angle {
       syntax: "<angle>";
       inherits: false;
@@ -793,301 +1218,322 @@
     }
 
     @keyframes moonGlow {
-      0% {
-        box-shadow:
-          0 0 25px rgba(220,220,255,0.3),
-          0 0 50px rgba(220,220,255,0.15);
+      0%, 100% {
+        box-shadow: 0 0 25px rgba(220,220,255,0.3), 0 0 50px rgba(220,220,255,0.15);
       }
       50% {
-        box-shadow:
-          0 0 70px rgba(220,220,255,0.85),
-          0 0 140px rgba(220,220,255,0.55);
-      }
-      100% {
-        box-shadow:
-          0 0 25px rgba(220,220,255,0.3),
-          0 0 50px rgba(220,220,255,0.15);
+        box-shadow: 0 0 70px rgba(220,220,255,0.85), 0 0 140px rgba(220,220,255,0.55);
       }
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes loadProgress {
-      to { width: 100%; }
-    }
-
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes loadProgress { to { width: 100%; } }
     @keyframes bgShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    @keyframes glowName {
-      0% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
-      50% { text-shadow: 2px 2px 12px rgba(0,0,0,0.9), 0 0 20px rgba(230,0,84,1); }
-      100% { text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 10px rgba(230,0,84,0.8); }
-    }
-
-    @keyframes neonPulse {
-      0%   { filter: blur(100px) brightness(0.9); }
-      50%  { filter: blur(140px) brightness(1.4); }
-      100% { filter: blur(100px) brightness(1); }
-    }
-
-    @keyframes neonBorderSpin {
-      from { --neon-angle: 0deg; }
-      to { --neon-angle: 360deg; }
-    }
-
     @keyframes neonBorderSpinFade {
-      0% {
-        --neon-angle: 0deg;
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      80% {
-        opacity: 1;
-      }
-      100% {
-        --neon-angle: 360deg;
-        opacity: 0;
-      }
+      0% { --neon-angle: 0deg; opacity: 0; }
+      10%, 80% { opacity: 1; }
+      100% { --neon-angle: 360deg; opacity: 0; }
     }
 
     @keyframes gameModalPop {
-      from {
-        transform: scale(0.88);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
+      from { transform: scale(0.88); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+      @keyframes miniPlayerMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    2% {
+      transform: translateX(0);
+    }
+    90% {
+      transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+    }
+    100% {
+      transform: translateX(calc(-1 * var(--marquee-distance, 0px)));
+    }
+}
+
+    /* =========================================================
+      RESPONSIVE
+    ========================================================== */
+    @media (max-width: 900px) {
+      .games-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
-    /* ==================================================| RESPONSIVE |========================================================== */
-    @media (max-width: 768px) {
-      #bg-parallax {
-        animation: none;
-        background-position: center, center;
-      }
+    @media (max-width: 640px) {
+  .games-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-      .loading-bg-image {
-        background-size: cover;
-        background-position: center center;
-        opacity: 0.30;
-        transform: scale(1.22);
-        animation: none;
-      }
-    }
+  .facts-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
 
+  .facts-actions .shuffle-btn {
+    width: auto;
+    align-self: auto;
+  }
+
+  .music-controls {
+    margin-left: 0;
+    width: auto;
+    justify-content: flex-end;
+  }
+}
   </style>
-  
-  <link rel="stylesheet" href="faq.css">
-  
 </head>
-
 <body class="loading">
-  <!-- ==================================================| FIXED BACKGROUND |========================================================== -->
+  <!-- =========================================================
+    FIXED BACKGROUND
+  ========================================================== -->
   <div id="bg-parallax"></div>
 
-  <!-- ==================================================| LOADING SCREEN |========================================================== -->
+  <!-- =========================================================
+    LOADING SCREEN
+  ========================================================== -->
   <div id="loading-screen">
     <div class="loading-bg-image"></div>
     <div class="loading-stars"></div>
     <div class="loading-fog"></div>
-
     <div class="loading-moon"></div>
     <div class="loading-text">LOADING</div>
     <div class="loading-spinner"></div>
-
     <div class="loading-bar">
       <div class="loading-bar-fill"></div>
     </div>
   </div>
 
-  <!-- ==================================================| HEADER / PROFILE |========================================================== -->
-  <div class="banner">
+  <!-- =========================================================
+    HEADER / PROFILE
+  ========================================================== -->
+  <header class="banner">
     <div class="profile-wrapper">
       <div class="profile-pic">
         <div class="avatar-mask">
           <img id="avatar-img" src="https://i.imgur.com/DX81yVk.png" alt="Avatar">
         </div>
-
         <div class="decoration-mask">
           <img id="avatar-decoration" alt="Avatar decoration">
         </div>
       </div>
 
-      <div class="profile-name">Doldie</div>
-    </div>
-  </div>
-
-  <!-- ==================================================| MAIN CONTENT |========================================================== -->
-  <div class="content">
-    <!-- ABOUT ME -->
-    <h2>About Me</h2>
-
-    <button class="toggle-btn" onclick="toggleSection('likes')">Things I Love</button>
-    <div id="likes" class="toggle-content">
-      <ul class="love-list">
-        <li>Cars that push the limits...</li>
-        <li>Fighter jets, especially the Mirage 2000-5F</li>
-        <li>Games: War Thunder, Phantom Forces, Phasmophobia</li>
-        <li>Subtle gothic aesthetics: black clothes, eyeliner, fishnets...</li>
-        <li>Anime like Yofukashi no Uta, Berserk, Chainsaw Man, Made in Abyss...</li>
-        <li>Loona. Yes, Loona, from Helluva Boss</li>
-        <li>Cheetahs. Fast, graceful, cute.</li>
-        <li>Quiet nights, soft music, moments to just… exist.</li>
-      </ul>
-    </div>
-
-    <button class="toggle-btn" onclick="toggleSection('dislikes')">Things I Don’t Like</button>
-    <div id="dislikes" class="toggle-content">
-      <ul class="hate-list">
-        <li>People who ignore obvious truths</li>
-        <li>People who play the victim</li>
-        <li>People who use manipulation</li>
-        <li>people that don’t admit that they’re wrong.</li>
-        <li>People who keep bitching on the internet</li>
-        <li>Waking up early</li>
-        <li>Insects in general</li>
-        <li>Brainrot</li>
-        <li>Hipocrisy</li>
-        <li>Untruth</li>
-        <li>Sports, except for E-sports, and specially football</li>
-      </ul>
-    </div>
-
-    <button class="toggle-btn" onclick="toggleSection('about')">Who I Am</button>
-    <div id="about" class="toggle-content">
-      <div class="text-block"><p>Myself. Who'd you excpect me to be?</p></div>
-    </div>
-
-    <button class="toggle-btn" onclick="toggleSection('obsessions')">Things I Get Obsessed With</button>
-    <div id="obsessions" class="toggle-content">
-      <div class="text-block"><p>I am obsessed with Loona, speed, horror movies, gambling, cars, jets, tanks, games, drawing...</p></div>
-    </div>
-
-    <button class="toggle-btn" onclick="toggleSection('dreams')">Dreams</button>
-    <div id="dreams" class="toggle-content">
-      <div class="text-block"><p>Become a professional pilot</p></div>
-      <div class="text-block"><p>Become a professional digital artist</p></div>
-      <div class="text-block"><p>Become a professional programmer</p></div>
-    </div>
-
-    <button class="toggle-btn" onclick="toggleSection('friends')">Friends</button>
-    <div id="friends" class="toggle-content">
-      <div class="text-block">
-        <p>My dear friends:</p>
-
-<div class="friends-grid" id="friends-grid"></div>
+      <div class="profile-text">
+        <div class="profile-name" id="discord-username">Doldie</div>
+        <div class="discord-presence">
+          <span id="discord-status" class="discord-status-indicator offline"></span>
+        </div>
       </div>
+    </div>
+  </header>
 
-      <div class="text-block">
-        <p>Honorable mentions</p>
-        <ul>
-          <li>kirit_ls</li><li>our.rumi</li><li>susielaser</li><li>Thunder</li><li>fl4king</li><li>Zimrico</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>hz4troz</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
+  <!-- =========================================================
+    MAIN CONTENT
+  ========================================================== -->
+  <main class="content">
+    <!-- ABOUT ME -->
+    <section aria-labelledby="about-me-heading">
+      <h2 id="about-me-heading">About Me</h2>
+
+      <button class="toggle-btn" type="button" data-toggle-target="likes">Things I Love</button>
+      <div id="likes" class="toggle-content">
+        <ul class="love-list">
+          <li>Cars that push the limits...</li>
+          <li>Fighter jets, especially the Mirage 2000-5F</li>
+          <li>Games: War Thunder, Phantom Forces, Phasmophobia</li>
+          <li>Subtle gothic aesthetics: black clothes, eyeliner, fishnets...</li>
+          <li>Anime like Yofukashi no Uta, Berserk, Chainsaw Man, Made in Abyss...</li>
+          <li>Loona. Yes, Loona, from Helluva Boss</li>
+          <li>Cheetahs. Fast, graceful, cute.</li>
+          <li>Quiet nights, soft music, moments to just… exist.</li>
         </ul>
       </div>
-    </div>
 
-    <!-- FAVORITE STUFF -->
-    <h2>Favorite Stuff</h2>
-    <div id="favorites-root"></div>
+      <button class="toggle-btn" type="button" data-toggle-target="dislikes">Things I Don’t Like</button>
+      <div id="dislikes" class="toggle-content">
+        <ul class="hate-list">
+          <li>People who ignore obvious truths</li>
+          <li>People who play the victim</li>
+          <li>People who use manipulation</li>
+          <li>People that don’t admit that they’re wrong</li>
+          <li>People who keep bitching on the internet</li>
+          <li>Waking up early</li>
+          <li>Insects in general</li>
+          <li>Brainrot</li>
+          <li>Hypocrisy</li>
+          <li>Untruth</li>
+          <li>Sports, except for E-sports, and specially football</li>
+        </ul>
+      </div>
 
-    <!-- SOCIAL MEDIA -->
-    <h2>Social Media</h2>
-    <div class="social-links">
-      <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank">
-        <img src="https://i.imgur.com/Mf3ATZj.png" alt="Roblox"> Roblox
-      </a>
+      <button class="toggle-btn" type="button" data-toggle-target="about">Who I Am</button>
+      <div id="about" class="toggle-content">
+        <div class="text-block"><p>Myself. Who'd you expect me to be?</p></div>
+      </div>
 
-      <a class="social-btn" href="https://steamcommunity.com/profiles/76561199031088390" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"> Steam
-      </a>
+      <button class="toggle-btn" type="button" data-toggle-target="obsessions">Things I Get Obsessed With</button>
+      <div id="obsessions" class="toggle-content">
+        <div class="text-block"><p>I am obsessed with Loona, speed, horror movies, gambling, cars, jets, tanks, games, drawing...</p></div>
+      </div>
 
-      <a class="social-btn" href="https://www.youtube.com/channel/UCb33G1UKxmxe-23q-bvFDDQ" target="_blank">
-        <img src="https://i.imgur.com/gfTqX0r.png" alt="YouTube"> YouTube
-      </a>
+      <button class="toggle-btn" type="button" data-toggle-target="dreams">Dreams</button>
+      <div id="dreams" class="toggle-content">
+        <div class="text-block"><p>Become a professional pilot</p></div>
+        <div class="text-block"><p>Become a professional digital artist</p></div>
+        <div class="text-block"><p>Become a professional programmer</p></div>
+      </div>
 
-      <a class="social-btn" href="https://github.com/Doldie" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub"> GitHub
-      </a>
+      <button class="toggle-btn" type="button" data-toggle-target="friends">Friends</button>
+      <div id="friends" class="toggle-content">
+        <div class="text-block">
+          <p>My dear friends:</p>
+          <div class="friends-grid" id="friends-grid"></div>
+        </div>
 
-      <a class="social-btn" href="https://open.spotify.com/user/kxkkezbsyn617tgu1fk3oumr9?si=OCO3uiwkQD2nQh9qO1TKSA" target="_blank">
-        <img src="https://i.imgur.com/EolHL8t.png" alt="Spotify"> Spotify
-      </a>
+        <div class="text-block">
+          <p>Honorable mentions</p>
+          <ul>
+            <li>kirit_ls</li><li>our.rumi</li><li>susielaser</li><li>Thunder</li><li>fl4king</li><li>Zimrico</li><li>Lks²</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      <a class="social-btn" href="https://www.reddit.com/u/Doldieks/s/GmmUkl1spr" target="_blank">
-        <img src="https://i.imgur.com/mFWWo1t.png" alt="Reddit"> Reddit
-      </a>
+    <!-- FAVORITES -->
+    <section aria-labelledby="favorites-heading">
+      <h2 id="favorites-heading">Favorite Stuff</h2>
+      <div id="favorites-root"></div>
+    </section>
 
-      <a class="social-btn" href="https://x.com/Douldd_" target="_blank">
-        <img src="https://i.imgur.com/XS658rc.png" alt="X"> X
-      </a>
-    </div>
+    <!-- SOCIAL -->
+    <section aria-labelledby="social-heading">
+      <h2 id="social-heading">Social Media</h2>
+      <div class="social-links">
+        <a class="social-btn" href="https://www.roblox.com/users/289149578/profile" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.imgur.com/Mf3ATZj.png" alt="Roblox"> Roblox
+        </a>
+        <a class="social-btn" href="https://steamcommunity.com/profiles/76561199031088390" target="_blank" rel="noopener noreferrer">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam"> Steam
+        </a>
+        <a class="social-btn" href="https://www.youtube.com/channel/UCb33G1UKxmxe-23q-bvFDDQ" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.imgur.com/gfTqX0r.png" alt="YouTube"> YouTube
+        </a>
+        <a class="social-btn" href="https://github.com/Doldie" target="_blank" rel="noopener noreferrer">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub"> GitHub
+        </a>
+        <a class="social-btn" href="https://open.spotify.com/user/kxkkezbsyn617tgu1fk3oumr9?si=OCO3uiwkQD2nQh9qO1TKSA" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.imgur.com/EolHL8t.png" alt="Spotify"> Spotify
+        </a>
+        <a class="social-btn" href="https://www.reddit.com/u/Doldieks/s/GmmUkl1spr" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.imgur.com/mFWWo1t.png" alt="Reddit"> Reddit
+        </a>
+        <a class="social-btn" href="https://x.com/Douldd_" target="_blank" rel="noopener noreferrer">
+          <img src="https://i.imgur.com/XS658rc.png" alt="X"> X
+        </a>
+      </div>
+    </section>
 
-    <!-- FUN FACTS / FAQ -->
-    <h2>Not so FAQ / Fun Facts</h2>
-    <!-- FAQ -->
-<section class="faq-section">
+    <!-- FAQ / FUN FACTS -->
+    <section aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Not so FAQ / Fun Facts</h2>
 
-  <div class="faq-box">
-    <button class="faq-arrow" id="faq-prev" aria-label="Pergunta anterior">
-      &#10094;
-    </button>
+      <section class="faq-section">
+        <div class="faq-box">
+          <button class="faq-arrow" id="faq-prev" aria-label="Pergunta anterior">&#10094;</button>
+          <div class="faq-content">
+            <p class="faq-line">
+              <span class="faq-label">Q:</span>
+              <span id="faq-question">Loading question...</span>
+            </p>
+            <p class="faq-line">
+              <span class="faq-label">R:</span>
+              <span id="faq-answer">Loading answer...</span>
+            </p>
+          </div>
+          <button class="faq-arrow" id="faq-next" aria-label="Próxima pergunta">&#10095;</button>
+        </div>
+      </section>
 
-    <div class="faq-content">
-      <p class="faq-line">
-        <span class="faq-label">Q:</span>
-        <span id="faq-question">Loading question...</span>
-      </p>
+      <div class="fun-facts" id="funFactsContainer">
+        <div class="fact">I can spend hours perfecting an anime sketch.</div>
+        <div class="fact">Nighttime is my favorite time to be outside.</div>
+        <div class="fact">I’ve memorized specs of my favorite cars.</div>
+        <div class="fact">I love learning random aviation trivia.</div>
+      </div>
 
-      <p class="faq-line">
-        <span class="faq-label">R:</span>
-        <span id="faq-answer">Loading answer...</span>
-      </p>
-    </div>
+      <div class="facts-actions">
+        <button class="shuffle-btn" id="shuffle-facts-btn" type="button">Shuffle Facts</button>
+        <div class="music-controls">
+          <button id="music-btn" class="music-btn" type="button">open player</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <button class="faq-arrow" id="faq-next" aria-label="Próxima pergunta">
-      &#10095;
-    </button>
-  </div>
-</section>
-
-    <!-- FUN FACTS -->
-    
-    <div class="fun-facts" id="funFactsContainer">
-      <div class="fact">I can spend hours perfecting an anime sketch.</div>
-      <div class="fact">Nighttime is my favorite time to be outside.</div>
-      <div class="fact">I’ve memorized specs of my favorite cars.</div>
-      <div class="fact">I love learning random aviation trivia.</div>
-    </div>
-
-    <div class="facts-actions">
-      <button class="shuffle-btn" onclick="shuffleFacts(this)">Shuffle Facts</button>
-      <button id="music-btn" class="shuffle-btn music-btn">Sound</button>
-    </div>
-  </div>
-
-  <!-- ==================================================| MINI PROFILE HOVER CARD |==========================================================  -->
+  <!-- =========================================================
+    MINI PROFILE CARD
+  ========================================================== -->
   <div id="mini-profile" class="mini-profile hidden">
-    <div class="mini-header">
-      <img id="mini-avatar" src="" alt="Friend avatar">
-      <div class="mini-name" id="mini-name"></div>
-    </div>
-    <div class="mini-body" id="mini-desc">Friend</div>
+  <div class="mini-header">
+    <img id="mini-avatar" src="" alt="Friend avatar">
+    <div class="mini-name" id="mini-name"></div>
   </div>
+  <div class="mini-body" id="mini-desc">Friend</div>
+</div>
 
-  <!-- ==================================================| AUDIO ELEMENTS |==========================================================  -->
-  <audio id="bg-music" preload="none" loop>
-    <source src="https://raw.githubusercontent.com/Doldie/Mybio/main/music.mp3" type="audio/mpeg">
-  </audio>
+  <!-- =========================================================
+    AUDIO
+  ========================================================== -->
+  <audio id="bg-music" preload="auto"></audio>
+
+  <div id="mini-player" class="mini-player">
+    <div class="mini-player-bg"></div>
+  <div class="mini-player-bg-next"></div>
+    <div class="mini-player-header">
+      <img id="mini-player-thumb" class="mini-player-thumb" src="" alt="Thumbnail">
+      <div class="mini-player-meta">
+        <div class="mini-player-title-wrap">
+          <div id="mini-player-title" class="mini-player-title">Track</div>
+        </div>
+        <a id="mini-player-link" class="mini-player-link" href="#" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
+      </div>
+      <button id="mini-player-close" class="mini-player-close" type="button">✕</button>
+    </div>
+
+    <div class="mini-player-progress-wrap">
+      <input id="mini-player-progress" class="mini-player-progress" type="range" min="0" max="100" value="0">
+      <div class="mini-player-time">
+        <span id="mini-player-current">0:00</span>
+        <span id="mini-player-duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="mini-player-volume-box">
+      <button id="mini-player-volume-btn" class="mini-player-volume-btn" type="button" aria-label="Volume">🔊</button>
+      <div id="mini-player-volume-popup" class="mini-player-volume-popup">
+        <input id="mini-player-volume" class="mini-player-volume" type="range" min="0" max="100" value="16">
+      </div>
+    </div>
+
+    <div class="mini-player-controls">
+      <button id="prev-music-btn" class="music-nav-btn" type="button">◀</button>
+      <button id="mini-player-playpause" class="music-btn" type="button">play</button>
+      <button id="next-music-btn" class="music-nav-btn" type="button">▶</button>
+    </div>
+  </div>
 
   <audio id="btn-click-sound" preload="auto">
     <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
@@ -1097,22 +1543,30 @@
     <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- ==================================================| GAME MODAL |==========================================================  -->
+  <!-- =========================================================
+    GAME MODAL
+  ========================================================== -->
   <div id="game-modal" class="game-modal hidden">
     <div class="game-modal-overlay"></div>
-
     <div class="game-modal-content">
-      <button id="close-game-modal" class="game-modal-close">✕</button>
+      <button id="close-game-modal" class="game-modal-close" type="button">✕</button>
       <img id="game-modal-img" src="" alt="">
       <div id="game-modal-title" class="game-modal-title"></div>
     </div>
   </div>
 
-  <!-- ==================================================| EXTERNAL SCRIPT |==========================================================  -->
+  <!-- =========================================================
+    EXTERNAL SCRIPTS
+  ========================================================== -->
   <script src="favorites.js"></script>
   <script src="faq.js"></script>
   <script src="friends.js"></script>
-  <!-- ==================================================| DATA / CONFIG SCRIPTS |==========================================================  -->
+  <script src="lanyard.js"></script>
+  <script defer src="music.js"></script>
+
+  <!-- =========================================================
+    GLOBAL CONFIG
+  ========================================================== -->
   <script>
     const loadingBgImages = [
       'https://i.imgur.com/E48oiig.jpeg',
@@ -1150,17 +1604,18 @@
     ];
 
     const randomLoadingBg = loadingBgImages[Math.floor(Math.random() * loadingBgImages.length)];
-
-    const decorationUrl =
-      "https://cdn.discordapp.com/avatar-decoration-presets/a_c7d0b92c2c06bbb3fed297b34a51d5e5.png?size=160";
+    const decorationUrl = 'https://cdn.discordapp.com/avatar-decoration-presets/a_c7d0b92c2c06bbb3fed297b34a51d5e5.png?size=160';
   </script>
 
-  <!-- ==================================================| MAIN SITE SCRIPT |==========================================================  -->
+  <!-- =========================================================
+    MAIN INTERACTION SCRIPTS
+  ========================================================== -->
   <script>
     function toggleSection(id) {
       const section = document.getElementById(id);
-      const isOpen = section.classList.contains('open');
+      if (!section) return;
 
+      const isOpen = section.classList.contains('open');
       section.style.transition = 'none';
 
       if (isOpen) {
@@ -1191,321 +1646,217 @@
       section.addEventListener('transitionend', onEnd);
     }
 
-    function shuffleFacts(btn) {
-      btn.style.transform = "scale(0.9)";
-      setTimeout(() => { btn.style.transform = "scale(1)"; }, 120);
-
+    function shuffleFacts() {
       const facts = [
-        "I have two cats that chill with me while I game.",
-        "My favorite anime is Yofukashi no Uta.",
-        "I can name almost every Mirage 2000 variant.",
-        "I track crazy car 0-400 km/h times for fun.",
-        "War Thunder is life",
-        "I’m obsessed with cars like the Rimac Nevera R and Koenigsegg Jesko.",
-        "I enjoy drawing characters late at night.",
-        "I can spend hours comparing aircraft designs just for fun.",
-        "My fav color is Rose red",
-        "The Challenger 2 British MBT is my fav tank",
-        "I’m obsessed with jet engine sounds.",
-        "I draw better at 2 AM than during the day.",
-        "I once played War Thunder for 12 hours straight.",
-        "I can identify fighter jets just by silhouette.",
-        "My fav song is exit music (for a film) by Radiohead",
-        "My fav artist is Melanie Martinez",
-        "My fav food is savory pie",
-        "Cheetahs are my fav animal",
+        'I have two cats that chill with me while I game.',
+        'My favorite anime is Yofukashi no Uta.',
+        'I can name almost every Mirage 2000 variant.',
+        'I track crazy car 0-400 km/h times for fun.',
+        'War Thunder is life',
+        'I’m obsessed with cars like the Corvette C8 and Koenigsegg Jesko.',
+        'I enjoy drawing characters late at night.',
+        'I can spend hours comparing aircraft designs just for fun.',
+        'My fav color is Rose red',
+        'The Challenger 2 British MBT is my fav tank',
+        'I’m obsessed with jet engine sounds.',
+        'I draw better at 2 AM than during the day.',
+        'I once played War Thunder for 12 hours straight.',
+        'I can identify fighter jets just by silhouette.',
+        'My fav song is exit music (for a film) by Radiohead',
+        'My fav artist is Melanie Martinez',
+        'My fav food is savory pie',
+        'Cheetahs are my fav animal',
         "I have more than 3000 hours of Sol's RNG",
-        "France is my fav nation",
-        "Tomboys over femboys",
-        "1+1 = 2",
-        "Loona? perfection",
-        "🥀",
-        "Amd > Intel",
-        "Reshiram best pokemon",
-        "Cats > dogs",
+        'France is my fav nation',
+        'Tomboys over femboys',
+        '1+1 = 2',
+        'Loona? perfection',
+        '🥀',
+        'Amd > Intel',
+        'Reshiram best pokemon.',
+        'Cats > dogs.',
         "I'm lazy asf 💔",
-        "V8 > V12",
-        "Lamborghini Murcielago best sounding car ever made",
-        "Unpopular opinion, Sousou no Frieren is Mid",
-        "Monster energy is great",
-        "Kiwi my fav fruit",
-        "Wannabe extrovert",
-        "Yaps a lot about things i'm obsessed with",
-        "Passionfruit the best to make juice with",
-        "I like to argue about something irrelevant all day"
+        'V8 > V12.',
+        'Lamborghini Murcielago best sounding car ever made.',
+        'Unpopular opinion, Sousou no Frieren is Mid.',
+        'Monster energy is great.',
+        'Kiwi my fav fruit.',
+        'Wannabe extrovert.',
+        "Yaps a lot about things i'm obsessed with.",
+        'Passionfruit the best to make juice with.',
+        'I like to argue about something irrelevant all day.',
+        'I enjoy being alone.',
+        'I spend nights awake just thinking.',
+        'Music hits different at night.',
+        'There is a music player on the site with my fav songs.',
+        "I'm gonna tell you that I'm fine even when I'm not.",
+        'I love furries, but I dont consider myself one.',
+        "I will hate you if you're an insistent person.",
+        'I think 5 times before doing something, and still do it wrong.',
+        'Do not ask me how much money and time I spend making avatars in Roblox monthly',
+        'JOJO',
+        'あなたの時間を無駄にしてしまいました。'
       ];
 
       const container = document.getElementById('funFactsContainer');
-      container.innerHTML = '';
+      if (!container) return;
 
-      const selected = facts.sort(() => 0.5 - Math.random()).slice(0, 4);
-      selected.forEach(fact => {
+      container.innerHTML = '';
+      const selected = [...facts].sort(() => 0.5 - Math.random()).slice(0, 4);
+      selected.forEach((fact) => {
         const div = document.createElement('div');
         div.className = 'fact';
         div.textContent = fact;
         container.appendChild(div);
       });
     }
-  </script>
 
-  <!-- ==================================================| DOM READY / LOADING / DECORATION |==========================================================  -->
-  <script>
     document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-toggle-target]').forEach((button) => {
+        button.addEventListener('click', () => toggleSection(button.dataset.toggleTarget));
+      });
+
+      const shuffleBtn = document.getElementById('shuffle-facts-btn');
+      if (shuffleBtn) {
+        shuffleBtn.addEventListener('click', () => {
+          shuffleBtn.style.transform = 'scale(0.9)';
+          setTimeout(() => { shuffleBtn.style.transform = 'scale(1)'; }, 120);
+          shuffleFacts();
+        });
+      }
+
       const loadingBgElement = document.querySelector('.loading-bg-image');
       if (loadingBgElement) {
         loadingBgElement.style.backgroundImage = `url("${randomLoadingBg}")`;
       }
 
-      const deco = document.getElementById("avatar-decoration");
+      const deco = document.getElementById('avatar-decoration');
       if (deco) {
         deco.src = decorationUrl;
-        deco.style.display = "block";
-        deco.onerror = () => {
-          deco.style.display = "none";
-        };
+        deco.style.display = 'block';
+        deco.onerror = () => { deco.style.display = 'none'; };
       }
     });
 
-    window.addEventListener("load", () => {
+    window.addEventListener('load', () => {
       setTimeout(() => {
-        document.getElementById("loading-screen").classList.add("exit");
-        document.body.classList.remove("loading");
-        document.documentElement.classList.remove("loading");
-        document.getElementById("bg-parallax").style.opacity = "1";
+        document.getElementById('loading-screen')?.classList.add('exit');
+        document.body.classList.remove('loading');
+        document.documentElement.classList.remove('loading');
+        const bg = document.getElementById('bg-parallax');
+        if (bg) bg.style.opacity = '1';
       }, 8000);
     });
   </script>
 
-  <!-- ==================================================| MUUSIC |==========================================================  -->
+  <!-- =========================================================
+    CLICK / HOVER / MODAL FX
+  ========================================================== -->
   <script>
-    const music = document.getElementById("bg-music");
-    const musicBtn = document.getElementById("music-btn");
+    const clickSound = document.getElementById('btn-click-sound');
+    const neonSound = document.getElementById('neon-sound');
+    const profileWrapper = document.querySelector('.profile-wrapper');
+    const gameModal = document.getElementById('game-modal');
+    const gameModalImg = document.getElementById('game-modal-img');
+    const gameModalTitle = document.getElementById('game-modal-title');
+    const closeGameModal = document.getElementById('close-game-modal');
+    const gameModalOverlay = document.querySelector('.game-modal-overlay');
 
-    music.volume = 0.16;
+    if (clickSound) clickSound.volume = 0.09;
+    if (neonSound) neonSound.volume = 0.14;
 
-    musicBtn.addEventListener("click", () => {
-      if (music.paused) {
-        music.currentTime = 0;
-        music.muted = false;
-        music.play();
-        musicBtn.textContent = "Playing";
-        musicBtn.classList.add("playing");
-      } else {
-        music.pause();
-        musicBtn.textContent = "Sound";
-        musicBtn.classList.remove("playing");
-      }
+    document.addEventListener('click', (e) => {
+      const clickable = e.target.closest('button, .social-btn, .friend-card');
+      if (!clickable || !clickSound) return;
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {});
     });
-  </script>
-  <!-- ==================================================| FRIEND MINI PROFILE |==========================================================  -->
-  <script>
-    const mini = document.getElementById("mini-profile");
-    const miniAvatar = document.getElementById("mini-avatar");
-    const miniName = document.getElementById("mini-name");
-    const miniDesc = document.getElementById("mini-desc");
 
-    let holdTimeout = null;
-    let hideTimeout = null;
-    let activeCard = null;
-
-    document.querySelectorAll(".friend-card").forEach(card => {
-      const id = card.dataset.id;
-
-      const show = (x, y) => {
-        if (hideTimeout) {
-          clearTimeout(hideTimeout);
-          hideTimeout = null;
-        }
-
-        activeCard = card;
-
-        const data = friendsData[id] || {};
-        miniAvatar.src = data.avatar || "https://cdn.discordapp.com/embed/avatars/5.png";
-        miniName.textContent = data.name || card.textContent.trim();
-        miniDesc.textContent = data.desc || "Friend";
-
-        mini.classList.remove("hidden");
-        mini.style.visibility = "hidden";
-
-        requestAnimationFrame(() => {
-          mini.classList.add("show");
-
-          const padding = 12;
-          const miniRect = mini.getBoundingClientRect();
-          const viewportW = window.innerWidth;
-          const viewportH = window.innerHeight;
-
-          let left = x + 15;
-          let top = y + 15;
-
-          if (left + miniRect.width > viewportW - padding) {
-            left = x - miniRect.width - 15;
-          }
-
-          if (top + miniRect.height > viewportH - padding) {
-            top = y - miniRect.height - 15;
-          }
-
-          left = Math.max(padding, left);
-          top = Math.max(padding, top);
-
-          mini.style.left = left + "px";
-          mini.style.top = top + "px";
-          mini.style.visibility = "visible";
-        });
-      };
-
-      const hide = () => {
-        hideTimeout = setTimeout(() => {
-          mini.classList.remove("show");
-          setTimeout(() => mini.classList.add("hidden"), 120);
-          activeCard = null;
-        }, 40);
-      };
-
-      card.addEventListener("mouseenter", e => {
-        show(e.clientX, e.clientY);
+    if (profileWrapper && neonSound) {
+      let neonCooldown = false;
+      profileWrapper.addEventListener('mouseenter', () => {
+        if (neonCooldown) return;
+        neonCooldown = true;
+        profileWrapper.classList.add('neon-active');
+        neonSound.currentTime = 0;
+        neonSound.play().catch(() => {});
+        setTimeout(() => {
+          profileWrapper.classList.remove('neon-active');
+          neonCooldown = false;
+        }, 1400);
       });
-
-      card.addEventListener("mousemove", e => {
-        if (activeCard !== card) return;
-        show(e.clientX, e.clientY);
-      });
-
-      card.addEventListener("mouseleave", hide);
-
-      card.addEventListener("touchstart", e => {
-        const t = e.touches[0];
-        holdTimeout = setTimeout(() => {
-          show(t.clientX, t.clientY);
-        }, 300);
-      });
-
-      card.addEventListener("touchend", () => {
-        clearTimeout(holdTimeout);
-        hide();
-      });
-    });
-  </script>
-
-  <!-- ==================================================| CLICK SOUND |==========================================================  -->
-<script>
-const clickSound = document.getElementById("btn-click-sound");
-clickSound.volume = 0.09;
-
-document.addEventListener("click", (e) => {
-  const clickable = e.target.closest("button, .social-btn, .friend-card");
-
-  if (!clickable) return;
-
-  clickSound.currentTime = 0;
-  clickSound.play().catch(() => {});
-});
-</script>
-
-  <!-- ==================================================| PROFILE NEON SOUND / EFFECT |==========================================================  -->
-  <script>
-    const profileWrapper = document.querySelector(".profile-wrapper");
-    const neonSound = document.getElementById("neon-sound");
-
-    let neonCooldown = false;
-    neonSound.volume = 0.14;
-
-    profileWrapper.addEventListener("mouseenter", () => {
-      if (neonCooldown) return;
-
-      neonCooldown = true;
-      profileWrapper.classList.add("neon-active");
-
-      neonSound.currentTime = 0;
-      neonSound.play().catch(() => {});
-
-      setTimeout(() => {
-        profileWrapper.classList.remove("neon-active");
-        neonCooldown = false;
-      }, 1400);
-    });
-  </script>
-
-  <!-- ==================================================| BACKGROUND HOVER DIMMING |==========================================================  -->
-  <script>
-    const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-    if (supportsHover) {
-      const interactiveSelectors = [
-        "button",
-        ".social-btn",
-        ".friend-card",
-        ".toggle-btn",
-        ".shuffle-btn",
-        "#music-btn",
-        ".profile-wrapper",
-        "a"
-      ].join(",");
-
-      function activateBGHover() {
-        document.body.classList.add("hover-bg");
-      }
-
-      function clearHoverState() {
-        document.body.classList.remove("hover-bg");
-      }
-
-      document.addEventListener("mousemove", (e) => {
-        const overInteractive = e.target.closest(interactiveSelectors);
-        const insideContent = e.target.closest(".content, .banner, .mini-profile");
-
-        if (!overInteractive && !insideContent) {
-          activateBGHover();
-        } else {
-          clearHoverState();
-        }
-      });
-
-      document.addEventListener("mouseleave", () => {
-        clearHoverState();
-      });
-    } else {
-      document.body.classList.remove("hover-bg");
     }
-  </script>
 
-  <!-- ==================================================| GAME MODAL |==========================================================  -->
-  <script>
-    const gameCards = document.querySelectorAll(".game-card");
-    const gameModal = document.getElementById("game-modal");
-    const gameModalImg = document.getElementById("game-modal-img");
-    const gameModalTitle = document.getElementById("game-modal-title");
-    const closeGameModal = document.getElementById("close-game-modal");
-    const gameModalOverlay = document.querySelector(".game-modal-overlay");
-
-    gameCards.forEach(card => {
-      card.addEventListener("click", () => {
-        const img = card.querySelector("img");
-        if (!img) return;
-
-        gameModalImg.src = img.src;
-        gameModalImg.alt = img.alt;
-        gameModalTitle.textContent = card.dataset.title;
-
-        gameModal.classList.remove("hidden");
-        document.body.style.overflow = "hidden";
+    function bindGameCards() {
+      document.querySelectorAll('.game-card').forEach((card) => {
+        card.addEventListener('click', () => {
+          const img = card.querySelector('img');
+          if (!img || !gameModal || !gameModalImg || !gameModalTitle) return;
+          gameModalImg.src = img.src;
+          gameModalImg.alt = img.alt;
+          gameModalTitle.textContent = card.dataset.title || img.alt;
+          gameModal.classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        });
       });
-    });
+    }
 
     function closeModal() {
-      gameModal.classList.add("hidden");
-      document.body.style.overflow = "";
+      if (!gameModal) return;
+      gameModal.classList.add('hidden');
+      document.body.style.overflow = '';
     }
 
-    closeGameModal.addEventListener("click", closeModal);
-    gameModalOverlay.addEventListener("click", closeModal);
+    document.addEventListener('DOMContentLoaded', () => {
+      bindGameCards();
+    });
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !gameModal.classList.contains("hidden")) {
+    closeGameModal?.addEventListener('click', closeModal);
+    gameModalOverlay?.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && gameModal && !gameModal.classList.contains('hidden')) {
         closeModal();
       }
     });
+  </script>
+
+  <!-- =========================================================
+    BACKGROUND DIM ON EMPTY HOVER AREAS
+  ========================================================== -->
+  <script>
+    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (supportsHover) {
+      const interactiveSelectors = [
+        'button',
+        '.social-btn',
+        '.friend-card',
+        '.toggle-btn',
+        '.shuffle-btn',
+        '#music-btn',
+        '.profile-wrapper',
+        'a'
+      ].join(',');
+
+      function activateBGHover() {
+        document.body.classList.add('hover-bg');
+      }
+
+      function clearHoverState() {
+        document.body.classList.remove('hover-bg');
+      }
+
+      document.addEventListener('mousemove', (e) => {
+        const overInteractive = e.target.closest(interactiveSelectors);
+        const insideContent = e.target.closest('.content, .banner, .mini-profile');
+        if (!overInteractive && !insideContent) activateBGHover();
+        else clearHoverState();
+      });
+
+      document.addEventListener('mouseleave', clearHoverState);
+    } else {
+      document.body.classList.remove('hover-bg');
+    }
   </script>
 </body>
 </html>
