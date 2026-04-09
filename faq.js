@@ -140,7 +140,7 @@ const faqItems = [
   },
   {
     question: "What should I know before talking to you?",
-    answer: "Nothing"
+    answer: "Do not be insistent"
   },
   {
     question: "Is there any topic you hate?",
@@ -288,7 +288,7 @@ const faqItems = [
   },
   {
     question: "Do you like it when someone insists, or does that annoy you?",
-    answer: "It annoys the fuck outta me"
+    answer: "It annoys the FUCK outta me"
   },
   {
     question: "Are you more rational or emotional?",
@@ -333,6 +333,38 @@ const faqItems = [
   {
     question: "Are you okay?",
       answer: "I think and hope so"
+  },
+  {
+    question:"What is your biggest fear",
+    answer:"Fear of loss, and roaches"
+  },
+  {
+    question:"You like being alone?",
+    answer:"Yes"
+  },
+  {
+    question:"Do you have a life?",
+    answer:"Debatable"
+  },
+  {
+    question:"Do you touch grass",
+    answer:"Nah"
+  },
+  {
+    question:"Are you cold?",
+    answer:"Some people say i am"
+  },
+  {
+    question:"If i message you, you will answer?",
+    answer:"Yes"
+  },
+  {
+    question:"Favorite feeling?",
+    answer:"Peace"
+  },
+  {
+    question:"What country would you like to travel to",
+    answer:"Canada, Japan, France, and Switzerland"
   }
 ];
 
