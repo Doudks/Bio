@@ -15,8 +15,19 @@ const favoritesData = [
       { title: "Dead Cells", img: "https://i.imgur.com/XgG95OP.png" },
       { title: "Undertale", img: "https://i.imgur.com/vQ3MY6T.png" },
       { title: "Battlefield 4", img: "https://i.imgur.com/tqlI7TU.jpeg" },
-      { title: "Factorio", img: "https://i.imgur.com/X2nVd0B.png" }
+      { title: "Factorio", img: "https://i.imgur.com/X2nVd0B.png" },
+      { title: "Roblox", img: "https://i.imgur.com/lh6ptm8.jpeg" },
+      { title: "Need for Speed Underground 2", img: "https://i.imgur.com/ViLBchV.jpeg" },
+      { title: "Mindustry", img: "https://cdn.imgchest.com/files/d4a24c6fb086.webp" },
+      { title: "The Binding of Isaac: Repentance", img: "https://i.imgur.com/mApVS6h.jpeg" },
+      { title: "Skullgirls", img: "https://cdn.imgchest.com/files/ba8b26de1e13.webp" },
+      { title: "Clash Royale", img: "https://i.imgur.com/LW18bnR.jpeg" },
+      { title: "Mortal Kombat 11", img: "https://i.imgur.com/k6NsJiP.jpeg" },
+      { title: "Injustice 2", img: "https://i.imgur.com/rz9xt7C.jpeg" },
+      { title: "Garry's Mod", img: "https://i.imgur.com/ssJ9uPg.jpeg" }
       
+  
+  //   { title: "Placeholder", img: "Placeholder.png" },
     ]
   },
   
@@ -55,8 +66,12 @@ const favoritesData = [
       { title: "Darwin's Game", img: "https://cdn.imgchest.com/files/701df77393de.webp" },
       { title: "Gachiakuta", img: "https://cdn.imgchest.com/files/4826cc8117c2.webp" },
       { title: "Blue Lock", img: "https://cdn.imgchest.com/files/507a8bee314d.webp" },
-      { title: "Serial Experiments Lain", img: "https://cdn.imgchest.com/files/afc547d4f788.webp" }
-      
+      { title: "Serial Experiments Lain", img: "https://cdn.imgchest.com/files/afc547d4f788.webp" },
+      { title: "Berserk", img: "https://i.imgur.com/tjqxWKA.jpeg" },
+      { title: "Godzilla Singular Point", img: "https://i.imgur.com/a8EVxz7.jpeg" },
+      { title: "Tokyo Ghoul", img: "https://i.imgur.com/v2IvZZB.jpeg" }
+    
+        //   { title: "Placeholder", img: "Placeholder.png" },
     ]
     
 // ===================================|  MANGAS  |=========================================
@@ -140,4 +155,5 @@ function bindGameCards() {
     });
   });
 }
+
 document.addEventListener("DOMContentLoaded", renderFavorites);
