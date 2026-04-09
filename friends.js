@@ -29,7 +29,7 @@ const friendsData = {
     avatar: "https://i.imgur.com/jUiuNSr.png",
     desc: "Universum totum duobus tantum numeris servare possumus... SAPERE AUDE!!! Eu gosto de matemática, física, e tecnologia, de mexer em eletrônicos , computadores e reparar-los, minha meta é fazer faculdade de engenharia da computação",
     status: "dnd",
-    background: "https://cdn.imgchest.com/files/8edfdd8c1f8d.webp"
+    background: "https://i.imgur.com/qumCYma.jpeg"
   },
 
   matheusbleck21: {
@@ -128,7 +128,7 @@ const friendsOrder = [
   "Nikko",
   "nitidez",
   "Yingloomy",
-  "yoserius",
+  "YOserius",
   "Zilirian",
   "jpxwf12",
   "jann",
