@@ -1,3 +1,4 @@
+
 const music = document.getElementById("bg-music");
 
 const openPlayerBtn = document.getElementById("music-btn");
@@ -18,6 +19,9 @@ const miniPlayerVolumeBtn = document.getElementById("mini-player-volume-btn");
 const miniPlayerVolumePopup = document.getElementById("mini-player-volume-popup");
 const miniPlayerBg = document.querySelector(".mini-player-bg");
 const miniPlayerBgNext = document.querySelector(".mini-player-bg-next");
+const miniPlayerBgVideo = document.getElementById("mini-player-bg-video");
+const miniPlayerVisualizer = document.getElementById("mini-player-visualizer");
+const visualizerBars = document.querySelectorAll(".visualizer-bar");
 
 const musicList = [
   {
@@ -174,6 +178,13 @@ const musicList = [
     youtube: "https://www.youtube.com/watch?v=cpJ5JIscnLs",
     background: "https://i.imgur.com/DyJ3zOL.jpeg"
   },
+  {
+    name: "Melanie Martinez - AVOIDANT (Official Audio)",
+    src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/AVOIDANT.mp3",
+    thumbnail: "https://i.imgur.com/0vtl467.jpeg",
+    youtube: "https://www.youtube.com/watch?v=kjIuGUDvZkw",
+    background: "https://i.imgur.com/WNcWPZZ.png"
+  }
   
 ];
 
@@ -202,112 +213,48 @@ if (
   miniPlayerPlayPause &&
   miniPlayerProgress &&
   miniPlayerCurrent &&
-  miniPlayerVolume &&
+  miniPlayerDuration &&
   miniPlayerVolumeBtn &&
-  miniPlayerBg &&
-miniPlayerBgNext &&
   miniPlayerVolumePopup &&
-  miniPlayerDuration
+  miniPlayerBg &&
+  miniPlayerBgNext &&
+  miniPlayerBgVideo
 ) {
   music.volume = 0.16;
   
-  const preloadedTracks = new Map();
-let fullPlaylistPreloaded = false;
-let fullPlaylistPreloading = false;
-let playerImagesPreloaded = false;
-
-async function preloadTrack(index) {
-  const track = musicList[index];
-  if (!track || preloadedTracks.has(track.src)) return;
-
-  try {
-    const response = await fetch(track.src);
-    const blob = await response.blob();
-    const blobUrl = URL.createObjectURL(blob);
-
-    preloadedTracks.set(track.src, blobUrl);
-  } catch (err) {
-    console.error("Erro ao preloadar faixa:", track.name, err);
-  }
-}
-
-async function preloadAllTracks() {
-  if (fullPlaylistPreloaded || fullPlaylistPreloading) return;
-
-  fullPlaylistPreloading = true;
-
-  try {
-    await Promise.all(
-      musicList.map((_, index) => preloadTrack(index))
-    );
-
-    fullPlaylistPreloaded = true;
-    console.log("Todas as músicas foram preloadadas.");
-  } catch (err) {
-    console.error("Erro no preload completo da playlist:", err);
-  } finally {
-    fullPlaylistPreloading = false;
-  }
-}
-
-
-function preloadPlayerTracks() {
-  preloadTrack(currentMusicIndex);
-  preloadTrack((currentMusicIndex + 1) % musicList.length);
-  preloadTrack((currentMusicIndex + 2) % musicList.length);
+  if (miniPlayerVisualizer) {
+  miniPlayerVisualizer.classList.add("paused");
 }
   
-miniPlayerVolume.value = music.volume * 100;
-
-miniPlayerVolume.addEventListener("input", () => {
-  music.volume = miniPlayerVolume.value / 100;
-  updateVolumeIcon();
-});
-
-miniPlayerVolumeBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  miniPlayerVolumePopup.classList.toggle("show");
-});
-
-document.addEventListener("click", (e) => {
-  const clickedInsideVolume =
-    miniPlayerVolumePopup.contains(e.target) ||
-    miniPlayerVolumeBtn.contains(e.target);
-
-  if (!clickedInsideVolume) {
-    miniPlayerVolumePopup.classList.remove("show");
-  }
-});
-
-function updateVolumeIcon() {
-  const vol = music.volume;
-
-  if (vol === 0) {
-    miniPlayerVolumeBtn.textContent = "🔇";
-  } else if (vol <= 0.5) {
-    miniPlayerVolumeBtn.textContent = "🔉";
-  } else {
-    miniPlayerVolumeBtn.textContent = "🔊";
-  }
+function startVisualizer() {
+  if (!miniPlayerVisualizer) return;
+  miniPlayerVisualizer.classList.remove("paused");
 }
 
-function preloadPlayerImages() {
-  if (playerImagesPreloaded) return;
-
-  playerImagesPreloaded = true;
-
-  musicList.forEach(track => {
-    if (track.thumbnail) {
-      const thumbImg = new Image();
-      thumbImg.src = track.thumbnail;
-    }
-
-    if (track.background) {
-      const bgImg = new Image();
-      bgImg.src = track.background;
-    }
-  });
+function stopVisualizer() {
+  if (!miniPlayerVisualizer) return;
+  miniPlayerVisualizer.classList.add("paused");
 }
+
+  const TRACK_CHANGE_COOLDOWN = 600;
+
+  const comeHomeTrigger = {
+  trackName: "Jace June - Come Home (Sped Up)",
+  triggerTime: 103.5168,
+  videoSrc: "https://raw.githubusercontent.com/Doudks/test/main/mp4file/Alone.mp4",
+  videoDuration: 32
+};
+
+  let trackButtonCooldown = false;
+  let crossedTriggerBySeek = false;
+  let comeHomeVideoPlayed = false;
+  let comeHomeVideoConsumed = false;
+  let hidingComeHomeVideo = false;
+  let playerImagesPreloaded = false;
+
+  const preloadedTracks = new Map();
+  let fullPlaylistPreloaded = false;
+  let fullPlaylistPreloading = false;
 
   function formatTime(seconds) {
     if (!isFinite(seconds)) return "0:00";
@@ -315,124 +262,343 @@ function preloadPlayerImages() {
     const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
     return `${mins}:${secs}`;
   }
-  
-  function setupTitleMarquee() {
-  const titleWrap = document.querySelector(".mini-player-title-wrap");
-  if (!titleWrap || !miniPlayerTitle) return;
 
-  miniPlayerTitle.classList.remove("is-overflowing");
-  miniPlayerTitle.style.removeProperty("--marquee-distance");
-  miniPlayerTitle.style.removeProperty("--marquee-duration");
-  miniPlayerTitle.style.transform = "translateX(0)";
-
-  requestAnimationFrame(() => {
-    const wrapWidth = titleWrap.clientWidth;
-    const textWidth = miniPlayerTitle.scrollWidth;
-
-    if (textWidth > wrapWidth) {
-      const distance = textWidth - wrapWidth + 24;
-      const duration = Math.max(6, distance / 35);
-
-      miniPlayerTitle.classList.add("is-overflowing");
-      miniPlayerTitle.style.setProperty("--marquee-distance", `${distance}px`);
-      miniPlayerTitle.style.setProperty("--marquee-duration", `${duration}s`);
-    }
-  });
-}
-
-function updateTrackUI() {
-  const track = musicList[currentMusicIndex];
-
-  const nextBg = track.background || track.thumbnail || "";
-  const currentBg = miniPlayerBg.dataset.currentBg || "";
-
-  if (!currentBg) {
-    miniPlayerBg.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
-    miniPlayerBg.dataset.currentBg = nextBg;
-  } else if (currentBg !== nextBg) {
-    miniPlayerBgNext.style.transition = "none";
-    miniPlayerBgNext.style.opacity = "0";
-    miniPlayerBgNext.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
-
-    miniPlayerBgNext.offsetHeight;
-
-    miniPlayerBgNext.style.transition = "opacity 0.35s linear";
-    miniPlayerBgNext.style.opacity = "1";
-
-    const handleFade = (e) => {
-      if (e.propertyName !== "opacity") return;
-
-      miniPlayerBg.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
-      miniPlayerBg.dataset.currentBg = nextBg;
-
-      miniPlayerBgNext.style.transition = "none";
-      miniPlayerBgNext.style.opacity = "0";
-
-      miniPlayerBgNext.removeEventListener("transitionend", handleFade);
-    };
-
-    miniPlayerBgNext.addEventListener("transitionend", handleFade);
+  function isComeHomeTrack() {
+    return musicList[currentMusicIndex]?.name === comeHomeTrigger.trackName;
   }
 
-  miniPlayerTitle.textContent = track.name;
-  miniPlayerThumb.src = track.thumbnail;
-  miniPlayerLink.href = track.youtube;
+  function updateVolumeIcon() {
+    const vol = music.volume;
 
-  setupTitleMarquee();
+    if (vol === 0) {
+      miniPlayerVolumeBtn.textContent = "🔇";
+    } else if (vol <= 0.5) {
+      miniPlayerVolumeBtn.textContent = "🔉";
+    } else {
+      miniPlayerVolumeBtn.textContent = "🔊";
+    }
+  }
+
+  async function preloadTrack(index) {
+    const track = musicList[index];
+    if (!track || preloadedTracks.has(track.src)) return;
+
+    try {
+      const response = await fetch(track.src);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      preloadedTracks.set(track.src, blobUrl);
+    } catch (err) {
+      console.error("Erro ao preloadar faixa:", track.name, err);
+    }
+  }
+
+  async function preloadAllTracks() {
+    if (fullPlaylistPreloaded || fullPlaylistPreloading) return;
+
+    fullPlaylistPreloading = true;
+
+    try {
+      await Promise.all(musicList.map((_, index) => preloadTrack(index)));
+      fullPlaylistPreloaded = true;
+    } catch (err) {
+      console.error("Erro no preload completo da playlist:", err);
+    } finally {
+      fullPlaylistPreloading = false;
+    }
+  }
+
+  function preloadPlayerImages() {
+    if (playerImagesPreloaded) return;
+
+    playerImagesPreloaded = true;
+
+    musicList.forEach((track) => {
+      if (track.thumbnail) {
+        const thumbImg = new Image();
+        thumbImg.src = track.thumbnail;
+      }
+
+      if (track.background) {
+        const bgImg = new Image();
+        bgImg.src = track.background;
+      }
+    });
+  }
+
+  function setupTitleMarquee() {
+    const titleWrap = document.querySelector(".mini-player-title-wrap");
+    if (!titleWrap || !miniPlayerTitle) return;
+
+    miniPlayerTitle.classList.remove("is-overflowing");
+    miniPlayerTitle.style.removeProperty("--marquee-distance");
+    miniPlayerTitle.style.removeProperty("--marquee-duration");
+    miniPlayerTitle.style.transform = "translateX(0)";
+
+    requestAnimationFrame(() => {
+      const wrapWidth = titleWrap.clientWidth;
+      const textWidth = miniPlayerTitle.scrollWidth;
+
+      if (textWidth > wrapWidth) {
+        const distance = textWidth - wrapWidth + 24;
+        const duration = Math.max(6, distance / 35);
+
+        miniPlayerTitle.classList.add("is-overflowing");
+        miniPlayerTitle.style.setProperty("--marquee-distance", `${distance}px`);
+        miniPlayerTitle.style.setProperty("--marquee-duration", `${duration}s`);
+      }
+    });
+  }
+
+   function resetComeHomeVideoState() {
+    crossedTriggerBySeek = false;
+    comeHomeVideoPlayed = false;
+    comeHomeVideoConsumed = false;
+    hidingComeHomeVideo = false;
+
+    miniPlayerBgVideo.pause();
+    miniPlayerBgVideo.currentTime = 0;
+    miniPlayerBgVideo.classList.remove("show", "hide");
+    miniPlayerBgVideo.style.removeProperty("opacity");
+    miniPlayerBgVideo.removeAttribute("src");
+    miniPlayerBgVideo.load();
+  }
+
+  async function playComeHomeBackgroundVideo() {
+    if (!miniPlayerBgVideo || !isComeHomeTrack() || comeHomeVideoPlayed) return;
+
+    comeHomeVideoPlayed = true;
+    hidingComeHomeVideo = false;
+
+    try {
+      miniPlayerBgVideo.pause();
+      miniPlayerBgVideo.src = comeHomeTrigger.videoSrc;
+      miniPlayerBgVideo.muted = true;
+      miniPlayerBgVideo.playsInline = true;
+
+      await new Promise((resolve, reject) => {
+        const onLoaded = () => {
+          miniPlayerBgVideo.removeEventListener("loadeddata", onLoaded);
+          miniPlayerBgVideo.removeEventListener("error", onError);
+          resolve();
+        };
+
+        const onError = () => {
+          miniPlayerBgVideo.removeEventListener("loadeddata", onLoaded);
+          miniPlayerBgVideo.removeEventListener("error", onError);
+          reject(new Error("Falha ao carregar o vídeo"));
+        };
+
+        miniPlayerBgVideo.addEventListener("loadeddata", onLoaded, { once: true });
+        miniPlayerBgVideo.addEventListener("error", onError, { once: true });
+        miniPlayerBgVideo.load();
+      });
+
+      miniPlayerBgVideo.currentTime = 0;
+    miniPlayerBgVideo.style.removeProperty("opacity");
+    miniPlayerBgVideo.classList.remove("hide");
+    miniPlayerBgVideo.classList.add("show");
+
+await miniPlayerBgVideo.play();
+    } catch (err) {
+      comeHomeVideoPlayed = false;
+      console.error("Erro ao tocar vídeo de fundo:", err);
+    }
+  }
+  
+  function syncComeHomeVideoToMusic() {
+  if (!miniPlayerBgVideo || !isComeHomeTrack() || !comeHomeVideoPlayed) return;
+
+  const videoOffset = music.currentTime - comeHomeTrigger.triggerTime;
+  const videoEndTime = comeHomeTrigger.videoDuration;
+
+  if (videoOffset < 0 || videoOffset > videoEndTime) {
+  comeHomeVideoConsumed = true;
+  hideComeHomeBackgroundVideoSmooth(false);
+  return;
+}
+
+  if (!miniPlayerBgVideo.src) {
+    miniPlayerBgVideo.src = comeHomeTrigger.videoSrc;
+    miniPlayerBgVideo.muted = true;
+    miniPlayerBgVideo.playsInline = true;
+  }
+
+  miniPlayerBgVideo.style.removeProperty("opacity");
+  miniPlayerBgVideo.classList.remove("hide");
+  miniPlayerBgVideo.classList.add("show");
+
+  if (Math.abs((miniPlayerBgVideo.currentTime || 0) - videoOffset) > 0.15) {
+    miniPlayerBgVideo.currentTime = videoOffset;
+  }
 
   if (music.paused) {
-    miniPlayerPlayPause.textContent = "play";
-    miniPlayerPlayPause.classList.remove("playing");
-  } else {
-    miniPlayerPlayPause.textContent = "pause";
-    miniPlayerPlayPause.classList.add("playing");
+    miniPlayerBgVideo.pause();
+  } else if (miniPlayerBgVideo.paused) {
+    miniPlayerBgVideo.play().catch(() => {});
   }
 }
 
-  function loadMusic(index) {
-  currentMusicIndex = index;
+  function hideComeHomeBackgroundVideoSmooth(resetPlaybackState = true) {
+  if (!miniPlayerBgVideo || hidingComeHomeVideo) return;
 
-  const track = musicList[currentMusicIndex];
-  const preloadedUrl = preloadedTracks.get(track.src);
+  hidingComeHomeVideo = true;
 
-  music.src = preloadedUrl || track.src;
-  music.load();
-  updateTrackUI();
+  miniPlayerBgVideo.style.removeProperty("opacity");
+  miniPlayerBgVideo.classList.remove("show");
+  miniPlayerBgVideo.classList.add("hide");
+
+  const finishHide = (e) => {
+    if (e.propertyName !== "opacity") return;
+
+    miniPlayerBgVideo.pause();
+    miniPlayerBgVideo.currentTime = 0;
+    miniPlayerBgVideo.classList.remove("hide");
+    miniPlayerBgVideo.removeAttribute("src");
+    miniPlayerBgVideo.load();
+    hidingComeHomeVideo = false;
+
+    if (resetPlaybackState) {
+      comeHomeVideoPlayed = false;
+    }
+
+    miniPlayerBgVideo.removeEventListener("transitionend", finishHide);
+  };
+
+  miniPlayerBgVideo.addEventListener("transitionend", finishHide);
 }
 
-  async function playCurrentMusic() {
-    try {
-      await music.play();
-      updateTrackUI();
-    } catch (err) {
-      console.error("Erro ao tocar música:", err);
+  function startTrackChangeCooldown() {
+    if (trackButtonCooldown) return false;
+
+    trackButtonCooldown = true;
+    prevMusicBtn.disabled = true;
+    nextMusicBtn.disabled = true;
+
+    setTimeout(() => {
+      trackButtonCooldown = false;
+      prevMusicBtn.disabled = false;
+      nextMusicBtn.disabled = false;
+    }, TRACK_CHANGE_COOLDOWN);
+
+    return true;
+  }
+
+  function updateTrackUI() {
+    const track = musicList[currentMusicIndex];
+    const nextBg = track.background || track.thumbnail || "";
+    const currentBg = miniPlayerBg.dataset.currentBg || "";
+
+    if (!currentBg) {
+      miniPlayerBg.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
+      miniPlayerBg.dataset.currentBg = nextBg;
+    } else if (currentBg !== nextBg) {
+      miniPlayerBgNext.style.transition = "none";
+      miniPlayerBgNext.style.opacity = "0";
+      miniPlayerBgNext.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
+
+      miniPlayerBgNext.offsetHeight;
+
+      miniPlayerBgNext.style.transition = "opacity 0.35s linear";
+      miniPlayerBgNext.style.opacity = "1";
+
+      const handleFade = (e) => {
+        if (e.propertyName !== "opacity") return;
+
+        miniPlayerBg.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
+        miniPlayerBg.dataset.currentBg = nextBg;
+
+        miniPlayerBgNext.style.transition = "none";
+        miniPlayerBgNext.style.opacity = "0";
+
+        miniPlayerBgNext.removeEventListener("transitionend", handleFade);
+      };
+
+      miniPlayerBgNext.addEventListener("transitionend", handleFade);
+    }
+
+    miniPlayerTitle.textContent = track.name;
+    miniPlayerThumb.src = track.thumbnail;
+    miniPlayerLink.href = track.youtube;
+
+    setupTitleMarquee();
+
+    if (music.paused) {
+      miniPlayerPlayPause.textContent = "play";
+      miniPlayerPlayPause.classList.remove("playing");
+    } else {
+      miniPlayerPlayPause.textContent = "pause";
+      miniPlayerPlayPause.classList.add("playing");
     }
   }
 
-  function pauseCurrentMusic() {
-    music.pause();
+  function loadMusic(index) {
+    currentMusicIndex = index;
+    resetComeHomeVideoState();
+
+    const track = musicList[currentMusicIndex];
+    const preloadedUrl = preloadedTracks.get(track.src);
+
+    music.src = preloadedUrl || track.src;
+    music.load();
     updateTrackUI();
   }
-  
-function openMiniPlayer() {
-  miniPlayer.classList.add("show");
-  playerOpened = true;
+
+  async function playCurrentMusic() {
+  try {
+    await music.play();
+    startVisualizer();
+    updateTrackUI();
+  } catch (err) {
+    console.error("Erro ao tocar música:", err);
+  }
+}
+
+  function pauseCurrentMusic() {
+  music.pause();
+  stopVisualizer();
   updateTrackUI();
-  preloadPlayerImages();
-  preloadAllTracks();
 }
 
-function closeMiniPlayer() {
+  function openMiniPlayer() {
+    miniPlayer.classList.add("show");
+    playerOpened = true;
+    updateTrackUI();
+    preloadPlayerImages();
+    preloadAllTracks();
+  }
+
+  function closeMiniPlayer() {
   miniPlayer.classList.remove("show");
+  stopVisualizer();
+  hideComeHomeBackgroundVideoSmooth();
 }
 
-  openPlayerBtn.addEventListener("click", () => {
-    openMiniPlayer();
+  miniPlayerVolume.value = music.volume * 100;
+  updateVolumeIcon();
+
+  miniPlayerVolume.addEventListener("input", () => {
+    music.volume = miniPlayerVolume.value / 100;
+    updateVolumeIcon();
   });
 
-  miniPlayerClose.addEventListener("click", () => {
-    closeMiniPlayer();
+  miniPlayerVolumeBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    miniPlayerVolumePopup.classList.toggle("show");
   });
+
+  document.addEventListener("click", (e) => {
+    const clickedInsideVolume =
+      miniPlayerVolumePopup.contains(e.target) ||
+      miniPlayerVolumeBtn.contains(e.target);
+
+    if (!clickedInsideVolume) {
+      miniPlayerVolumePopup.classList.remove("show");
+    }
+  });
+
+  openPlayerBtn.addEventListener("click", openMiniPlayer);
+  miniPlayerClose.addEventListener("click", closeMiniPlayer);
 
   miniPlayerPlayPause.addEventListener("click", async () => {
     if (music.paused) {
@@ -443,11 +609,10 @@ function closeMiniPlayer() {
   });
 
   prevMusicBtn.addEventListener("click", async () => {
+    if (!startTrackChangeCooldown()) return;
+
     const wasPlaying = !music.paused;
-
-    currentMusicIndex =
-      (currentMusicIndex - 1 + musicList.length) % musicList.length;
-
+    currentMusicIndex = (currentMusicIndex - 1 + musicList.length) % musicList.length;
     loadMusic(currentMusicIndex);
 
     if (wasPlaying) {
@@ -456,11 +621,10 @@ function closeMiniPlayer() {
   });
 
   nextMusicBtn.addEventListener("click", async () => {
+    if (!startTrackChangeCooldown()) return;
+
     const wasPlaying = !music.paused;
-
-    currentMusicIndex =
-      (currentMusicIndex + 1) % musicList.length;
-
+    currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
     loadMusic(currentMusicIndex);
 
     if (wasPlaying) {
@@ -474,30 +638,149 @@ function closeMiniPlayer() {
   });
 
   music.addEventListener("timeupdate", () => {
-  if (!isFinite(music.duration) || music.duration <= 0) return;
+    if (!isFinite(music.duration) || music.duration <= 0) return;
+  
+    const currentTime = music.currentTime;
+    const progress = (currentTime / music.duration) * 100;
+  
+    miniPlayerProgress.value = progress;
+    miniPlayerCurrent.textContent = formatTime(currentTime);
+    miniPlayerDuration.textContent = formatTime(music.duration);
+  
+    if (
+    isComeHomeTrack() &&
+    currentTime < comeHomeTrigger.triggerTime &&
+    !hidingComeHomeVideo
+  ) {
+    crossedTriggerBySeek = false;
+    comeHomeVideoConsumed = false;
+  }
+  
+    if (
+    playerOpened &&
+    isComeHomeTrack() &&
+    !comeHomeVideoPlayed &&
+    !comeHomeVideoConsumed &&
+    !crossedTriggerBySeek &&
+    currentTime >= comeHomeTrigger.triggerTime
+  ) {
+    playComeHomeBackgroundVideo();
+  }
+  
+  
+  
+    if (
+      playerOpened &&
+      isComeHomeTrack() &&
+      comeHomeVideoPlayed &&
+      !hidingComeHomeVideo
+    ) {
+      syncComeHomeVideoToMusic();
+    }
+  });
 
-  const progress = (music.currentTime / music.duration) * 100;
-  miniPlayerProgress.value = progress;
-  miniPlayerCurrent.textContent = formatTime(music.currentTime);
-  miniPlayerDuration.textContent = formatTime(music.duration);
+  music.addEventListener("seeking", () => {
+  if (!isComeHomeTrack()) return;
+
+  const currentTime = music.currentTime;
+  const videoOffset = currentTime - comeHomeTrigger.triggerTime;
+  const videoEndTime = comeHomeTrigger.videoDuration;
+
+  if (currentTime < comeHomeTrigger.triggerTime) {
+  crossedTriggerBySeek = false;
+  comeHomeVideoConsumed = false;
+
+  if (comeHomeVideoPlayed) {
+    hideComeHomeBackgroundVideoSmooth(true);
+  }
+
+  return;
+}
+
+  if (!comeHomeVideoPlayed && currentTime >= comeHomeTrigger.triggerTime) {
+    crossedTriggerBySeek = true;
+  }
+
+  if (comeHomeVideoPlayed) {
+    if (videoOffset < 0 || videoOffset > videoEndTime) {
+      hideComeHomeBackgroundVideoSmooth(true);
+    } else {
+      syncComeHomeVideoToMusic();
+    }
+  }
 });
 
   miniPlayerProgress.addEventListener("input", () => {
-    if (!isFinite(music.duration) || music.duration <= 0) return;
+  if (!isFinite(music.duration) || music.duration <= 0) return;
 
-    const newTime = (miniPlayerProgress.value / 100) * music.duration;
-    music.currentTime = newTime;
-  });
+  const newTime = (miniPlayerProgress.value / 100) * music.duration;
+  const videoOffset = newTime - comeHomeTrigger.triggerTime;
+  const videoEndTime = comeHomeTrigger.videoDuration;
+
+  if (isComeHomeTrack() && newTime < comeHomeTrigger.triggerTime) {
+  crossedTriggerBySeek = false;
+  comeHomeVideoConsumed = false;
+
+  if (comeHomeVideoPlayed) {
+    hideComeHomeBackgroundVideoSmooth(true);
+  }
+
+  music.currentTime = newTime;
+  return;
+}
+
+  if (
+    isComeHomeTrack() &&
+    newTime >= comeHomeTrigger.triggerTime &&
+    !comeHomeVideoPlayed
+  ) {
+    crossedTriggerBySeek = true;
+  }
+
+  music.currentTime = newTime;
+
+  if (isComeHomeTrack() && comeHomeVideoPlayed) {
+    if (videoOffset < 0 || videoOffset > videoEndTime) {
+      hideComeHomeBackgroundVideoSmooth(true);
+    } else {
+      syncComeHomeVideoToMusic();
+    }
+  }
+});
 
   music.addEventListener("ended", async () => {
-    currentMusicIndex =
-      (currentMusicIndex + 1) % musicList.length;
-
+    currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
     loadMusic(currentMusicIndex);
 
     if (playerOpened) {
       await playCurrentMusic();
     }
   });
+
+  miniPlayerBgVideo.addEventListener("ended", () => {
+  comeHomeVideoConsumed = true;
+  hideComeHomeBackgroundVideoSmooth(false);
+});
+
+  miniPlayerBgVideo.addEventListener("error", () => {
+    console.log("Erro no vídeo:", miniPlayerBgVideo.error);
+  });
+
+  music.addEventListener("pause", () => {
+  stopVisualizer();
+
+  if (!miniPlayerBgVideo.paused) {
+    miniPlayerBgVideo.pause();
+  }
+});
+
+  music.addEventListener("play", () => {
+  startVisualizer();
+
+  if (miniPlayerBgVideo.classList.contains("show") && miniPlayerBgVideo.paused) {
+    miniPlayerBgVideo.play().catch(() => {});
+  }
+});
+
   loadMusic(currentMusicIndex);
 }
