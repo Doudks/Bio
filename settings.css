@@ -1,0 +1,256 @@
+#settings-btn.settings-trigger-btn {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--player-button-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--player-button-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 36px;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: 0;
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease;
+}
+
+#settings-btn.settings-trigger-btn:hover {
+  color: #fff;
+  border-color: #fff;
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 12px rgba(255,255,255,0.08);
+  transform: translateY(-1px);
+}
+
+#settings-btn.settings-trigger-btn:active {
+  transform: scale(0.94);
+}
+
+body.light-theme #settings-btn.settings-trigger-btn:hover {
+  color: #111;
+}
+
+.settings-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 72px;
+  width: min(340px, calc(100vw - 32px));
+  padding: 16px;
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(8, 8, 14, 0.96), rgba(14, 10, 20, 0.98));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.55),
+    0 0 24px rgba(201, 20, 65, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  z-index: 45000;
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease,
+    visibility 0.22s ease;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.settings-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top left, rgba(201, 20, 65, 0.12), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(255, 143, 189, 0.08), transparent 28%);
+  pointer-events: none;
+}
+
+.settings-panel.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.settings-panel.hidden {
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.settings-panel-header,
+.settings-panel-body {
+  position: relative;
+  z-index: 1;
+}
+
+.settings-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.settings-panel-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--text-main);
+}
+
+.settings-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.03);
+  color: var(--player-button-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.settings-close-btn:hover {
+  background: rgba(255,255,255,0.07);
+  border-color: rgba(255,255,255,0.18);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(255,255,255,0.06);
+  transform: translateY(-1px);
+}
+
+.settings-close-btn:active {
+  transform: scale(0.94);
+}
+
+.settings-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-option-btn {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(201, 20, 65, 0.95), rgba(140, 0, 54, 0.95));
+  color: #fff;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow:
+    0 10px 18px rgba(0,0,0,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.settings-option-btn::after {
+  content: "›";
+  font-size: 18px;
+  opacity: 0.72;
+}
+
+.settings-option-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow:
+    0 14px 24px rgba(0,0,0,0.22),
+    0 0 14px rgba(201, 20, 65, 0.16),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.settings-option-btn:active {
+  transform: scale(0.985);
+}
+
+body.light-theme .settings-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.96), rgba(240,240,240,0.98));
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.12),
+    0 0 20px rgba(201, 20, 65, 0.05),
+    inset 0 1px 0 rgba(255,255,255,0.55);
+}
+
+body.light-theme .settings-panel::before {
+  background:
+    radial-gradient(circle at top left, rgba(201, 20, 65, 0.08), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(160, 120, 140, 0.08), transparent 28%);
+}
+
+body.light-theme .settings-panel-header {
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+body.light-theme .settings-panel-title {
+  color: #151515;
+}
+
+body.light-theme .settings-close-btn {
+  border-color: rgba(0,0,0,0.10);
+  background: rgba(0,0,0,0.03);
+  color: rgba(20,20,20,0.75);
+}
+
+body.light-theme .settings-close-btn:hover {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.16);
+  color: #111;
+}
+
+body.light-theme .settings-option-btn {
+  background:
+    linear-gradient(135deg, #d3afbb, #b98b9b);
+  color: #1b1b1b;
+  border-color: rgba(255,255,255,0.28);
+  box-shadow:
+    0 10px 18px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+}
+
+body.light-theme .settings-option-btn:hover {
+  background:
+    linear-gradient(135deg, #ddbcca, #c296a6);
+  border-color: rgba(255,255,255,0.34);
+  box-shadow:
+    0 14px 24px rgba(0,0,0,0.10),
+    0 0 10px rgba(201,20,65,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.38);
+}
