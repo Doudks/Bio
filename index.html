@@ -11,7 +11,7 @@
       script-src 'self' https: 'unsafe-inline';
       style-src 'self' https: 'unsafe-inline';
       img-src 'self' https: data:;
-      media-src 'self' https:;
+      media-src 'self' https: blob:;
       font-src 'self' https: data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0d0d0d">
@@ -32,6 +32,7 @@
   ========================================================== -->
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Nosifer&family=Rubik+Glitch&family=Metal+Mania&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="faq.css">
+  <link rel="stylesheet" href="settings.css">
 
   <!-- =========================================================
     STYLES
@@ -44,16 +45,96 @@
   ========================================================== -->
   <style>
     :root {
-      --bg-darkness: 0.65;
-      --neon-angle: 0deg;
-      --accent: #c91441;
-      --accent-soft: #ff8fbd;
-      --text-dim: rgba(255, 255, 255, 0.7);
-      --panel: rgba(255, 255, 255, 0.08);
-      --panel-2: rgba(255, 255, 255, 0.12);
-      --border-soft: rgba(255, 255, 255, 0.14);
-      --bg-panel: linear-gradient(180deg, rgba(55, 55, 55, 0.45), rgba(20, 20, 20, 0.7));
-    }
+  --bg-darkness: 0.65;
+  --neon-angle: 0deg;
+
+  --accent: #c91441;
+  --accent-soft: #ff8fbd;
+
+  --text-main: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.7);
+
+  --panel: rgba(255, 255, 255, 0.08);
+  --panel-2: rgba(255, 255, 255, 0.12);
+  --border-soft: rgba(255, 255, 255, 0.14);
+
+  --bg-panel: linear-gradient(180deg, rgba(55, 55, 55, 0.45), rgba(20, 20, 20, 0.7));
+  --body-text: #ffffff;
+  --heading-border: rgba(255, 255, 255, 0.2);
+  --social-btn-bg: rgba(255,255,255,0.1);
+  --friend-card-hover: rgba(255, 255, 255, 0.14);
+  --mini-body-text: rgba(255,255,255,0.65);
+  --mini-body-strong: rgba(255,255,255,0.82);
+  --player-track: rgba(255,255,255,0.16);
+  --player-track-2: rgba(255,255,255,0.14);
+  --player-overlay-1: rgba(8, 8, 12, 0.68);
+  --player-overlay-2: rgba(8, 8, 12, 0.86);
+  --player-popup-bg-1: rgba(20,20,26,0.98);
+  --player-popup-bg-2: rgba(12,12,18,0.98);
+  --player-button-text: rgba(255,255,255,0.75);
+  --player-button-border: rgba(255,255,255,0.25);
+  --player-title-color: #ffffff;
+  --faq-box-bg: linear-gradient(135deg, rgba(8, 8, 12, 0.92), rgba(18, 10, 18, 0.9));
+  --faq-box-border: rgba(227, 0, 57, 0.16);
+  --faq-box-glow: rgba(227, 0, 57, 0.07);
+  --faq-box-topline: rgba(255, 31, 90, 0.4);
+  --faq-box-sheen-1: rgba(227, 0, 57, 0.05);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.02);
+  --faq-box-sheen-3: rgba(227, 0, 57, 0.04);
+  --faq-text: rgba(255, 255, 255, 0.94);
+  --faq-divider: rgba(255, 255, 255, 0.18);
+  --faq-arrow-bg-1: rgba(255,255,255,0.08);
+  --faq-arrow-bg-2: rgba(255,255,255,0.03);
+  --faq-arrow-border: rgba(255, 255, 255, 0.14);
+  --faq-arrow-text: #f4f4f4;
+  --faq-arrow-hover-border: rgba(255, 31, 90, 0.45);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.12);
+  --faq-arrow-hover-bg-2: rgba(255,31,90,0.10);
+  --faq-arrow-hover-glow: rgba(255, 31, 90, 0.18);
+}
+
+body.light-theme {
+  --text-main: #111111;
+  --text-dim: rgba(0, 0, 0, 0.66);
+
+  --panel: rgba(255, 255, 255, 0.62);
+  --panel-2: rgba(255, 255, 255, 0.78);
+  --border-soft: rgba(0, 0, 0, 0.08);
+
+  --bg-panel: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(225,225,225,0.68));
+  --body-text: #111111;
+  --heading-border: rgba(0, 0, 0, 0.16);
+  --social-btn-bg: rgba(255,255,255,0.55);
+  --friend-card-hover: rgba(255, 255, 255, 0.82);
+  --mini-body-text: rgba(255,255,255,0.9);
+  --mini-body-strong: rgba(255,255,255,0.96);
+  --player-track: rgba(255,255,255,0.35);
+  --player-track-2: rgba(255,255,255,0.3);
+  --player-overlay-1: rgba(255, 255, 255, 0.58);
+  --player-overlay-2: rgba(235, 235, 235, 0.82);
+  --player-popup-bg-1: rgba(255,255,255,0.96);
+  --player-popup-bg-2: rgba(235,235,235,0.96);
+  --player-button-text: rgba(20,20,20,0.78);
+  --player-button-border: rgba(0,0,0,0.15);
+  --player-title-color: #111111;
+  --faq-box-bg: linear-gradient(135deg, rgba(255,255,255,0.72), rgba(235,235,235,0.88));
+  --faq-box-border: rgba(201, 20, 65, 0.14);
+  --faq-box-glow: rgba(201, 20, 65, 0.05);
+  --faq-box-topline: rgba(201, 20, 65, 0.22);
+  --faq-box-sheen-1: rgba(201, 20, 65, 0.035);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.22);
+  --faq-box-sheen-3: rgba(201, 20, 65, 0.03);
+  --faq-text: rgba(20, 20, 20, 0.92);
+  --faq-divider: rgba(0, 0, 0, 0.12);
+  --faq-arrow-bg-1: rgba(255,255,255,0.72);
+  --faq-arrow-bg-2: rgba(240,240,240,0.88);
+  --faq-arrow-border: rgba(0, 0, 0, 0.10);
+  --faq-arrow-text: #2b2b2b;
+  --faq-arrow-hover-border: rgba(201, 20, 65, 0.28);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.95);
+  --faq-arrow-hover-bg-2: rgba(201,20,65,0.08);
+  --faq-arrow-hover-glow: rgba(201, 20, 65, 0.10);
+}
 
     * { box-sizing: border-box; }
 
@@ -65,19 +146,22 @@
     }
 
     body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      color: #fff;
-      overflow-x: hidden;
-      background: transparent;
-      background-attachment: fixed;
-      background-position: center 0;
-    }
+  margin: 0;
+  font-family: 'Quicksand', sans-serif;
+  color: var(--body-text);
+  overflow-x: hidden;
+  background: transparent;
+  background-attachment: fixed;
+  background-position: center 0;
+  transition:
+    color 1s ease,
+    background-color 1s ease;
+}
 
     h2 {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-      padding-bottom: 5px;
-    }
+  border-bottom: 2px solid var(--heading-border);
+  padding-bottom: 5px;
+}
 
     ul {
       list-style: none;
@@ -177,28 +261,75 @@
       BACKGROUND / LOADING
     ========================================================== */
     #bg-parallax {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background-image:
-        linear-gradient(135deg, #0a0a0f, #1a0030, #3a004d, #003040, #0a0a0f, #260000),
-        url("https://i.imgur.com/xtzaH3v.png");
-      background-size: 400% 400%, cover;
-      background-position: 50% 50%, center;
-      background-repeat: no-repeat, no-repeat;
-      background-blend-mode: multiply;
-      animation: none;
-      background-size: cover;
-    }
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+  background-image:
+    linear-gradient(135deg, #0a0a0f, #1a0030, #3a004d, #003040, #0a0a0f, #260000),
+    url("https://i.imgur.com/xtzaH3v.png");
+  background-size: 400% 400%, cover;
+  background-position: 50% 50%, center;
+  background-repeat: no-repeat, no-repeat;
+  background-blend-mode: multiply;
+  animation: none;
+  background-size: cover;
+  transition:
+    filter 0.6s ease,
+    opacity 0.6s ease,
+    background-image 0.6s ease,
+    background-blend-mode 0.6s ease;
+}
+
+#bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 1;
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease;
+}
+
+body.video-bg-disabled #bg-video {
+  opacity: 0;
+}
+
+body.light-theme #bg-video {
+  filter: invert(1) brightness(0.72) contrast(1.08);
+}
+
+body.light-theme #bg-parallax {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.38), rgba(255,255,255,0.38)),
+    url("https://i.imgur.com/xtzaH3v.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: lighten;
+  filter: invert(1) brightness(0.72) contrast(1.08);
+}
 
     #bg-parallax::before {
-      content: "";
-      position: abolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-    }
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  transition: background 0.6s ease, opacity 0.6s ease;
+}
+
+body.light-theme #bg-parallax::before {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+    body.light-theme #bg-parallax::before {
+  background: rgba(255, 255, 255, 0.22);
+}
     
     #loading-screen {
       position: fixed;
@@ -430,42 +561,67 @@
     /* =========================================================
       TEXT / CARDS / BUTTONS
     ========================================================== */
-    .toggle-btn,
-    .shuffle-btn,
-    .music-btn,
-    .music-nav-btn,
-    .social-btn,
-    .friend-card,
-    .text-block,
-    .fact,
-    .love-list li,
-    .hate-list li,
-    .friends-list li,
-    .profile-wrapper,
-    .content {
-      transition:
-        opacity 1s ease,
-        background 1s ease,
-        transform 0.25s ease,
-        box-shadow 1s ease,
-        filter 1s ease,
-        border-color 0.22s ease,
-        color 0.22s ease;
-    }
+        .toggle-btn,
+  .shuffle-btn,
+  .music-btn,
+  .music-nav-btn,
+  .settings-trigger-btn,
+  .social-btn,
+  .friend-card,
+  .text-block,
+  .fact,
+  .love-list li,
+  .hate-list li,
+  .friends-list li,
+  .profile-wrapper,
+  .content {
+    transition:
+      opacity 1s ease,
+      background 1s ease,
+      transform 0.25s ease,
+      box-shadow 1s ease,
+      filter 1s ease,
+      border-color 1s ease,
+      color 1s ease;
+  }
 
     .toggle-btn {
-      display: block;
-      width: 100%;
-      background: linear-gradient(135deg, #e60054, #9b003a, #3a0018);
-      color: #fff;
-      padding: 12px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-bottom: 6px;
-      font-weight: bold;
-      box-shadow: 0 0 10px rgba(230,0,84,0.4), 0 4px 15px rgba(0,0,0,0.6);
-    }
+  display: block;
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), #9b003a, #3a0018);
+  color: var(--text-main);
+  padding: 12px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(230,0,84,0.25), 0 4px 15px rgba(0,0,0,0.25);
+}
+
+body.light-theme .toggle-btn {
+  background: linear-gradient(135deg, #d8b8c2, #b998a4, #977887);
+  color: #1f1f1f;
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: 0 0 10px rgba(80, 50, 65, 0.08), 0 4px 15px rgba(0,0,0,0.08);
+}
+
+body.light-theme .toggle-btn:hover {
+  background: linear-gradient(135deg, #e1c4cc, #c4a6b1, #a28391);
+  filter: brightness(1.01);
+}
+
+body.light-theme .shuffle-btn {
+  background: linear-gradient(135deg, #d8b8c2, #b998a4, #977887);
+  color: #1f1f1f;
+  border: 1px solid rgba(255,255,255,0.35);
+  box-shadow: 0 0 10px rgba(80, 50, 65, 0.08), 0 4px 15px rgba(0,0,0,0.08);
+}
+
+body.light-theme .shuffle-btn:hover {
+  background: linear-gradient(135deg, #e1c4cc, #c4a6b1, #a28391);
+  filter: brightness(1.01);
+}
 
     .toggle-content {
       max-height: 0;
@@ -507,16 +663,16 @@
     }
 
     .social-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.1);
-      padding: 8px 12px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-    }
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--social-btn-bg);
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--body-text);
+    font-weight: bold;
+}
 
     .social-btn img {
       width: 20px;
@@ -540,9 +696,9 @@
     }
 
     .friend-card:hover {
-      background: rgba(255, 255, 255, 0.14);
-      transform: translateY(-2px);
-    }
+  background: var(--friend-card-hover);
+  transform: translateY(-2px);
+}
 
     .friends-list {
       display: flex;
@@ -620,7 +776,7 @@
   -webkit-backdrop-filter: blur(6px);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
   font-size: 13px;
-  color: rgba(255,255,255,0.82);
+  color: var(--mini-body-strong);
   line-height: 1.35;
 }
 
@@ -661,10 +817,10 @@
     }
 
     .mini-body {
-      margin-top: 10px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.65);
-    }
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--mini-body-text);
+}
 
     .games-grid {
       display: grid;
@@ -770,29 +926,74 @@
       background: rgba(255,255,255,0.16);
     }
 
+ .fact-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 32000;
+  background: #000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.fact-video-modal.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.fact-video-modal.hidden {
+  display: block;
+}
+
+.fact-video-player {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+  background: #000;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.fact-video-modal.show .fact-video-player {
+  opacity: 1;
+}
+
+.fact.fact-jojo {
+  cursor: default;
+}
+
+.fact.fact-jojo:hover {
+  transform: none;
+  filter: none;
+}
+
     .social-btn:hover,
-    .toggle-btn:hover,
-    .shuffle-btn:hover {
-      background: linear-gradient(135deg, #ff1f75, #b80042, #5a001f);
-      transform: scale(1.03);
-      filter: brightness(1.1);
-    }
+  .toggle-btn:hover,
+  .shuffle-btn:hover {
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent), #7a002d);
+    transform: scale(1.03);
+    filter: brightness(1.04);
+}
 
     body.hover-bg .toggle-btn,
-    body.hover-bg .shuffle-btn,
-    body.hover-bg .social-btn,
-    body.hover-bg .friend-card,
-    body.hover-bg .text-block,
-    body.hover-bg .fact,
-    body.hover-bg .love-list li,
-    body.hover-bg .hate-list li,
-    body.hover-bg .friends-list li,
-    body.hover-bg .profile-wrapper,
-    body.hover-bg .content {
-      opacity: 0.22;
-      box-shadow: none !important;
-      filter: saturate(0.8);
-    }
+body.hover-bg .shuffle-btn,
+body.hover-bg .social-btn,
+body.hover-bg .friend-card,
+body.hover-bg .text-block,
+body.hover-bg .fact,
+body.hover-bg .love-list li,
+body.hover-bg .hate-list li,
+body.hover-bg .friends-list li,
+body.hover-bg .profile-wrapper {
+  opacity: 0.22;
+  box-shadow: none !important;
+  filter: saturate(0.8);
+}
 
     .facts-actions {
       display: flex;
@@ -812,17 +1013,17 @@
     }
 
     .music-nav-btn,
-    .music-btn,
-    #music-btn,
-    .mini-player-close,
-    .mini-player-volume-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.25);
-      color: rgba(255,255,255,0.75);
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: none;
-    }
+.music-btn,
+#music-btn,
+.mini-player-close,
+.mini-player-volume-btn {
+  background: transparent;
+  border: 1px solid var(--player-button-border);
+  color: var(--player-button-text);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: none;
+}
 
     .music-nav-btn,
     .mini-player-volume-btn,
@@ -886,20 +1087,20 @@
     }
 
     .shuffle-btn {
-      background: linear-gradient(135deg, #ff005d, #b80042, #4a001a);
-      color: #fff;
-      height: 36px;
-      padding: 0 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      white-space: nowrap;
-      box-shadow: 0 0 12px rgba(255,0,93,0.4), 0 4px 12px rgba(0,0,0,0.5);
-    }
+  background: linear-gradient(135deg, var(--accent), #b80042, #4a001a);
+  color: var(--text-main);
+  height: 36px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-shadow: 0 0 12px rgba(255,0,93,0.18), 0 4px 12px rgba(0,0,0,0.18);
+}
 
     /* =========================================================
       MINI PLAYER
@@ -968,13 +1169,34 @@
   will-change: opacity;
 }
 
+.mini-player-bg-video {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
 .mini-player-bg::after,
 .mini-player-bg-next::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(rgba(8, 8, 12, 0.68), rgba(8, 8, 12, 0.86));
+  background: linear-gradient(var(--player-overlay-1), var(--player-overlay-2));
+}
+
+.mini-player-bg-video.show {
+  opacity: 1;
+}
+
+.mini-player-bg-video.hide {
+  opacity: 0;
 }
 
 .mini-player-header,
@@ -982,7 +1204,7 @@
 .mini-player-volume-box,
 .mini-player-controls {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
     .mini-player.show {
@@ -1025,14 +1247,14 @@
       }
       
       .mini-player-title {
-        font-size: 15px;
-        font-weight: 600;
-        color: #fff;
-        display: inline-block;
-        white-space: nowrap;
-        min-width: max-content;
-        will-change: transform;
-      }
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--player-title-color);
+  display: inline-block;
+  white-space: nowrap;
+  min-width: max-content;
+  will-change: transform;
+}
       
       .mini-player-title.is-overflowing {
         cursor: default;
@@ -1060,12 +1282,12 @@
     }
 
     .mini-player-time {
-      margin-top: 6px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: rgba(255,255,255,0.65);
-    }
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-dim);
+}
 
     .mini-player-controls {
       margin-top: 12px;
@@ -1080,26 +1302,72 @@
       display: flex;
       justify-content: flex-end;
     }
+    
+     .mini-player-visualizer {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 4;
+  width: 26px;
+  height: 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.visualizer-bar {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  box-shadow: 0 0 6px rgba(201, 20, 65, 0.22);
+  transform-origin: bottom center;
+  animation: miniVisualizerIdle 1.2s ease-in-out infinite;
+}
+
+.visualizer-bar:nth-child(1) { animation-delay: 0s; }
+.visualizer-bar:nth-child(2) { animation-delay: 0.15s; }
+.visualizer-bar:nth-child(3) { animation-delay: 0.3s; }
+.visualizer-bar:nth-child(4) { animation-delay: 0.45s; }
+
+.mini-player-visualizer.paused .visualizer-bar {
+  animation-play-state: paused;
+  height: 4px;
+  opacity: 0.45;
+}
+
+@keyframes miniVisualizerIdle {
+  0%, 100% { height: 4px; }
+  25% { height: 10px; }
+  50% { height: 16px; }
+  75% { height: 8px; }
+}
 
     .mini-player-volume-popup {
-      position: absolute;
-      right: 0;
-      bottom: 46px;
-      width: 42px;
-      height: 132px;
-      padding: 10px 0;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(20,20,26,0.98), rgba(12,12,18,0.98));
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transform: translateY(8px) scale(0.96);
-      pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.45), 0 0 18px rgba(227, 0, 57, 0.08);
-    }
+  position: absolute;
+  right: 0;
+  bottom: 46px;
+  width: 42px;
+  height: 132px;
+  padding: 10px 0;
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--player-popup-bg-1), var(--player-popup-bg-2));
+  border: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.18), 0 0 18px rgba(227, 0, 57, 0.05);
+}
 
     .mini-player-volume-popup.show {
       opacity: 1;
@@ -1116,10 +1384,10 @@
     }
 
     .mini-player-progress::-webkit-slider-runnable-track {
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.16);
-    }
+  height: 4px;
+  border-radius: 999px;
+  background: var(--player-track);
+}
 
     .mini-player-progress::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -1134,11 +1402,11 @@
       cursor: pointer;
     }
 
-    .mini-player-progress::-moz-range-track {
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.14);
-    }
+      .mini-player-progress::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--player-track-2);
+  }
 
     .mini-player-progress::-moz-range-thumb {
       width: 14px;
@@ -1159,11 +1427,11 @@
       cursor: pointer;
     }
 
-    .mini-player-volume::-webkit-slider-runnable-track {
-      width: 4px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.14);
-    }
+      .mini-player-volume::-webkit-slider-runnable-track {
+    width: 4px;
+    border-radius: 999px;
+    background: var(--player-track-2);
+  }
 
     .mini-player-volume::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -1178,10 +1446,10 @@
     }
 
     .mini-player-volume::-moz-range-track {
-      width: 4px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.14);
-    }
+  width: 4px;
+  border-radius: 999px;
+  background: var(--player-track-2);
+}
 
     .mini-player-volume::-moz-range-thumb {
       width: 14px;
@@ -1300,8 +1568,17 @@
   <!-- =========================================================
     FIXED BACKGROUND
   ========================================================== -->
-  <div id="bg-parallax"></div>
-
+<div id="bg-parallax"></div>
+  <video
+    id="bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source src="https://github.com/Doudks/test/raw/refs/heads/main/mp4file/starry-sky-moon-clouds-moewalls-com%20(1).mp4" type="video/mp4">
+  </video>
   <!-- =========================================================
     LOADING SCREEN
   ========================================================== -->
@@ -1348,7 +1625,7 @@
     <section aria-labelledby="about-me-heading">
       <h2 id="about-me-heading">About Me</h2>
 
-      <button class="toggle-btn" type="button" data-toggle-target="likes">Things I Love</button>
+      <button id="btn-likes" class="toggle-btn" type="button" data-toggle-target="likes">Things I Love</button>
       <div id="likes" class="toggle-content">
         <ul class="love-list">
           <li>Cars that push the limits...</li>
@@ -1362,7 +1639,7 @@
         </ul>
       </div>
 
-      <button class="toggle-btn" type="button" data-toggle-target="dislikes">Things I Don’t Like</button>
+      <button id="btn-dislikes" class="toggle-btn" type="button" data-toggle-target="dislikes">Things I Don’t Like</button>
       <div id="dislikes" class="toggle-content">
         <ul class="hate-list">
           <li>People who ignore obvious truths</li>
@@ -1379,36 +1656,37 @@
         </ul>
       </div>
 
-      <button class="toggle-btn" type="button" data-toggle-target="about">Who I Am</button>
+      <button id="btn-about" class="toggle-btn" type="button" data-toggle-target="about">Who I Am</button>
       <div id="about" class="toggle-content">
         <div class="text-block"><p>Myself. Who'd you expect me to be?</p></div>
       </div>
 
-      <button class="toggle-btn" type="button" data-toggle-target="obsessions">Things I Get Obsessed With</button>
+      <button id="btn-obsessions" class="toggle-btn" type="button" data-toggle-target="obsessions">Things I Get Obsessed With</button>
       <div id="obsessions" class="toggle-content">
         <div class="text-block"><p>I am obsessed with Loona, speed, horror movies, gambling, cars, jets, tanks, games, drawing...</p></div>
       </div>
 
-      <button class="toggle-btn" type="button" data-toggle-target="dreams">Dreams</button>
+      <button id="btn-dreams" class="toggle-btn" type="button" data-toggle-target="dreams">Dreams</button>
       <div id="dreams" class="toggle-content">
         <div class="text-block"><p>Become a professional pilot</p></div>
         <div class="text-block"><p>Become a professional digital artist</p></div>
         <div class="text-block"><p>Become a professional programmer</p></div>
       </div>
 
-      <button class="toggle-btn" type="button" data-toggle-target="friends">Friends</button>
+      <button id="btn-friends" class="toggle-btn" type="button" data-toggle-target="friends">Friends</button>
       <div id="friends" class="toggle-content">
-        <div class="text-block">
-          <p>My dear friends:</p>
-          <div class="friends-grid" id="friends-grid"></div>
-        </div>
-
-        <div class="text-block">
-          <p>Honorable mentions</p>
-          <ul>
-            <li>kirit_ls</li><li>our.rumi</li><li>susielaser</li><li>Thunder</li><li>fl4king</li><li>Zimrico</li><li>Lks²</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
-          </ul>
-        </div>
+        
+              <div class="text-block">
+        <p id="friends-main-title">My dear friends:</p>
+        <div class="friends-grid" id="friends-grid"></div>
+      </div>
+      
+      <div class="text-block">
+        <p id="friends-honorable-title">Honorable mentions</p>
+        <ul>
+          <li>kirit_ls</li><li>our.rumi</li><li>susielaser</li><li>Thunder</li><li>fl4king</li><li>Zimrico</li><li>lg_oficial</li><li>Állan</li><li>foxy06</li><li>gallet_ofc</li><li>martinelli_rs</li><li>eeveefofa</li>
+        </ul>
+      </div>
       </div>
     </section>
 
@@ -1475,11 +1753,24 @@
       </div>
 
       <div class="facts-actions">
-        <button class="shuffle-btn" id="shuffle-facts-btn" type="button">Shuffle Facts</button>
-        <div class="music-controls">
-          <button id="music-btn" class="music-btn" type="button">open player</button>
-        </div>
-      </div>
+    <button class="shuffle-btn" id="shuffle-facts-btn" type="button">Shuffle Facts</button>
+    <div class="music-controls">
+    <button id="music-btn" class="music-btn" type="button">open player</button>
+    <button id="settings-btn" class="settings-trigger-btn" type="button" aria-label="Open settings">⚙️</button>
+  </div>
+  </div>
+  
+<div id="settings-panel" class="settings-panel hidden" aria-hidden="true">
+  <div class="settings-panel-header">
+    <span class="settings-panel-title" id="settings-panel-title">Settings</span>
+    <button id="settings-close-btn" class="settings-close-btn" type="button" aria-label="Close settings">✕</button>
+  </div>
+<div class="settings-panel-body">
+  <button id="theme-toggle-btn" class="settings-option-btn" type="button">dark mode</button>
+  <button id="language-toggle-btn" class="settings-option-btn" type="button">language: english</button>
+  <button id="bg-video-toggle-btn" class="settings-option-btn" type="button">animated background: on</button>
+</div>
+</div>
     </section>
   </main>
 
@@ -1497,54 +1788,70 @@
   <!-- =========================================================
     AUDIO
   ========================================================== -->
-  <audio id="bg-music" preload="auto"></audio>
+<audio id="bg-music" preload="auto"></audio>
 
-  <div id="mini-player" class="mini-player">
-    <div class="mini-player-bg"></div>
+<div id="mini-player" class="mini-player">
+  <div class="mini-player-bg"></div>
   <div class="mini-player-bg-next"></div>
-    <div class="mini-player-header">
-      <img id="mini-player-thumb" class="mini-player-thumb" src="" alt="Thumbnail">
-      <div class="mini-player-meta">
-        <div class="mini-player-title-wrap">
-          <div id="mini-player-title" class="mini-player-title">Track</div>
-        </div>
-        <a id="mini-player-link" class="mini-player-link" href="#" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
-      </div>
-      <button id="mini-player-close" class="mini-player-close" type="button">✕</button>
-    </div>
 
-    <div class="mini-player-progress-wrap">
-      <input id="mini-player-progress" class="mini-player-progress" type="range" min="0" max="100" value="0">
-      <div class="mini-player-time">
-        <span id="mini-player-current">0:00</span>
-        <span id="mini-player-duration">0:00</span>
-      </div>
-    </div>
+  <video
+    id="mini-player-bg-video"
+    class="mini-player-bg-video"
+    preload="auto"
+    muted
+    playsinline
+  ></video>
 
-    <div class="mini-player-volume-box">
-      <button id="mini-player-volume-btn" class="mini-player-volume-btn" type="button" aria-label="Volume">🔊</button>
-      <div id="mini-player-volume-popup" class="mini-player-volume-popup">
-        <input id="mini-player-volume" class="mini-player-volume" type="range" min="0" max="100" value="16">
+  <div class="mini-player-header">
+    <img id="mini-player-thumb" class="mini-player-thumb" src="" alt="Thumbnail">
+    <div class="mini-player-meta">
+      <div class="mini-player-title-wrap">
+        <div id="mini-player-title" class="mini-player-title">Track</div>
       </div>
+      <a id="mini-player-link" class="mini-player-link" href="#" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
     </div>
+    <button id="mini-player-close" class="mini-player-close" type="button">✕</button>
+  </div>
 
-    <div class="mini-player-controls">
-      <button id="prev-music-btn" class="music-nav-btn" type="button">◀</button>
-      <button id="mini-player-playpause" class="music-btn" type="button">play</button>
-      <button id="next-music-btn" class="music-nav-btn" type="button">▶</button>
+  <div class="mini-player-progress-wrap">
+    <input id="mini-player-progress" class="mini-player-progress" type="range" min="0" max="100" value="0">
+    <div class="mini-player-time">
+      <span id="mini-player-current">0:00</span>
+      <span id="mini-player-duration">0:00</span>
+    </div>
+  </div>
+  
+  <div id="mini-player-visualizer" class="mini-player-visualizer" aria-hidden="true">
+  <span class="visualizer-bar"></span>
+  <span class="visualizer-bar"></span>
+  <span class="visualizer-bar"></span>
+  <span class="visualizer-bar"></span>
+</div>
+
+  <div class="mini-player-volume-box">
+    <button id="mini-player-volume-btn" class="mini-player-volume-btn" type="button" aria-label="Volume">🔊</button>
+    <div id="mini-player-volume-popup" class="mini-player-volume-popup">
+      <input id="mini-player-volume" class="mini-player-volume" type="range" min="0" max="100" value="16">
     </div>
   </div>
 
-  <audio id="btn-click-sound" preload="auto">
-    <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
-  </audio>
+  <div class="mini-player-controls">
+    <button id="prev-music-btn" class="music-nav-btn" type="button">◀</button>
+    <button id="mini-player-playpause" class="music-btn" type="button">play</button>
+    <button id="next-music-btn" class="music-nav-btn" type="button">▶</button>
+  </div>
+</div>
 
-  <audio id="neon-sound" preload="auto">
-    <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3" type="audio/mpeg">
-  </audio>
+<audio id="btn-click-sound" preload="auto">
+  <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="neon-sound" preload="auto">
+  <source src="https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3" type="audio/mpeg">
+</audio>
 
   <!-- =========================================================
-    GAME MODAL
+   MODAL
   ========================================================== -->
   <div id="game-modal" class="game-modal hidden">
     <div class="game-modal-overlay"></div>
@@ -1555,14 +1862,27 @@
     </div>
   </div>
 
+ <div id="fact-video-modal" class="fact-video-modal hidden">
+  <video
+    id="fact-video-player"
+    class="fact-video-player"
+    preload="auto"
+    playsinline
+  >
+    <source src="https://github.com/Doudks/test/raw/refs/heads/main/mp4file/MADEINHEAVEN.mp4" type="video/mp4">
+  </video>
+</div>
+
   <!-- =========================================================
     EXTERNAL SCRIPTS
   ========================================================== -->
-  <script src="favorites.js"></script>
-  <script src="faq.js"></script>
-  <script src="friends.js"></script>
-  <script src="lanyard.js"></script>
-  <script defer src="music.js"></script>
+
+<script src="favorites.js"></script>
+<script src="faq.js"></script>
+<script src="friends.js"></script>
+<script src="lanyard.js"></script>
+<script defer src="music.js"></script>
+<script src="settings.js"></script>
 
   <!-- =========================================================
     GLOBAL CONFIG
@@ -1646,107 +1966,203 @@
       section.addEventListener('transitionend', onEnd);
     }
 
-    function shuffleFacts() {
-      const facts = [
-        'I have two cats that chill with me while I game.',
-        'My favorite anime is Yofukashi no Uta.',
-        'I can name almost every Mirage 2000 variant.',
-        'I track crazy car 0-400 km/h times for fun.',
-        'War Thunder is life',
-        'I’m obsessed with cars like the Corvette C8 and Koenigsegg Jesko.',
-        'I enjoy drawing characters late at night.',
-        'I can spend hours comparing aircraft designs just for fun.',
-        'My fav color is Rose red',
-        'The Challenger 2 British MBT is my fav tank',
-        'I’m obsessed with jet engine sounds.',
-        'I draw better at 2 AM than during the day.',
-        'I once played War Thunder for 12 hours straight.',
-        'I can identify fighter jets just by silhouette.',
-        'My fav song is exit music (for a film) by Radiohead',
-        'My fav artist is Melanie Martinez',
-        'My fav food is savory pie',
-        'Cheetahs are my fav animal',
-        "I have more than 3000 hours of Sol's RNG",
-        'France is my fav nation',
-        'Tomboys over femboys',
-        '1+1 = 2',
-        'Loona? perfection',
-        '🥀',
-        'Amd > Intel',
-        'Reshiram best pokemon.',
-        'Cats > dogs.',
-        "I'm lazy asf 💔",
-        'V8 > V12.',
-        'Lamborghini Murcielago best sounding car ever made.',
-        'Unpopular opinion, Sousou no Frieren is Mid.',
-        'Monster energy is great.',
-        'Kiwi my fav fruit.',
-        'Wannabe extrovert.',
-        "Yaps a lot about things i'm obsessed with.",
-        'Passionfruit the best to make juice with.',
-        'I like to argue about something irrelevant all day.',
-        'I enjoy being alone.',
-        'I spend nights awake just thinking.',
-        'Music hits different at night.',
-        'There is a music player on the site with my fav songs.',
-        "I'm gonna tell you that I'm fine even when I'm not.",
-        'I love furries, but I dont consider myself one.',
-        "I will hate you if you're an insistent person.",
-        'I think 5 times before doing something, and still do it wrong.',
-        'Do not ask me how much money and time I spend making avatars in Roblox monthly',
-        'JOJO',
-        'あなたの時間を無駄にしてしまいました。'
-      ];
+    let currentFactIndexes = [0, 1, 2, 3];
 
-      const container = document.getElementById('funFactsContainer');
-      if (!container) return;
+    function renderFactsByIndexes(indexes) {
+  const container = document.getElementById('funFactsContainer');
+  if (!container || !window.getSiteText) return;
 
-      container.innerHTML = '';
-      const selected = [...facts].sort(() => 0.5 - Math.random()).slice(0, 4);
-      selected.forEach((fact) => {
-        const div = document.createElement('div');
-        div.className = 'fact';
-        div.textContent = fact;
-        container.appendChild(div);
-      });
+  const facts = window.getSiteText().funFactsPool || [];
+  container.innerHTML = '';
+
+  indexes.forEach((index) => {
+    if (typeof facts[index] !== 'string') return;
+
+    const factText = facts[index];
+    const div = document.createElement('div');
+    div.className = 'fact';
+
+    if (factText === 'JOJO') {
+      div.classList.add('fact-jojo');
+      div.dataset.factAction = 'open-jojo-video';
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-toggle-target]').forEach((button) => {
-        button.addEventListener('click', () => toggleSection(button.dataset.toggleTarget));
-      });
+    div.textContent = factText;
+    container.appendChild(div);
+  });
+}
 
-      const shuffleBtn = document.getElementById('shuffle-facts-btn');
-      if (shuffleBtn) {
-        shuffleBtn.addEventListener('click', () => {
-          shuffleBtn.style.transform = 'scale(0.9)';
-          setTimeout(() => { shuffleBtn.style.transform = 'scale(1)'; }, 120);
-          shuffleFacts();
-        });
-      }
+function shuffleFacts() {
+  if (!window.getSiteText) return;
 
-      const loadingBgElement = document.querySelector('.loading-bg-image');
-      if (loadingBgElement) {
-        loadingBgElement.style.backgroundImage = `url("${randomLoadingBg}")`;
-      }
+  const facts = window.getSiteText().funFactsPool || [];
+  const allIndexes = facts.map((_, index) => index);
 
-      const deco = document.getElementById('avatar-decoration');
-      if (deco) {
-        deco.src = decorationUrl;
-        deco.style.display = 'block';
-        deco.onerror = () => { deco.style.display = 'none'; };
-      }
+  currentFactIndexes = [...allIndexes]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 4);
+
+  renderFactsByIndexes(currentFactIndexes);
+}
+
+  document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-toggle-target]').forEach((button) => {
+    button.addEventListener('click', () => toggleSection(button.dataset.toggleTarget));
+  });
+
+  const shuffleBtn = document.getElementById('shuffle-facts-btn');
+  if (shuffleBtn) {
+    shuffleBtn.addEventListener('click', () => {
+      shuffleBtn.style.transform = 'scale(0.9)';
+      setTimeout(() => { shuffleBtn.style.transform = 'scale(1)'; }, 120);
+      shuffleFacts();
     });
+  }
+
+  const loadingBgElement = document.querySelector('.loading-bg-image');
+  if (loadingBgElement) {
+    loadingBgElement.style.backgroundImage = `url("${randomLoadingBg}")`;
+  }
+
+  const deco = document.getElementById('avatar-decoration');
+  if (deco) {
+    deco.src = decorationUrl;
+    deco.style.display = 'block';
+    deco.onerror = () => { deco.style.display = 'none'; };
+  }
+
+  const factVideoModal = document.getElementById('fact-video-modal');
+  const factVideoPlayer = document.getElementById('fact-video-player');
+
+
+  let factVideoStartTimeout = null;
+let factVideoFadeInterval = null;
+
+function openFactVideoModal() {
+  if (!factVideoModal || !factVideoPlayer) return;
+
+  if (factVideoStartTimeout) {
+    clearTimeout(factVideoStartTimeout);
+    factVideoStartTimeout = null;
+  }
+
+  if (factVideoFadeInterval) {
+    clearInterval(factVideoFadeInterval);
+    factVideoFadeInterval = null;
+  }
+
+  factVideoModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  factVideoPlayer.pause();
+  factVideoPlayer.currentTime = 0;
+  factVideoPlayer.volume = 0;
+  factVideoPlayer.load();
+
+  factVideoStartTimeout = setTimeout(() => {
+    const playPromise = factVideoPlayer.play();
+
+    if (playPromise) {
+      playPromise
+        .then(() => {
+          let volume = 0;
+          const targetVolume = 1;
+          const fadeDuration = 1800;
+          const stepTime = 60;
+          const step = targetVolume / (fadeDuration / stepTime);
+
+          factVideoFadeInterval = setInterval(() => {
+            volume += step;
+
+            if (volume >= targetVolume) {
+              volume = targetVolume;
+              clearInterval(factVideoFadeInterval);
+              factVideoFadeInterval = null;
+            }
+
+            factVideoPlayer.volume = volume;
+          }, stepTime);
+        })
+        .catch((err) => {
+          console.error('Erro ao tocar vídeo JOJO:', err);
+        });
+    }
+  }, 900);
+}
+
+  function closeFactVideo() {
+  if (!factVideoModal || !factVideoPlayer) return;
+
+  if (factVideoStartTimeout) {
+    clearTimeout(factVideoStartTimeout);
+    factVideoStartTimeout = null;
+  }
+
+  if (factVideoFadeInterval) {
+    clearInterval(factVideoFadeInterval);
+    factVideoFadeInterval = null;
+  }
+
+  factVideoPlayer.pause();
+  factVideoPlayer.currentTime = 0;
+  factVideoPlayer.volume = 1;
+
+  factVideoModal.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+  document.getElementById('funFactsContainer')?.addEventListener('click', (e) => {
+    const fact = e.target.closest('.fact[data-fact-action="open-jojo-video"]');
+    if (!fact) return;
+    openFactVideoModal();
+  });
+
+  factVideoModal?.addEventListener('click', closeFactVideo);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && factVideoModal?.classList.contains('show')) {
+      closeFactVideo();
+    }
+  });
+
+  renderFactsByIndexes(currentFactIndexes);
+
+  document.addEventListener('site-language-changed', () => {
+    renderFactsByIndexes(currentFactIndexes);
+  });
+});
 
     window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loading-screen')?.classList.add('exit');
-        document.body.classList.remove('loading');
-        document.documentElement.classList.remove('loading');
-        const bg = document.getElementById('bg-parallax');
-        if (bg) bg.style.opacity = '1';
-      }, 8000);
-    });
+  const loadingScreen = document.getElementById('loading-screen');
+  const bg = document.getElementById('bg-parallax');
+
+  let loadingFinished = false;
+  let loadingTimeout = null;
+
+  function finishLoading() {
+    if (loadingFinished) return;
+    loadingFinished = true;
+
+    loadingScreen?.classList.add('exit');
+    document.body.classList.remove('loading');
+    document.documentElement.classList.remove('loading');
+
+    if (bg) bg.style.opacity = '1';
+
+    document.removeEventListener('click', skipLoading);
+    document.removeEventListener('keydown', skipLoading);
+  }
+
+  function skipLoading() {
+    if (loadingTimeout) clearTimeout(loadingTimeout);
+    finishLoading();
+  }
+
+  loadingTimeout = setTimeout(finishLoading, 8000);
+
+  document.addEventListener('click', skipLoading);
+  document.addEventListener('keydown', skipLoading);
+});
   </script>
 
   <!-- =========================================================
@@ -1810,7 +2226,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       bindGameCards();
     });
-
+    
     closeGameModal?.addEventListener('click', closeModal);
     gameModalOverlay?.addEventListener('click', closeModal);
     document.addEventListener('keydown', (e) => {
@@ -1824,39 +2240,35 @@
     BACKGROUND DIM ON EMPTY HOVER AREAS
   ========================================================== -->
   <script>
-    const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const interactiveSelectors = [
+  'button',
+  '.social-btn',
+  '.friend-card',
+  '.toggle-btn',
+  '.shuffle-btn',
+  '#music-btn',
+  '#settings-btn',
+  '.settings-panel',
+  '.settings-option-btn',
+  '.settings-close-btn',
+  '.profile-wrapper',
+  'a'
+].join(',');
 
-    if (supportsHover) {
-      const interactiveSelectors = [
-        'button',
-        '.social-btn',
-        '.friend-card',
-        '.toggle-btn',
-        '.shuffle-btn',
-        '#music-btn',
-        '.profile-wrapper',
-        'a'
-      ].join(',');
+function activateBGHover() {
+  document.body.classList.add('hover-bg');
+}
 
-      function activateBGHover() {
-        document.body.classList.add('hover-bg');
-      }
+function clearHoverState() {
+  document.body.classList.remove('hover-bg');
+}
 
-      function clearHoverState() {
-        document.body.classList.remove('hover-bg');
-      }
-
-      document.addEventListener('mousemove', (e) => {
-        const overInteractive = e.target.closest(interactiveSelectors);
-        const insideContent = e.target.closest('.content, .banner, .mini-profile');
-        if (!overInteractive && !insideContent) activateBGHover();
-        else clearHoverState();
-      });
-
-      document.addEventListener('mouseleave', clearHoverState);
-    } else {
-      document.body.classList.remove('hover-bg');
-    }
+document.addEventListener('mousemove', (e) => {
+  const overInteractive = e.target.closest(interactiveSelectors);
+  const insideContent = e.target.closest('.content, .banner, .mini-profile, .settings-panel');
+  if (!overInteractive && !insideContent) activateBGHover();
+  else clearHoverState();
+});
   </script>
 </body>
 </html>
