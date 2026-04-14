@@ -1,7 +1,7 @@
 const favoritesData = [
   {
     id: "favorite-games",
-    title: "Favorite Games",
+    title: { en: "Favorite Games", pt: "Jogos Favoritos" },
     type: "cards",
     items: [
       { title: "War Thunder", img: "https://i.imgur.com/I4eq4p7.jpeg" },
@@ -25,17 +25,11 @@ const favoritesData = [
       { title: "Mortal Kombat 11", img: "https://i.imgur.com/k6NsJiP.jpeg" },
       { title: "Injustice 2", img: "https://i.imgur.com/rz9xt7C.jpeg" },
       { title: "Garry's Mod", img: "https://i.imgur.com/ssJ9uPg.jpeg" }
-      
-  
-  //   { title: "Placeholder", img: "Placeholder.png" },
     ]
   },
-  
-  // =====================================|  ANIMES  |=========================================
-  
   {
     id: "favorite-anime",
-    title: "Favorite Anime",
+    title: { en: "Favorite Anime", pt: "Animes Favoritos" },
     type: "cards",
     items: [
       { title: "Yofukashi no Uta", img: "https://cdn.imgchest.com/files/9de8e632b54a.webp" },
@@ -70,16 +64,11 @@ const favoritesData = [
       { title: "Berserk", img: "https://i.imgur.com/tjqxWKA.jpeg" },
       { title: "Godzilla Singular Point", img: "https://i.imgur.com/a8EVxz7.jpeg" },
       { title: "Tokyo Ghoul", img: "https://i.imgur.com/v2IvZZB.jpeg" }
-    
-        //   { title: "Placeholder", img: "Placeholder.png" },
     ]
-    
-// ===================================|  MANGAS  |=========================================
-
   },
   {
     id: "favorite-manga",
-    title: "Favorite Manga",
+    title: { en: "Favorite Manga", pt: "Mangás Favoritos" },
     type: "cards",
     items: [
       { title: "One Punch Man", img: "https://cdn.imgchest.com/files/3d79884edb7f.jpg" },
@@ -93,29 +82,56 @@ const favoritesData = [
       { title: "Blue Lock", img: "https://cdn.imgchest.com/files/c5f007d6ea02.jpg" },
       { title: "Neon Genesis Evangelion", img: "https://cdn.imgchest.com/files/1d9cc376c141.jpg" },
       { title: "Hellsing", img: "https://cdn.imgchest.com/files/18a21458639c.jpg" }
-      //   { title: "Placeholder", img: "Placeholder.png" },
-      
-   
+    ]
+  },
+  {
+    id: "favorite-car",
+    title: { en: "Favorite Cars", pt: "Carros Favoritos" },
+    type: "cards",
+    items: [
+      { title: "Corvette C7 ZR1", img: "https://i.imgur.com/yMUCE3y.png" },
+      { title: "Corvette C8 ZR1X", img: "https://i.imgur.com/14o2pm5.jpeg" },
+      { title: "Corvette C6 ZR1", img: "https://i.imgur.com/nERJqPX.jpeg" },
+      { title: "McLaren 765lt", img: "https://i.imgur.com/LIVBRAa.png" },
+      { title: "Koenigsegg Jesko Absolut", img: "https://i.imgur.com/Tjyrxlb.jpeg" },
+      { title: "Lamborghini Murciélago SV", img: "https://i.imgur.com/OiCe0pV.jpeg" },
+      { title: "Porsche 911 GT3 RS (992)", img: "https://i.imgur.com/dPUl8at.jpeg" },
+      { title: "2003 Ford Mustang SVT Cobra", img: "https://i.imgur.com/LUDOrU7.jpeg" },
+      { title: "2025 Cadillac CT5-V Blackwing", img: "https://i.imgur.com/owQGZU4.png" },
+      { title: "2018 Camaro ZL1 1LE", img: "https://i.imgur.com/ywY6YHx.jpeg" },
+      { title: "Mazda RX7 F3DS", img: "https://i.imgur.com/nwcPMb5.jpeg" },
+      { title: "Dodge Viper ACR", img: "https://i.imgur.com/yrKuupH.jpeg" },
+      { title: "Mercedes-Benz SL 65 AMG Black Series", img: "https://i.imgur.com/n6jbDlP.jpeg" },
+      { title: "Lexus RC F Track Edition", img: "https://i.imgur.com/0tdg9ms.jpeg" },
+      { title: "2023 Dodge Challenger SRT Demon 170", img: "https://i.imgur.com/y0sT077.jpeg" }
     ]
   }
 ];
 
-  // ===================================|  SCRIPT  |=========================================
+function getLanguage() {
+  return window.getSiteLanguage ? window.getSiteLanguage() : 'en';
+}
 
+function getSectionTitle(section) {
+  if (typeof section.title === 'string') return section.title;
+  return section.title?.[getLanguage()] || section.title?.en || '';
+}
 
 function renderFavorites() {
   const root = document.getElementById("favorites-root");
   if (!root) return;
 
   root.innerHTML = favoritesData.map(section => {
+    const title = getSectionTitle(section);
+
     if (section.type === "cards") {
       return `
-        <button class="toggle-btn" onclick="toggleSection('${section.id}')">${section.title}</button>
+        <button class="toggle-btn" onclick="toggleSection('${section.id}')">${title}</button>
         <div id="${section.id}" class="toggle-content">
           <div class="games-grid">
             ${section.items.map(item => `
               <div class="game-card" data-title="${item.title}">
-                <img src="${item.img}" alt="${item.title}">
+                <img src="${item.img}" loading="lazy" alt="${item.title}">
               </div>
             `).join("")}
           </div>
@@ -124,7 +140,7 @@ function renderFavorites() {
     }
 
     return `
-      <button class="toggle-btn" onclick="toggleSection('${section.id}')">${section.title}</button>
+      <button class="toggle-btn" onclick="toggleSection('${section.id}')">${title}</button>
       <div id="${section.id}" class="toggle-content">
         <div class="text-block">
           <ul class="love-list">
@@ -157,3 +173,4 @@ function bindGameCards() {
 }
 
 document.addEventListener("DOMContentLoaded", renderFavorites);
+document.addEventListener("site-language-changed", renderFavorites);
