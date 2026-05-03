@@ -198,6 +198,55 @@ const musicList = [
   
 let currentMusicIndex = 0;
 let playerOpened = false;
+let isDraggingPlayer = false;
+let playerDragOffsetX = 0;
+let playerDragOffsetY = 0;
+
+function makeMiniPlayerDraggable() {
+  const dragArea = document.querySelector(".mini-player-header");
+  if (!dragArea || !miniPlayer) return;
+
+  dragArea.style.cursor = "grab";
+
+  dragArea.addEventListener("mousedown", (e) => {
+    if (e.target.closest("button, a, input")) return;
+
+    isDraggingPlayer = true;
+    dragArea.style.cursor = "grabbing";
+
+    const rect = miniPlayer.getBoundingClientRect();
+    playerDragOffsetX = e.clientX - rect.left;
+    playerDragOffsetY = e.clientY - rect.top;
+
+    miniPlayer.style.left = rect.left + "px";
+    miniPlayer.style.top = rect.top + "px";
+    miniPlayer.style.right = "auto";
+    miniPlayer.style.bottom = "auto";
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDraggingPlayer) return;
+
+    const padding = 8;
+    const rect = miniPlayer.getBoundingClientRect();
+
+    let left = e.clientX - playerDragOffsetX;
+    let top = e.clientY - playerDragOffsetY;
+
+    left = Math.max(padding, Math.min(left, window.innerWidth - rect.width - padding));
+    top = Math.max(padding, Math.min(top, window.innerHeight - rect.height - padding));
+
+    miniPlayer.style.left = left + "px";
+    miniPlayer.style.top = top + "px";
+  });
+
+  document.addEventListener("mouseup", () => {
+    if (!isDraggingPlayer) return;
+
+    isDraggingPlayer = false;
+    dragArea.style.cursor = "grab";
+  });
+}
 
 if (
   music &&
@@ -489,9 +538,13 @@ await miniPlayerBgVideo.play();
     const nextBg = track.background || track.thumbnail || "";
     const currentBg = miniPlayerBg.dataset.currentBg || "";
 
-    if (!currentBg) {
+    if (!currentBg || document.body.classList.contains("low-quality-mode")) {
       miniPlayerBg.style.backgroundImage = nextBg ? `url("${nextBg}")` : "none";
       miniPlayerBg.dataset.currentBg = nextBg;
+    
+      miniPlayerBgNext.style.transition = "none";
+      miniPlayerBgNext.style.opacity = "0";
+      miniPlayerBgNext.style.backgroundImage = "none";
     } else if (currentBg !== nextBg) {
       miniPlayerBgNext.style.transition = "none";
       miniPlayerBgNext.style.opacity = "0";
@@ -561,15 +614,32 @@ await miniPlayerBgVideo.play();
 }
 
   function openMiniPlayer() {
-    miniPlayer.classList.add("show");
-    playerOpened = true;
-    updateTrackUI();
-    preloadPlayerImages();
-    preloadAllTracks();
-  }
+  const isOpen = miniPlayer.classList.contains("show");
+
+  if (isOpen) {
+  closeMiniPlayer();
+  return;
+}
+
+  miniPlayer.classList.add("show");
+  playerOpened = true;
+
+  openPlayerBtn.textContent = window.getSiteLanguage?.() === "pt"
+    ? "fechar player"
+    : "close player";
+
+  updateTrackUI();
+  preloadPlayerImages();
+  preloadAllTracks();
+}
 
   function closeMiniPlayer() {
   miniPlayer.classList.remove("show");
+
+  openPlayerBtn.textContent = window.getSiteLanguage?.() === "pt"
+    ? "abrir player"
+    : "open player";
+
   stopVisualizer();
   hideComeHomeBackgroundVideoSmooth();
 }
@@ -782,5 +852,6 @@ await miniPlayerBgVideo.play();
   }
 });
 
-  loadMusic(currentMusicIndex);
+ loadMusic(currentMusicIndex);
+makeMiniPlayerDraggable();
 }
