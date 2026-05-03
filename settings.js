@@ -2,10 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggleBtn = document.getElementById('theme-toggle-btn');
   const languageToggleBtn = document.getElementById('language-toggle-btn');
   const bgVideoToggleBtn = document.getElementById('bg-video-toggle-btn');
+  const lowQualityToggleBtn = document.getElementById('low-quality-toggle-btn');
   const settingsBtn = document.getElementById('settings-btn');
   const settingsPanel = document.getElementById('settings-panel');
   const settingsCloseBtn = document.getElementById('settings-close-btn');
   const settingsPanelTitle = document.getElementById('settings-panel-title');
+  const settingsTabButtons = document.querySelectorAll('.settings-tab-btn');
+  const settingsViews = document.querySelectorAll('.settings-view');
 
   const translations = {
     en: {
@@ -31,6 +34,20 @@ document.addEventListener('DOMContentLoaded', () => {
     honorableMentions: 'Honorable mentions',
     bgVideoOn: 'Animated background: On',
     bgVideoOff: 'Animated background: Off',
+    lowQualityOn: 'Low quality mode: On',
+    lowQualityOff: 'Low quality mode: Off',
+    settingsOthersTab: 'Others',
+    settingsUpdateLog: 'Update log',
+    settingsNotesTitle: 'Notes',
+    settingsNotesText1: 'This is a personal project made for the sole purpose to entertain and inform',
+    settingsNotesText2: 'There are a bunch of easter eggs around the website👀.',
+    settingsCreditsTitle: 'Credits',
+    settingsCreditsText: "The website's concept, design and updates are made by me. Code assisted by AI and some ideas coming from my friends.",
+    moonbiteHint: 'Two words, put them together.',
+    moonbitePlaceholder: 'Enter code',
+    moonbiteButton: 'OK',
+    moonbiteAccepted: 'Accepted.',
+    moonbiteWrong: 'Nothing happened.',
       aboutContent: {
         likes: `
           <ul class="love-list">
@@ -148,6 +165,20 @@ document.addEventListener('DOMContentLoaded', () => {
     honorableMentions: 'Menções honrosas',
     bgVideoOn: 'Fundo animado: Ligado',
     bgVideoOff: 'Fundo animado: Desligado',
+    lowQualityOn: 'Modo leve: Ligado',
+    lowQualityOff: 'Modo leve: Desligado',
+    settingsOthersTab: 'Outros',
+    settingsUpdateLog: 'Registro de atualizações',
+    settingsNotesTitle: 'Notas',
+    settingsNotesText1: 'Este é um projeto pessoal feito com o único propósito de entreter e informar.',
+    settingsNotesText2: 'Existem vários easter eggs espalhados pelo site👀.',
+    settingsCreditsTitle: 'Créditos',
+    settingsCreditsText: 'O conceito, design e atualizações do site foram feitos por mim. Código auxiliado por IA e algumas ideias vieram dos meus amigos.',
+    moonbiteHint: 'Duas palavras, coloque elas juntas.',
+    moonbitePlaceholder: 'Digite o código',
+    moonbiteButton: 'OK',
+    moonbiteAccepted: 'Aceito.',
+    moonbiteWrong: 'Nada aconteceu.',
       aboutContent: {
         likes: `
           <ul class="love-list">
@@ -268,10 +299,63 @@ function applyBackgroundVideo(enabled) {
 
 function updateBackgroundVideoButtonText() {
   if (!bgVideoToggleBtn) return;
-  const t = getText();
-  bgVideoToggleBtn.textContent = getBackgroundVideoEnabled()
-    ? t.bgVideoOn
-    : t.bgVideoOff;
+
+  const label = bgVideoToggleBtn.querySelector('.settings-row-label');
+  const enabled = getBackgroundVideoEnabled();
+
+  if (label) {
+    label.textContent = getCurrentLanguage() === 'pt'
+      ? 'Fundo animado'
+      : 'Animated background';
+  }
+
+  bgVideoToggleBtn.classList.toggle('is-on', enabled);
+}
+
+function getLowQualityModeEnabled() {
+  return localStorage.getItem('site-low-quality') === 'on';
+}
+
+function applyLowQualityMode(enabled) {
+  const bgVideo = document.getElementById('bg-video');
+  const miniPlayerBgVideo = document.getElementById('mini-player-bg-video');
+
+  if (enabled) {
+    document.body.classList.add('low-quality-mode');
+    localStorage.setItem('site-low-quality', 'on');
+
+    if (bgVideo) {
+      bgVideo.pause();
+    }
+
+    if (miniPlayerBgVideo) {
+      miniPlayerBgVideo.pause();
+    }
+  } else {
+    document.body.classList.remove('low-quality-mode');
+    localStorage.setItem('site-low-quality', 'off');
+
+    if (bgVideo && getBackgroundVideoEnabled()) {
+      bgVideo.play().catch(() => {});
+    }
+  }
+
+  updateLowQualityButtonText();
+}
+
+function updateLowQualityButtonText() {
+  if (!lowQualityToggleBtn) return;
+
+  const label = lowQualityToggleBtn.querySelector('.settings-row-label');
+  const enabled = getLowQualityModeEnabled();
+
+  if (label) {
+    label.textContent = getCurrentLanguage() === 'pt'
+      ? 'Modo leve'
+      : 'Low quality mode';
+  }
+
+  lowQualityToggleBtn.classList.toggle('is-on', enabled);
 }
 
   function getText() {
@@ -296,15 +380,34 @@ function updateBackgroundVideoButtonText() {
   }
 
   function updateThemeButtonText() {
-    if (!themeToggleBtn) return;
-    const t = getText();
-    themeToggleBtn.textContent = getCurrentTheme() === 'light' ? t.themeLight : t.themeDark;
+  if (!themeToggleBtn) return;
+
+  const label = themeToggleBtn.querySelector('.settings-row-label');
+  const isLight = getCurrentTheme() === 'light';
+
+  if (label) {
+    label.textContent = getCurrentLanguage() === 'pt'
+      ? 'Modo claro'
+      : 'Light mode';
   }
 
+  themeToggleBtn.classList.toggle('is-on', isLight);
+}
+
   function updateLanguageButtonText() {
-    if (!languageToggleBtn) return;
-    languageToggleBtn.textContent = getText().languageLabel;
+  if (!languageToggleBtn) return;
+
+  const label = languageToggleBtn.querySelector('.settings-row-label');
+  const isPortuguese = getCurrentLanguage() === 'pt';
+
+  if (label) {
+    label.textContent = isPortuguese
+      ? 'Idioma: Português'
+      : 'Language: English';
   }
+
+  languageToggleBtn.classList.toggle('is-on', isPortuguese);
+}
 
   function applyStaticTranslations() {
     const t = getText();
@@ -330,13 +433,32 @@ function updateBackgroundVideoButtonText() {
     const answer = document.getElementById('faq-answer');
     const friendsMainTitle = document.getElementById('friends-main-title');
     const friendsHonorableTitle = document.getElementById('friends-honorable-title');
+    const settingsUpdateLogTitle = document.getElementById('settings-update-log-title');
+    const settingsNotesTitle = document.getElementById('settings-notes-title');
+    const settingsNotesText1 = document.getElementById('settings-notes-text-1');
+    const settingsNotesText2 = document.getElementById('settings-notes-text-2');
+    const settingsCreditsTitle = document.getElementById('settings-credits-title');
+    const settingsCreditsText = document.getElementById('settings-credits-text');
+    const moonbiteHintText = document.getElementById('moonbite-hint-text');
+    const moonbiteCodeInput = document.getElementById('moonbite-code-input');
+    const moonbiteCodeBtn = document.getElementById('moonbite-code-btn');
 
     if (settingsPanelTitle) settingsPanelTitle.textContent = t.settingsTitle;
+        const settingsOthersTab = document.getElementById('settings-others-tab');
+    if (settingsOthersTab) settingsOthersTab.textContent = t.settingsOthersTab;
     if (aboutHeading) aboutHeading.textContent = t.aboutMe;
     if (favoritesHeading) favoritesHeading.textContent = t.favoriteStuff;
     if (socialHeading) socialHeading.textContent = t.socialMedia;
     if (faqHeading) faqHeading.textContent = t.faqHeading;
-
+    if (settingsUpdateLogTitle) settingsUpdateLogTitle.textContent = t.settingsUpdateLog;
+    if (settingsNotesTitle) settingsNotesTitle.textContent = t.settingsNotesTitle;
+    if (settingsNotesText1) settingsNotesText1.textContent = t.settingsNotesText1;
+    if (settingsNotesText2) settingsNotesText2.textContent = t.settingsNotesText2;
+    if (settingsCreditsTitle) settingsCreditsTitle.textContent = t.settingsCreditsTitle;
+    if (settingsCreditsText) settingsCreditsText.textContent = t.settingsCreditsText;
+    if (moonbiteHintText) moonbiteHintText.textContent = t.moonbiteHint;
+    if (moonbiteCodeInput) moonbiteCodeInput.placeholder = t.moonbitePlaceholder;
+    if (moonbiteCodeBtn) moonbiteCodeBtn.textContent = t.moonbiteButton;
     if (btnLikes) btnLikes.textContent = t.likes;
     if (btnDislikes) btnDislikes.textContent = t.dislikes;
     if (btnAbout) btnAbout.textContent = t.whoIAm;
@@ -370,34 +492,70 @@ function updateBackgroundVideoButtonText() {
     updateThemeButtonText();
     updateLanguageButtonText();
     updateBackgroundVideoButtonText();
-
+    updateLowQualityButtonText();
     document.dispatchEvent(new CustomEvent('site-language-changed', {
       detail: { language }
     }));
   }
 
   function openSettingsPanel() {
-    if (!settingsPanel) return;
-    settingsPanel.classList.remove('hidden');
-    settingsPanel.classList.add('show');
-    settingsPanel.setAttribute('aria-hidden', 'false');
-  }
+  if (!settingsPanel) return;
 
-  function closeSettingsPanel() {
-    if (!settingsPanel) return;
-    settingsPanel.classList.remove('show');
+  settingsPanel.classList.remove('hidden');
+  settingsPanel.setAttribute('aria-hidden', 'false');
+
+  requestAnimationFrame(() => {
+    settingsPanel.classList.add('show');
+  });
+}
+
+function closeSettingsPanel() {
+  if (!settingsPanel) return;
+
+  settingsPanel.classList.remove('show');
+  settingsPanel.setAttribute('aria-hidden', 'true');
+
+  setTimeout(() => {
     settingsPanel.classList.add('hidden');
-    settingsPanel.setAttribute('aria-hidden', 'true');
-  }
+  }, 220);
+}
 
   function toggleSettingsPanel() {
     if (!settingsPanel) return;
     settingsPanel.classList.contains('show') ? closeSettingsPanel() : openSettingsPanel();
   }
 
+function switchSettingsView(viewName) {
+  settingsTabButtons.forEach((button) => {
+    button.classList.toggle('active', button.dataset.settingsView === viewName);
+  });
+
+  settingsViews.forEach((view) => {
+    view.classList.toggle('show', view.id === `settings-view-${viewName}`);
+  });
+}
+
   applyTheme(getCurrentTheme());
-  applyLanguage(getCurrentLanguage());
-  applyBackgroundVideo(getBackgroundVideoEnabled());
+applyLanguage(getCurrentLanguage());
+applyBackgroundVideo(getBackgroundVideoEnabled());
+applyLowQualityMode(getLowQualityModeEnabled());
+
+settingsTabButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    switchSettingsView(button.dataset.settingsView);
+  });
+});
+
+const updateLogMainBtn = document.querySelector('.update-log-main-btn');
+const updateLogList = document.querySelector('.update-log-list');
+
+if (updateLogMainBtn && updateLogList) {
+  updateLogMainBtn.addEventListener('click', () => {
+    updateLogMainBtn.classList.toggle('open');
+    updateLogList.classList.toggle('show');
+    updateLogList.classList.toggle('update-log-list-hidden');
+  });
+}
 
   settingsBtn?.addEventListener('click', (e) => {
   e.stopPropagation();
@@ -427,6 +585,10 @@ function updateBackgroundVideoButtonText() {
   applyBackgroundVideo(!getBackgroundVideoEnabled());
 });
 
+  lowQualityToggleBtn?.addEventListener('click', () => {
+  applyLowQualityMode(!getLowQualityModeEnabled());
+});
+
   document.addEventListener('click', (e) => {
     if (!settingsPanel || !settingsBtn) return;
 
@@ -441,4 +603,6 @@ function updateBackgroundVideoButtonText() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeSettingsPanel();
   });
+  
 });
+
