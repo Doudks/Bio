@@ -396,7 +396,24 @@ body.light-theme #bg-parallax::before {
     .loading-bar {
       z-index: 2;
     }
-
+    
+    .loading-riddle {
+  z-index: 2;
+  margin-top: 18px;
+  max-width: min(86vw, 520px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  line-height: 1.35;
+  letter-spacing: 1px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.58);
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.10),
+    0 0 18px rgba(201,20,65,0.08);
+}
+    
     .loading-text {
       letter-spacing: 4px;
       font-weight: 600;
@@ -444,16 +461,15 @@ body.light-theme #bg-parallax::before {
     }
 
     .content {
-      max-width: 800px;
-      margin: 100px auto 50px;
-      padding: 20px;
-      background: var(--bg-panel);
-      border-radius: 15px;
-      background; rgba(0,0,0,0,6);
-      position: relative;
-      z-index: 1;
-      transition: opacity 1s;
-    }
+  max-width: 800px;
+  margin: 100px auto 50px;
+  padding: 20px;
+  background: var(--bg-panel);
+  border-radius: 15px;
+  background; rgba(0,0,0,0,6);
+  position: relative;
+  transition: opacity 1s;
+}
 
     .profile-wrapper {
       display: flex;
@@ -926,6 +942,46 @@ body.light-theme .shuffle-btn:hover {
       background: rgba(255,255,255,0.16);
     }
 
+  .game-modal.manga-minimize .game-modal-overlay {
+  opacity: 0;
+  transition: opacity 0.42s ease;
+}
+
+.game-modal.manga-minimize .game-modal-content {
+  animation: mangaImageMinimize 0.42s ease forwards;
+}
+
+@keyframes mangaImageMinimize {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.16) translateY(180px);
+    filter: blur(8px);
+  }
+}
+
+body.manga-bg-video-active #bg-video {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+  filter: none !important;
+}
+
+body.manga-bg-video-active #bg-parallax {
+  opacity: 0 !important;
+}
+
+body.manga-bg-video-active #bg-parallax::before {
+  opacity: 0 !important;
+}
+
  .fact-video-modal {
   position: fixed;
   inset: 0;
@@ -963,6 +1019,41 @@ body.light-theme .shuffle-btn:hover {
   opacity: 1;
 }
 
+.favorite-video-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 33000;
+  background: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.favorite-video-modal.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.favorite-video-modal.hidden {
+  display: flex;
+}
+
+.favorite-video-player {
+  width: min(92vw, 900px);
+  max-height: 82vh;
+  border-radius: 18px;
+  background: #000;
+  display: block;
+  box-shadow:
+    0 0 30px rgba(201, 20, 65, 0.25),
+    0 20px 70px rgba(0, 0, 0, 0.8);
+}
+
 .fact.fact-jojo {
   cursor: default;
 }
@@ -981,15 +1072,16 @@ body.light-theme .shuffle-btn:hover {
 }
 
     body.hover-bg .toggle-btn,
-body.hover-bg .shuffle-btn,
-body.hover-bg .social-btn,
-body.hover-bg .friend-card,
-body.hover-bg .text-block,
-body.hover-bg .fact,
-body.hover-bg .love-list li,
-body.hover-bg .hate-list li,
-body.hover-bg .friends-list li,
-body.hover-bg .profile-wrapper {
+    body.hover-bg .shuffle-btn,
+    body.hover-bg .social-btn,
+    body.hover-bg .friend-card,
+    body.hover-bg .text-block,
+    body.hover-bg .fact,
+    body.hover-bg .love-list li,
+    body.hover-bg .hate-list li,
+    body.hover-bg .friends-list li,
+    body.hover-bg .profile-wrapper,
+    body.hover-bg .faq-box {
   opacity: 0.22;
   box-shadow: none !important;
   filter: saturate(0.8);
@@ -1587,11 +1679,17 @@ body.hover-bg .profile-wrapper {
     <div class="loading-stars"></div>
     <div class="loading-fog"></div>
     <div class="loading-moon"></div>
-    <div class="loading-text">LOADING</div>
-    <div class="loading-spinner"></div>
-    <div class="loading-bar">
-      <div class="loading-bar-fill"></div>
-    </div>
+   <div class="loading-text">LOADING</div>
+<div class="loading-spinner"></div>
+<div class="loading-bar">
+  <div class="loading-bar-fill"></div>
+</div>
+
+<div class="loading-riddle">
+  <span>Shine when everyone sleeps, they say.</span>
+  <span>Some believe in me, some think i'm just a hologram</span>
+  <span>The brightest you'll find when there's no Sun</span>
+</div>
   </div>
 
   <!-- =========================================================
@@ -1762,13 +1860,89 @@ body.hover-bg .profile-wrapper {
   
 <div id="settings-panel" class="settings-panel hidden" aria-hidden="true">
   <div class="settings-panel-header">
-    <span class="settings-panel-title" id="settings-panel-title">Settings</span>
-    <button id="settings-close-btn" class="settings-close-btn" type="button" aria-label="Close settings">✕</button>
+  <div class="settings-tabs">
+    <button id="settings-panel-title" class="settings-tab-btn active" type="button" data-settings-view="main">
+      Settings
+    </button>
+
+    <button id="settings-others-tab" class="settings-tab-btn" type="button" data-settings-view="others">
+      Extra
+    </button>
   </div>
+
+  <button id="settings-close-btn" class="settings-close-btn" type="button" aria-label="Close settings">✕</button>
+</div>
 <div class="settings-panel-body">
-  <button id="theme-toggle-btn" class="settings-option-btn" type="button">dark mode</button>
-  <button id="language-toggle-btn" class="settings-option-btn" type="button">language: english</button>
-  <button id="bg-video-toggle-btn" class="settings-option-btn" type="button">animated background: on</button>
+  <div id="settings-view-main" class="settings-view show">
+    <button id="theme-toggle-btn" class="settings-row" type="button">
+      <span class="settings-row-label">Light mode</span>
+      <span class="settings-switch" aria-hidden="true"></span>
+    </button>
+
+    <button id="language-toggle-btn" class="settings-row" type="button">
+      <span class="settings-row-label">Language: English</span>
+      <span class="settings-switch" aria-hidden="true"></span>
+    </button>
+
+    <button id="bg-video-toggle-btn" class="settings-row" type="button">
+      <span class="settings-row-label">Animated background</span>
+      <span class="settings-switch" aria-hidden="true"></span>
+    </button>
+
+    <button id="low-quality-toggle-btn" class="settings-row" type="button">
+      <span class="settings-row-label">Low quality mode</span>
+      <span class="settings-switch" aria-hidden="true"></span>
+    </button>
+  </div>
+  
+  <!-- =============================================================================================
+  ============================================ UPDATE LOG ========================================== 
+  ==================================================================================================-->
+
+<div id="settings-view-others" class="settings-view">
+  <div class="settings-info-card">
+    <button class="update-log-main-btn" type="button">
+      <span id="settings-update-log-title">Update log</span>
+      <span class="update-log-arrow">›</span>
+    </button>
+
+    <div id="update-log-root" class="update-log-list update-log-list-hidden"></div>
+  </div>
+
+  <!--==================================== UPD LOG NOTES ====================================== -->
+
+  <div class="settings-info-card settings-notes-card">
+    <span id="settings-notes-title" class="settings-info-title">Notes</span>
+    <p id="settings-notes-text-1">This is a personal project made for the sole purpose to entertain and inform</p>
+    <p id="settings-notes-text-2">There are a bunch of easter eggs around the website👀.</p>
+  </div>
+
+  <div class="settings-info-card settings-credits-card">
+    <span id="settings-credits-title" class="settings-info-title">Credits</span>
+    <p id="settings-credits-text">The Website's Concept, design and updates are made by me. Code assisted by AI and some ideas coming from my friends.</p>
+  </div>
+
+  <div class="settings-info-card moonbite-card">
+    <span class="settings-info-title">???</span>
+    <p id="moonbite-hint-text">Two words, put them together.</p>
+
+    <div class="moonbite-code-box">
+      <input
+        id="moonbite-code-input"
+        class="moonbite-code-input"
+        type="text"
+        placeholder="Enter code"
+        autocomplete="off"
+      >
+
+      <button id="moonbite-code-btn" class="moonbite-code-btn" type="button">
+        OK
+      </button>
+    </div>
+
+    <div id="moonbite-code-message" class="moonbite-code-message"></div>
+  </div>
+</div>
 </div>
 </div>
     </section>
@@ -1862,15 +2036,24 @@ body.hover-bg .profile-wrapper {
     </div>
   </div>
 
- <div id="fact-video-modal" class="fact-video-modal hidden">
+<div id="fact-video-modal" class="fact-video-modal hidden">
   <video
     id="fact-video-player"
     class="fact-video-player"
     preload="auto"
     playsinline
   >
-    <source src="https://github.com/Doudks/test/raw/refs/heads/main/mp4file/MADEINHEAVEN.mp4" type="video/mp4">
+    <source src="https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/MIH.mp4">
   </video>
+</div>
+
+<div id="moonbite-secret-modal" class="moonbite-secret-modal hidden">
+  <img
+    id="moonbite-secret-img"
+    class="moonbite-secret-img"
+    src="https://i.imgur.com/uMyxEeA.jpeg"
+    alt="Moonbite"
+  >
 </div>
 
   <!-- =========================================================
@@ -1882,6 +2065,7 @@ body.hover-bg .profile-wrapper {
 <script src="friends.js"></script>
 <script src="lanyard.js"></script>
 <script defer src="music.js"></script>
+<script src="updateLog.js"></script>
 <script src="settings.js"></script>
 
   <!-- =========================================================
@@ -2203,19 +2387,7 @@ function openFactVideoModal() {
       });
     }
 
-    function bindGameCards() {
-      document.querySelectorAll('.game-card').forEach((card) => {
-        card.addEventListener('click', () => {
-          const img = card.querySelector('img');
-          if (!img || !gameModal || !gameModalImg || !gameModalTitle) return;
-          gameModalImg.src = img.src;
-          gameModalImg.alt = img.alt;
-          gameModalTitle.textContent = card.dataset.title || img.alt;
-          gameModal.classList.remove('hidden');
-          document.body.style.overflow = 'hidden';
-        });
-      });
-    }
+   
 
     function closeModal() {
       if (!gameModal) return;
@@ -2223,9 +2395,6 @@ function openFactVideoModal() {
       document.body.style.overflow = '';
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      bindGameCards();
-    });
     
     closeGameModal?.addEventListener('click', closeModal);
     gameModalOverlay?.addEventListener('click', closeModal);
@@ -2249,7 +2418,7 @@ function openFactVideoModal() {
   '#music-btn',
   '#settings-btn',
   '.settings-panel',
-  '.settings-option-btn',
+  '.settings-row',
   '.settings-close-btn',
   '.profile-wrapper',
   'a'
@@ -2270,5 +2439,65 @@ document.addEventListener('mousemove', (e) => {
   else clearHoverState();
 });
   </script>
+  
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("moonbite-code-input");
+    const button = document.getElementById("moonbite-code-btn");
+    const message = document.getElementById("moonbite-code-message");
+    const modal = document.getElementById("moonbite-secret-modal");
+
+    if (!input || !button || !message || !modal) return;
+
+    function openMoonbiteSecret() {
+      modal.classList.remove("hidden");
+
+      requestAnimationFrame(() => {
+        modal.classList.add("show");
+      });
+
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeMoonbiteSecret() {
+      modal.classList.remove("show");
+
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        document.body.style.overflow = "";
+      }, 350);
+    }
+
+    function checkMoonbiteCode() {
+      const code = input.value.trim().toLowerCase();
+
+      if (code === "moonbite") {
+        message.textContent = window.getSiteText ? window.getSiteText().moonbiteAccepted : "Accepted.";
+        openMoonbiteSecret();
+        return;
+      }
+
+      message.textContent = window.getSiteText ? window.getSiteText().moonbiteWrong : "Nothing happened.";
+      input.value = "";
+    }
+
+    button.addEventListener("click", checkMoonbiteCode);
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        checkMoonbiteCode();
+      }
+    });
+
+    modal.addEventListener("click", closeMoonbiteSecret);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modal.classList.contains("show")) {
+        closeMoonbiteSecret();
+      }
+    });
+  });
+</script>
+  
 </body>
 </html>
