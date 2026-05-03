@@ -416,85 +416,143 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function animateFaqArrow(button) {
-    button.style.transform = "scale(0.9)";
-    setTimeout(() => {
-      button.style.transform = "scale(1)";
-    }, 120);
-  }
+  button.style.transform = "scale(0.9)";
+
+  setTimeout(() => {
+    button.style.transform = "";
+  }, 120);
+}
 
   let shuffledFaq = shuffleArray(faqItems);
   let currentIndex = 0;
-  let isFaqEnded = false;
+  let faqEndStep = 0;
+  // 0 = perguntas normais
+  // 1 = mensagem final
+  // 2 = riddle final
 
   function renderFaq(index) {
     const item = shuffledFaq[index];
 
     const questionLine = questionEl.parentElement;
-    const answerLine = answerEl.parentElement;
+const answerLine = answerEl.parentElement;
+const questionLabel = questionLine.querySelector(".faq-label");
+const answerLabel = answerLine.querySelector(".faq-label");
 
-    questionLine.classList.remove("faq-end-message");
-    answerLine.style.display = "";
+questionLine.classList.remove("faq-end-message", "faq-riddle-message");
+answerLine.style.display = "";
+
+if (questionLabel) questionLabel.style.display = "";
+if (answerLabel) answerLabel.style.display = "";
 
     questionEl.textContent = getLangText(item.question);
-    answerEl.textContent = getLangText(item.answer);
+answerEl.textContent = getLangText(item.answer);
 
-    updateFaqButtons();
+nextBtn.classList.remove("faq-secret-pulse");
+
+updateFaqButtons();
   }
 
   function renderFaqEnd() {
-    const questionLine = questionEl.parentElement;
-    const answerLine = answerEl.parentElement;
+  const questionLine = questionEl.parentElement;
+const answerLine = answerEl.parentElement;
+const questionLabel = questionLine.querySelector(".faq-label");
+const answerLabel = answerLine.querySelector(".faq-label");
 
-    questionLine.classList.add("faq-end-message");
-    answerLine.style.display = "none";
+questionLine.classList.add("faq-end-message");
+questionLine.classList.remove("faq-riddle-message");
+answerLine.style.display = "none";
 
-    questionEl.textContent = getSiteLang() === "pt" ? "Você chegou ao final" : "You reached the end";
+if (questionLabel) questionLabel.style.display = "none";
+if (answerLabel) answerLabel.style.display = "none";
 
-    updateFaqButtons();
-  }
+  questionEl.textContent = getSiteLang() === "pt" ? "Você chegou ao final" : "You reached the end";
+
+nextBtn.classList.add("faq-secret-pulse");
+
+updateFaqButtons();
+}
+
+function renderFaqRiddle() {
+  const questionLine = questionEl.parentElement;
+const answerLine = answerEl.parentElement;
+const questionLabel = questionLine.querySelector(".faq-label");
+const answerLabel = answerLine.querySelector(".faq-label");
+
+questionLine.classList.add("faq-end-message", "faq-riddle-message");
+answerLine.style.display = "none";
+
+if (questionLabel) questionLabel.style.display = "none";
+if (answerLabel) answerLabel.style.display = "none";
+
+nextBtn.classList.remove("faq-secret-pulse");
+  questionEl.innerHTML = `
+    <span class="faq-riddle-mark">✦</span>
+    <span class="faq-riddle-title">The second answer</span>
+
+    <span class="faq-riddle-line">I might hurt a little, or a lot.</span>
+    <span class="faq-riddle-line">Sometimes I mean affection.</span>
+    <span class="faq-riddle-line">Some people even call me a kink.</span>
+  `;
+
+  updateFaqButtons();
+}
 
   function updateFaqButtons() {
-    prevBtn.disabled = currentIndex === 0 && !isFaqEnded;
-    nextBtn.disabled = isFaqEnded;
-  }
+  prevBtn.disabled = currentIndex === 0 && faqEndStep === 0;
+  nextBtn.disabled = faqEndStep === 2;
+}
 
   prevBtn.addEventListener("click", () => {
-    animateFaqArrow(prevBtn);
+  animateFaqArrow(prevBtn);
 
-    if (isFaqEnded) {
-      isFaqEnded = false;
-      renderFaq(currentIndex);
-      return;
-    }
+  if (faqEndStep === 2) {
+    faqEndStep = 1;
+    renderFaqEnd();
+    return;
+  }
 
-    if (currentIndex > 0) {
-      currentIndex--;
-      renderFaq(currentIndex);
-    }
-  });
+  if (faqEndStep === 1) {
+    faqEndStep = 0;
+    renderFaq(currentIndex);
+    return;
+  }
+
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderFaq(currentIndex);
+  }
+});
 
   nextBtn.addEventListener("click", () => {
-    animateFaqArrow(nextBtn);
+  animateFaqArrow(nextBtn);
 
-    if (isFaqEnded) return;
+  if (faqEndStep === 2) return;
 
-    if (currentIndex >= shuffledFaq.length - 1) {
-      isFaqEnded = true;
-      renderFaqEnd();
-      return;
-    }
+  if (faqEndStep === 1) {
+    faqEndStep = 2;
+    renderFaqRiddle();
+    return;
+  }
 
-    currentIndex++;
-    renderFaq(currentIndex);
-  });
+  if (currentIndex >= shuffledFaq.length - 1) {
+    faqEndStep = 1;
+    renderFaqEnd();
+    return;
+  }
+
+  currentIndex++;
+  renderFaq(currentIndex);
+});
 
   document.addEventListener("site-language-changed", () => {
-    if (isFaqEnded) {
-      renderFaqEnd();
-    } else {
-      renderFaq(currentIndex);
-    }
-  });
+  if (faqEndStep === 2) {
+    renderFaqRiddle();
+  } else if (faqEndStep === 1) {
+    renderFaqEnd();
+  } else {
+    renderFaq(currentIndex);
+  }
+});
 
   renderFaq(currentIndex);
   updateFaqButtons();
