@@ -34,7 +34,13 @@ const favoritesData = [
     items: [
       { title: "Yofukashi no Uta", img: "https://cdn.imgchest.com/files/9de8e632b54a.webp" },
       { title: "Shibou Yuugi de Meshi wo Kuu", img: "https://i.imgur.com/OUgTeUp.jpeg" },
-      { title: "Chainsaw Man", img: "https://i.imgur.com/tUlLSVq.png" },
+      
+            {
+        title: "Chainsaw Man",
+        img: "https://cdn.imgchest.com/files/50e36ab63230.jpg",
+        video: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/BANGcsm.mp4"
+      },
+      
       { title: "Evangelion", img: "https://cdn.imgchest.com/files/9ff5cff889b8.jpeg" },
       { title: "Fate Zero", img: "https://i.imgur.com/8aniwIH.jpeg" },
       { title: "Mahou Shoujo ni Akogarete", img: "https://cdn.imgchest.com/files/96e64dc0c3e1.webp" },
@@ -75,7 +81,13 @@ const favoritesData = [
       { title: "Berserk", img: "https://cdn.imgchest.com/files/12fcede15e73.jpg" },
       { title: "One Piece", img: "https://cdn.imgchest.com/files/95b809b31e42.jpg" },
       { title: "Yofukashi no Uta", img: "https://cdn.imgchest.com/files/62a61b8e4cfd.png" },
-      { title: "Chainsaw Man", img: "https://cdn.imgchest.com/files/50e36ab63230.jpg" },
+    
+      {
+        title: "Chainsaw Man",
+        img: "https://cdn.imgchest.com/files/50e36ab63230.jpg",
+        video: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/BANGcsm.mp4"
+      },
+      
       { title: "Jujutsu Kaisen", img: "https://cdn.imgchest.com/files/fe858b528246.jpg" },
       { title: "JoJo's Bizarre Adventure Part 7: Steel Ball Run", img: "https://cdn.imgchest.com/files/2e940e2dabea.jpg" },
       { title: "Fullmetal Alchemist", img: "https://cdn.imgchest.com/files/103106e8f361.jpg" },
@@ -108,6 +120,26 @@ const favoritesData = [
   }
 ];
 
+const preloadedFavoriteVideos = new Map();
+
+function preloadFavoriteMangaVideos() {
+  const mangaSection = favoritesData.find(section => section.id === "favorite-manga");
+  if (!mangaSection) return;
+
+  mangaSection.items.forEach((item) => {
+    if (!item.video || preloadedFavoriteVideos.has(item.video)) return;
+
+    const video = document.createElement("video");
+    video.preload = "auto";
+    video.src = item.video;
+    video.muted = true;
+    video.playsInline = true;
+    video.load();
+
+    preloadedFavoriteVideos.set(item.video, video);
+  });
+}
+
 function getLanguage() {
   return window.getSiteLanguage ? window.getSiteLanguage() : 'en';
 }
@@ -126,13 +158,13 @@ function renderFavorites() {
 
     if (section.type === "cards") {
       return `
-        <button class="toggle-btn" onclick="toggleSection('${section.id}')">${title}</button>
+        <button class="toggle-btn" onclick="toggleSection('${section.id}'); ${section.id === "favorite-manga" ? "preloadFavoriteMangaVideos();" : ""}">${title}</button>
         <div id="${section.id}" class="toggle-content">
           <div class="games-grid">
             ${section.items.map(item => `
-              <div class="game-card" data-title="${item.title}">
-                <img src="${item.img}" loading="lazy" alt="${item.title}">
-              </div>
+              <div class="game-card" data-title="${item.title}" ${item.video ? `data-video="${item.video}"` : ""}>
+  <img src="${item.img}" loading="lazy" alt="${item.title}">
+</div>
             `).join("")}
           </div>
         </div>
@@ -160,16 +192,98 @@ function bindGameCards() {
   const gameModalImg = document.getElementById("game-modal-img");
   const gameModalTitle = document.getElementById("game-modal-title");
 
+  function openImageModal(card) {
+    const img = card.querySelector("img");
+    if (!img || !gameModal || !gameModalImg || !gameModalTitle) return;
+
+    gameModalImg.src = img.src;
+    gameModalImg.alt = img.alt;
+    gameModalTitle.textContent = card.dataset.title || img.alt;
+
+    gameModal.dataset.video = card.dataset.video || "";
+
+    gameModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+  }
+
+  function startMangaBackgroundVideo(videoUrl) {
+  if (!videoUrl) return;
+
+  const bgVideo = document.getElementById("bg-video");
+  if (!bgVideo || !gameModal) return;
+
+  const source = bgVideo.querySelector("source");
+  const preloadedVideo = preloadedFavoriteVideos.get(videoUrl);
+  const finalVideoUrl = preloadedVideo?.src || videoUrl;
+
+  gameModal.classList.add("manga-minimize");
+
+  setTimeout(() => {
+    gameModal.classList.add("hidden");
+    gameModal.classList.remove("manga-minimize");
+    document.body.style.overflow = "";
+
+    document.body.classList.add("manga-bg-video-active");
+    document.body.classList.remove("video-bg-disabled");
+
+    bgVideo.pause();
+
+    if (source) {
+      source.src = finalVideoUrl;
+    } else {
+      bgVideo.src = finalVideoUrl;
+    }
+
+    bgVideo.muted = false;
+    bgVideo.loop = false;
+    bgVideo.playsInline = true;
+    bgVideo.currentTime = 0;
+    bgVideo.load();
+
+    function restoreNormalBackgroundAfterMangaVideo() {
+  document.body.classList.remove("manga-bg-video-active");
+
+  if (source) {
+    source.src = "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/starry-sky-moon-clouds-moewalls-com%20(1).mp4";
+  } else {
+    bgVideo.src = "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/starry-sky-moon-clouds-moewalls-com%20(1).mp4";
+  }
+
+  bgVideo.muted = true;
+  bgVideo.loop = true;
+  bgVideo.currentTime = 0;
+  bgVideo.load();
+
+  if (!document.body.classList.contains("video-bg-disabled") && !document.body.classList.contains("low-quality-mode")) {
+    bgVideo.play().catch(() => {});
+  }
+}
+
+bgVideo.addEventListener("ended", restoreNormalBackgroundAfterMangaVideo, { once: true });
+
+bgVideo.play().catch((err) => {
+  console.error("Erro ao tocar vídeo de fundo do manga:", err);
+});
+  }, 420);
+}
+
   gameCards.forEach(card => {
     card.addEventListener("click", () => {
-      const img = card.querySelector("img");
-      gameModalImg.src = img.src;
-      gameModalImg.alt = img.alt;
-      gameModalTitle.textContent = card.dataset.title;
-      gameModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
+      openImageModal(card);
     });
   });
+
+  if (gameModalImg) {
+    gameModalImg.addEventListener("dblclick", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const videoUrl = gameModal?.dataset.video;
+      if (!videoUrl) return;
+
+      startMangaBackgroundVideo(videoUrl);
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", renderFavorites);
