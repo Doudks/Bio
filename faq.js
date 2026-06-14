@@ -16,10 +16,6 @@ const faqItems = [
     answer: { en: "Answer only for close friends", pt: "Só respondo isso para amigos próximos" }
   },
   {
-    question: { en: "Where are you from?", pt: "De onde você é?" },
-    answer: { en: "Brazil", pt: "Brasil" }
-  },
-  {
     question: { en: "What are your hobbies?", pt: "Quais são seus hobbies?" },
     answer: { en: "Drawing anime, playing games, and studying astronomy", pt: "Desenhar anime, jogar e estudar astronomia" }
   },
