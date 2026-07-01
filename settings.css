@@ -953,3 +953,884 @@ body.low-quality-mode.manga-bg-video-active #bg-parallax {
     0 0 32px rgba(201,20,65,0.28),
     0 20px 80px rgba(0,0,0,0.85);
 }
+
+/* ================= CMD TERMINAL / OPEN BUTTON ================= */
+
+.open-terminal-btn {
+  width: 100%;
+  height: 42px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.open-terminal-btn:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 0 14px rgba(201, 20, 65, 0.14);
+  transform: translateY(-1px);
+}
+
+.open-terminal-btn:active {
+  transform: scale(0.97);
+}
+
+body.light-theme .open-terminal-btn {
+  background: rgba(255,255,255,0.62);
+  border-color: rgba(0,0,0,0.08);
+  color: #151515;
+}
+
+body.light-theme .open-terminal-btn:hover {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(0,0,0,0.12);
+}
+
+/* ================= CMD TERMINAL MODAL ================= */
+
+.cmd-terminal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 92000;
+  display: block;
+  padding: 0;
+}
+
+.cmd-terminal-modal.hidden {
+  display: none;
+}
+
+.cmd-terminal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* ================= CMD WINDOW ================= */
+
+.cmd-window {
+  position: absolute;
+  z-index: 2;
+  width: min(92vw, 820px);
+  height: min(72vh, 520px);
+  min-width: 360px;
+  min-height: 220px;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100dvh - 20px);
+  display: flex;
+  flex-direction: column;
+  background: #0c0c0c;
+  border: 1px solid #2b2b2b;
+  box-shadow:
+    0 24px 80px rgba(0,0,0,0.78),
+    0 0 0 1px rgba(255,255,255,0.05);
+  font-family: Consolas, "Courier New", monospace;
+  overflow: hidden;
+  animation: cmdOpen 0.14s ease forwards;
+}
+
+/* ================= TITLE BAR ================= */
+
+.cmd-titlebar {
+  height: 31px;
+  flex: 0 0 31px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  color: #111111;
+  user-select: none;
+  cursor: move;
+}
+
+.cmd-title-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 9px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  color: #111111;
+}
+
+.cmd-icon {
+  width: 20px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0c0c0c;
+  color: #ffffff;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.cmd-window-controls {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  cursor: default;
+}
+
+.cmd-control-btn {
+  width: 46px;
+  height: 31px;
+  border: none;
+  background: transparent;
+  color: #111111;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease;
+}
+
+.cmd-control-btn:hover {
+  background: #e5e5e5;
+}
+
+.cmd-close-btn:hover {
+  background: #c42b1c;
+  color: #ffffff;
+}
+
+.cmd-close-btn:active {
+  background: #8f1f14;
+  color: #ffffff;
+}
+
+/* ================= CMD SCREEN ================= */
+
+.cmd-screen {
+  flex: 1;
+  padding: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #0c0c0c;
+  color: #cccccc;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 15px;
+  line-height: 1.28;
+  cursor: text;
+}
+
+.cmd-screen::-webkit-scrollbar {
+  width: 14px;
+}
+
+.cmd-screen::-webkit-scrollbar-track {
+  background: #0c0c0c;
+}
+
+.cmd-screen::-webkit-scrollbar-thumb {
+  background: #767676;
+  border: 3px solid #0c0c0c;
+}
+
+.cmd-screen::-webkit-scrollbar-thumb:hover {
+  background: #9a9a9a;
+}
+
+.cmd-output {
+  min-height: 0;
+}
+
+.cmd-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  min-height: 19px;
+  color: #cccccc;
+}
+
+.cmd-line.command {
+  color: #cccccc;
+}
+
+.cmd-line.success {
+  color: #cccccc;
+}
+
+.cmd-line.error {
+  color: #ff6b6b;
+}
+
+.cmd-form {
+  display: flex;
+  align-items: center;
+  min-height: 19px;
+}
+
+.cmd-prompt {
+  flex: 0 0 auto;
+  color: #cccccc;
+  white-space: pre;
+}
+
+.cmd-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #cccccc;
+  font: inherit;
+  font-size: 16px;
+  padding: 0;
+  caret-color: #cccccc;
+}
+
+/* ================= RESIZE HANDLE ================= */
+
+.cmd-resize-handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 18px;
+  height: 18px;
+  cursor: nwse-resize;
+  z-index: 5;
+}
+
+.cmd-resize-handle::before {
+  content: "";
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid rgba(255,255,255,0.45);
+  border-bottom: 2px solid rgba(255,255,255,0.45);
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes cmdOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ================= LOW QUALITY MODE ================= */
+
+body.low-quality-mode .cmd-terminal-backdrop {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.low-quality-mode .cmd-window {
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+body.low-quality-mode .open-terminal-btn:hover,
+body.low-quality-mode .cmd-control-btn:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ================= MOBILE / TOUCH ================= */
+
+@media (hover: none) {
+  .cmd-control-btn:hover {
+    background: transparent;
+  }
+
+  .cmd-close-btn:hover {
+    background: transparent;
+    color: #111111;
+  }
+
+  .cmd-close-btn:active {
+    background: #c42b1c;
+    color: #ffffff;
+  }
+}
+
+@media (max-width: 560px) {
+  .cmd-window {
+    min-width: 260px;
+    min-height: 220px;
+    max-width: calc(100vw - 12px);
+    max-height: calc(100dvh - 12px);
+  }
+
+  .cmd-screen {
+    font-size: 13px;
+    padding: 7px;
+  }
+
+  .cmd-title-left {
+    font-size: 11px;
+    gap: 6px;
+    padding-left: 7px;
+  }
+
+  .cmd-icon {
+    width: 18px;
+    height: 16px;
+    font-size: 8px;
+  }
+
+  .cmd-control-btn {
+    width: 42px;
+  }
+
+  .cmd-input {
+    font-size: 16px;
+  }
+
+  .cmd-resize-handle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cmd-resize-handle::before {
+    right: 7px;
+    bottom: 7px;
+  }
+}
+/* ================= CMD MAXIMIZED ================= */
+
+.cmd-window.is-maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  max-width: 100vw !important;
+  max-height: 100dvh !important;
+  border-radius: 0;
+}
+
+.cmd-window.is-maximized .cmd-titlebar {
+  cursor: default;
+}
+
+.cmd-window.is-maximized .cmd-resize-handle {
+  display: none;
+}
+
+/* ================= CMD MINIMIZED ICON ================= */
+
+.cmd-minimized-icon {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 93000;
+  width: 190px;
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 10px;
+  background: #101010;
+  color: #ffffff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow:
+    0 12px 34px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(255,255,255,0.04) inset;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.cmd-minimized-icon.hidden {
+  display: none;
+}
+
+.cmd-minimized-icon:hover {
+  background: #1b1b1b;
+  border-color: rgba(255,255,255,0.24);
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 42px rgba(0,0,0,0.62),
+    0 0 14px rgba(255,255,255,0.08);
+}
+
+.cmd-minimized-icon:active {
+  transform: scale(0.97);
+}
+
+.cmd-minimized-icon-symbol {
+  width: 28px;
+  height: 24px;
+  background: #0c0c0c;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: #ffffff;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+}
+
+.cmd-minimized-icon-text {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+body.light-theme .cmd-minimized-icon {
+  background: #f4f4f4;
+  color: #111111;
+  border-color: rgba(0,0,0,0.14);
+}
+
+body.light-theme .cmd-minimized-icon:hover {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.22);
+}
+
+body.light-theme .cmd-minimized-icon-symbol {
+  background: #0c0c0c;
+  color: #ffffff;
+}
+
+@media (max-width: 560px) {
+  .cmd-minimized-icon {
+    right: 12px;
+    bottom: 12px;
+    width: 168px;
+    height: 46px;
+  }
+
+  .cmd-minimized-icon-text {
+    font-size: 12px;
+  }
+}
+
+/* ================= SITE FLAVOR SELECTOR ================= */
+
+.settings-flavor-card {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 8px 18px rgba(0,0,0,0.14);
+}
+
+.flavor-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.flavor-option-btn {
+  min-height: 38px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.045);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    color 0.22s ease;
+}
+
+.flavor-option-btn:hover {
+  background: rgba(255,255,255,0.075);
+  border-color: rgba(255,255,255,0.16);
+  transform: translateY(-1px);
+  box-shadow: 0 0 14px rgba(201, 20, 65, 0.10);
+}
+
+.flavor-option-btn:active {
+  transform: scale(0.96);
+}
+
+.flavor-option-btn.active {
+  border-color: rgba(255,143,189,0.46);
+  background:
+    linear-gradient(135deg, rgba(201,20,65,0.20), rgba(255,255,255,0.055));
+  box-shadow:
+    0 0 14px rgba(201, 20, 65, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+.flavor-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex: 0 0 13px;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.08),
+    0 0 10px rgba(255,255,255,0.10);
+}
+
+.flavor-vanilla {
+  background: linear-gradient(135deg, #ffffff, #c91441, #111111);
+}
+
+.flavor-blueberry {
+  background: linear-gradient(135deg, #9fd7ff, #5b7cff, #16003a);
+}
+
+.flavor-peach {
+  background: linear-gradient(135deg, #ffd09f, #ff8a5b, #5b2434);
+}
+
+.flavor-coconut {
+  background: linear-gradient(135deg, #fffdf3, #d8ccb0, #1d1d1d);
+}
+
+.flavor-cherry {
+  background: linear-gradient(135deg, #ff5f8f, #e30039, #090006);
+}
+
+.flavor-lime {
+  background: linear-gradient(135deg, #f2ff8f, #b9ff3f, #5dff7a, #0d2f12);
+}
+
+body.light-theme .settings-flavor-card {
+  background: rgba(255,255,255,0.62);
+  border-color: rgba(0,0,0,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    0 8px 18px rgba(0,0,0,0.06);
+}
+
+body.light-theme .flavor-option-btn {
+  background: rgba(255,255,255,0.62);
+  color: #151515;
+  border-color: rgba(0,0,0,0.08);
+}
+
+body.light-theme .flavor-option-btn:hover {
+  background: rgba(255,255,255,0.84);
+  border-color: rgba(0,0,0,0.12);
+}
+
+body.light-theme .flavor-option-btn.active {
+  border-color: rgba(201,20,65,0.24);
+  background:
+    linear-gradient(135deg, rgba(201,20,65,0.13), rgba(255,255,255,0.78));
+}
+
+@media (max-width: 420px) {
+  .flavor-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+  FINAL BACKGROUND STACK FIX V3
+  0 = static image
+  1 = animated video
+  10+ = site content
+========================================================= */
+
+html {
+  background: #05050c !important;
+}
+
+body {
+  background: transparent !important;
+  min-height: 100vh;
+}
+
+/* camada 0: wallpaper estático */
+#bg-parallax {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+  background-color: #05050c !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-blend-mode: normal !important;
+  overflow: hidden !important;
+  transition:
+    opacity 0.65s ease,
+    filter 0.65s ease,
+    background 0.65s ease;
+}
+
+/* camada 1: wallpaper animado */
+#bg-video {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
+  z-index: 1 !important;
+  display: block !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  opacity: 0;
+  transition:
+    opacity 0.65s ease,
+    filter 0.65s ease;
+}
+
+/* conteúdo principal acima do background */
+.banner,
+.content {
+  position: relative;
+  z-index: 10;
+}
+
+/* loading acima de tudo */
+#loading-screen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 20000 !important;
+}
+
+/* vídeo ligado */
+body.flavor-animated-bg:not(.video-bg-disabled):not(.low-quality-mode) #bg-video {
+  opacity: 1 !important;
+}
+
+/* vídeo desligado: mostra só imagem estática */
+body.video-bg-disabled #bg-video,
+body.flavor-static-bg #bg-video {
+  opacity: 0 !important;
+}
+
+/* modo leve: desliga vídeo de verdade */
+body.low-quality-mode #bg-video {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* imagem estática sempre fica embaixo */
+body.video-bg-disabled #bg-parallax,
+body.flavor-static-bg #bg-parallax,
+body.flavor-animated-bg #bg-parallax {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* overlay do wallpaper estático */
+#bg-parallax::before {
+  pointer-events: none !important;
+}
+
+body.video-bg-disabled #bg-parallax::before,
+body.flavor-static-bg #bg-parallax::before {
+  background: rgba(0, 0, 0, 0.20) !important;
+  opacity: 1 !important;
+}
+
+body.light-theme.video-bg-disabled #bg-parallax::before,
+body.light-theme.flavor-static-bg #bg-parallax::before {
+  background: rgba(255, 255, 255, 0.08) !important;
+  opacity: 1 !important;
+}
+
+/* modais continuam acima */
+.settings-panel {
+  z-index: 45000 !important;
+}
+
+.mini-player {
+  z-index: 40000 !important;
+}
+
+.cmd-terminal-modal {
+  z-index: 92000 !important;
+}
+
+.cmd-minimized-icon {
+  z-index: 93000 !important;
+}
+
+/* compatibilidade com o vídeo secreto do manga */
+body.manga-bg-video-active #bg-video {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1 !important;
+  filter: none !important;
+}
+
+body.manga-bg-video-active #bg-parallax {
+  opacity: 0 !important;
+}
+/* =========================================================
+  THEME TRANSITION RHYTHM
+  Different parts transition at different speeds
+========================================================= */
+
+/* wallpaper: bem lentinho */
+body.theme-transitioning #bg-video {
+  transition:
+    opacity 1.8s ease,
+    filter 1.8s ease !important;
+}
+
+body.theme-transitioning #bg-parallax,
+body.theme-transitioning #bg-parallax::before {
+  transition:
+    opacity 2s ease,
+    filter 2s ease,
+    background 2s ease,
+    background-color 2s ease !important;
+}
+
+/* banner muda primeiro */
+body.theme-transitioning .banner {
+  transition:
+    background 1.35s ease 0s,
+    filter 1.35s ease 0s,
+    border-color 1.35s ease 0s,
+    box-shadow 1.35s ease 0s !important;
+}
+
+/* perfil muda um pouco depois */
+body.theme-transitioning .profile-wrapper,
+body.theme-transitioning .profile-name,
+body.theme-transitioning .profile-pic,
+body.theme-transitioning .avatar-mask {
+  transition:
+    background 1.45s ease 0.06s,
+    color 1.45s ease 0.06s,
+    filter 1.45s ease 0.06s,
+    border-color 1.45s ease 0.06s,
+    box-shadow 1.45s ease 0.06s,
+    text-shadow 1.45s ease 0.06s !important;
+}
+
+/* cards principais */
+body.theme-transitioning .content,
+body.theme-transitioning .text-block,
+body.theme-transitioning .fact,
+body.theme-transitioning .friend-card,
+body.theme-transitioning .love-list li,
+body.theme-transitioning .hate-list li,
+body.theme-transitioning .friends-list li {
+  transition:
+    background 1.05s ease 0.12s,
+    color 1.05s ease 0.12s,
+    border-color 1.05s ease 0.12s,
+    box-shadow 1.05s ease 0.12s,
+    filter 1.05s ease 0.12s,
+    opacity 1.05s ease 0.12s !important;
+}
+
+/* qotd e faq mais dramáticos */
+body.theme-transitioning .qotd-section,
+body.theme-transitioning .qotd-box,
+body.theme-transitioning .qotd-label,
+body.theme-transitioning #qotd-text,
+body.theme-transitioning .qotd-author,
+body.theme-transitioning .qotd-mark,
+body.theme-transitioning .faq-box,
+body.theme-transitioning .faq-line,
+body.theme-transitioning .faq-label,
+body.theme-transitioning .faq-arrow {
+  transition:
+    background 1.35s ease 0.18s,
+    color 1.35s ease 0.18s,
+    border-color 1.35s ease 0.18s,
+    box-shadow 1.35s ease 0.18s,
+    text-shadow 1.35s ease 0.18s,
+    filter 1.35s ease 0.18s,
+    opacity 1.35s ease 0.18s !important;
+}
+
+/* botões: mais rápidos pra parecer responsivo */
+body.theme-transitioning button,
+body.theme-transitioning .toggle-btn,
+body.theme-transitioning .shuffle-btn,
+body.theme-transitioning .social-btn,
+body.theme-transitioning .music-btn,
+body.theme-transitioning #music-btn,
+body.theme-transitioning .settings-trigger-btn,
+body.theme-transitioning .open-terminal-btn {
+  transition:
+    background 0.75s ease 0.24s,
+    color 0.75s ease 0.24s,
+    border-color 0.75s ease 0.24s,
+    box-shadow 0.75s ease 0.24s,
+    filter 0.75s ease 0.24s,
+    opacity 0.75s ease 0.24s,
+    transform 0.22s ease !important;
+}
+
+/* painel de settings */
+body.theme-transitioning .settings-panel,
+body.theme-transitioning .settings-row,
+body.theme-transitioning .settings-switch,
+body.theme-transitioning .settings-info-card,
+body.theme-transitioning .settings-flavor-card,
+body.theme-transitioning .flavor-option-btn,
+body.theme-transitioning .settings-tab-btn,
+body.theme-transitioning .update-log-main-btn,
+body.theme-transitioning .update-log-version,
+body.theme-transitioning .update-log-content {
+  transition:
+    background 0.95s ease 0.08s,
+    color 0.95s ease 0.08s,
+    border-color 0.95s ease 0.08s,
+    box-shadow 0.95s ease 0.08s,
+    filter 0.95s ease 0.08s,
+    opacity 0.95s ease 0.08s,
+    transform 0.22s ease !important;
+}
+
+/* player e terminal com ritmo próprio */
+body.theme-transitioning .mini-player,
+body.theme-transitioning .cmd-window,
+body.theme-transitioning .cmd-minimized-icon {
+  transition:
+    background 1.15s ease 0.16s,
+    color 1.15s ease 0.16s,
+    border-color 1.15s ease 0.16s,
+    box-shadow 1.15s ease 0.16s,
+    filter 1.15s ease 0.16s,
+    opacity 1.15s ease 0.16s,
+    transform 0.22s ease !important;
+}
