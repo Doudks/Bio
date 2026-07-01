@@ -102,6 +102,13 @@ const musicList = [
     background: "https://i.ytimg.com/vi/cnlpwbkKrpM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLB9QN25pRIIdo50r56H20u2tTAOqA"
   },
   {
+    name: "I hope this song makes you happy",
+    src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/I%20hope%20this%20song%20make%20you%20happy.mp3.mp3",
+    thumbnail: "https://i.imgur.com/U0hU5Bs.png",
+    youtube: "https://www.youtube.com/watch?v=dOBgx_PnVng",
+    background: "https://i.imgur.com/U0hU5Bs.png" 
+  },
+  {
     name: "Like Him",
     src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/Like%20him.mp3",
     thumbnail: "https://i.ytimg.com/vi/Z0CQf3JDKAY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDMW_BRY-ZhKwiVEsdnGgSFqMXfCg",
@@ -179,11 +186,32 @@ const musicList = [
     background: "https://i.imgur.com/DyJ3zOL.jpeg"
   },
   {
-    name: "Melanie Martinez - AVOIDANT (Official Audio)",
+    name: "Melanie Martinez - AVOIDANT",
     src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/AVOIDANT.mp3",
     thumbnail: "https://i.imgur.com/0vtl467.jpeg",
     youtube: "https://www.youtube.com/watch?v=kjIuGUDvZkw",
     background: "https://i.imgur.com/WNcWPZZ.png"
+  },
+  {
+    name: "Melanie Martinez - GUTTER",
+    src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/GLITTER.mp3",
+    thumbnail: "https://i.imgur.com/WNcWPZZ.png",
+    youtube: "https://www.youtube.com/watch?v=wmIHhNe8YIo",
+    background: "https://i.imgur.com/lNOXPg0.jpeg" 
+  },
+  {
+    name: "Melanie Martinez - BATSHIT INTELLIGENCE",
+    src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/Melanie%20Martinez%20-%20BATSHIT%20INTELLIGENCE%20(Official%20Audio)%20-%20melanie%20martinez%20(youtube).mp3",
+    thumbnail: "https://i.imgur.com/T15MCnH.jpeg",
+    youtube: "https://www.youtube.com/watch?v=BJ1EZd7lShI",
+    background: "https://i.imgur.com/xUXawMA.jpeg" 
+  },
+  {
+    name: "𝗖𝗘𝗡𝗦𝗢𝗥𝗘𝗗",
+    src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/%5B%F0%9D%97%96%F0%9D%97%98%F0%9D%97%A1%F0%9D%97%A6%F0%9D%97%A2%F0%9D%97%A5%F0%9D%97%98%F0%9D%97%97%5D.mp3",
+    thumbnail: "https://i.imgur.com/v4x9M36.jpeg",
+    youtube: "https://www.youtube.com/watch?v=WEp66-HjojQ",
+    background: "https://i.ytimg.com/vi/WEp66-HjojQ/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDW1sM1iYspOtCq7o5i-GIfMLuzGA" 
   }
   
 ];
