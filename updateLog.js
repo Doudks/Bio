@@ -157,12 +157,43 @@ const updateLogData = [
       ["improved", { en: "Settings panel layout to better match the reference design.", pt: "Layout do painel de configurações ajustado para combinar melhor com a referência." }],
       ["improved", { en: "Visual organization of the settings.", pt: "Organização visual das configurações." }],
       ["improved", { en: "Tab navigation inside the panel.", pt: "Navegação por abas dentro do painel." }],
-      ["improved", { en: "Update Log structure.", pt: "Estrutura do registro de atualizações." }],
+      ["improved", { en: "Update Log structure.", pt: "Estrutura do registro de updates." }],
       ["fixed", { en: "Log list escaping outside the screen.", pt: "Lista do log escapando para fora da tela." }],
-      ["fixed", { en: "Stacked transparent backgrounds accumulating across versions.", pt: "Fundos transparentes acumulando entre versões." }],
+      ["fixed", { en: "Stacked transparent backgrounds accumulating across versions.", pt: "Fundos transparentes acumulando entre versões no update log." }],
       ["added", { en: "2 New easter eggs.", pt: "2 novos easter eggs." }]
     ]
-  }
+  },
+  {
+    version: { en: "Version 1.2", pt: "Versão 1.2" },
+    date: "2026-06-12",
+    changes: [
+      ["improved", { en: "New website embed.", pt: "Novo embed do site." }],
+      ["Fixed", { en: "Typos in FAQ.", pt: "Erros de digitação no FAQ."}],
+      ["Added", { en: "Quote of the day.", pt: "Frase do dia."}],
+      ["Changed", { en: "Main profile name font.", pt: "Fonte do nome do perfil principal."}],
+    ]
+  },
+  {
+  version: { en: "Version 1.3", pt: "Versão 1.3" },
+  date: "2026-06-27",
+  changes: [
+    ["added", { en: "Windows style terminal in the Extra settings tab.", pt: "Terminal estilo Windows na aba Extra das configurações." }],
+    ["added", { en: "Terminal commands such as help, about, status, time, date, clear, cls and exit.", pt: "Comandos no terminal tipo help, about, status, time, date, clear, cls e exit." }],
+    ["added", { en: "More Hidden easter egg commands.", pt: "Mais easter eggs" }],
+    ["added", { en: "Draggable terminal window.", pt: "Janela do terminal arrastável." }],
+    ["added", { en: "Resizable terminal window using the bottom-right corner.", pt: "Janela do terminal redimensionável pelo canto inferior direito." }],
+    ["added", { en: "Fullscreen and restore button for the terminal.", pt: "Botão de tela cheia e restaurar para o terminal." }],
+    ["added", { en: "Minimize button that turns the terminal into a floating icon.", pt: "Botão de minimizar que transforma o terminal em um ícone flutuante." }],
+    ["improved", { en: "Minimized terminal keeps the current command log.", pt: "Terminal minimizado mantém o log atual dos comandos." }],
+    ["improved", { en: "Terminal controls now work better on mobile and touch screens.", pt: "Controles do terminal agora funcionam melhor no mobile e em telas touch." }],
+    ["improved", { en: "Close button hover effect to better match modern Windows behavior.", pt: "Efeito de hover do botão de fechar ajustado para combinar melhor com o Windows moderno." }],
+    ["changed", { en: "The old ??? code input was replaced with an Open Terminal button.", pt: "O antigo campo de código ??? foi substituído por um botão Open Terminal." }],
+    ["changed", { en: "Opening any easter egg now closes the terminal first.", pt: "Abrir qualquer easter egg agora fecha o terminal primeiro." }],
+    ["fixed", { en: "Terminal layout issues on smaller screens.", pt: "Problemas de layout do terminal em telas menores." }],
+    ["fixed", { en: "Terminal background blur affecting the entire website.", pt: "Blur do fundo do terminal afetando o site inteiro." }],
+    ["fixed", { en: "Several JavaScript issues related to terminal controls.", pt: "Vários problemas de JavaScript relacionados aos controles do terminal." }]
+  ]
+} 
 ];
 
 function getUpdateLogLang() {
