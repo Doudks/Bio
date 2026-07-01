@@ -193,7 +193,69 @@ const updateLogData = [
     ["fixed", { en: "Terminal background blur affecting the entire website.", pt: "Blur do fundo do terminal afetando o site inteiro." }],
     ["fixed", { en: "Several JavaScript issues related to terminal controls.", pt: "Vários problemas de JavaScript relacionados aos controles do terminal." }]
   ]
-} 
+},
+{
+  version: { en: "Version 1.4", pt: "Versão 1.4" },
+  date: "2026-07-01",
+  changes: [
+    ["added", { en: "Site flavor system with multiple visual styles.", pt: "Sistema de flavors do site com vários estilos visuais." }],
+    ["added", { en: "New flavor options: Vanilla, Blueberry, Peach, Coconut, Cherry, Lime and Strawberry.", pt: "Novas opções de flavor: Vanilla, Blueberry, Peach, Coconut, Cherry, Lime e Strawberry." }],
+    ["added", { en: "Different banner images for each flavor.", pt: "Imagens de banner diferentes para cada flavor." }],
+    ["added", { en: "Different background images for each flavor.", pt: "Imagens de fundo diferentes para cada flavor." }],
+    ["added", { en: "Animated wallpaper support per flavor.", pt: "Suporte a wallpaper animado por flavor." }],
+    ["added", { en: "Static background fallback when animated wallpaper is disabled.", pt: "Imagem de fundo estática quando o wallpaper animado está desativado." }],
+    ["added", { en: "Smooth transitions when changing flavors.", pt: "Transições suaves ao trocar de flavor." }],
+    ["added", { en: "Different transition timing for several website elements.", pt: "Tempos de transição diferentes para vários elementos do site." }],
+    ["added", { en: "Flavor-specific click sound effects.", pt: "Efeitos sonoros de clique específicos para cada flavor." }],
+    ["added", { en: "Flavor-specific profile hover sound effects.", pt: "Efeitos sonoros específicos ao passar o mouse no mini perfil em cada flavor." }],
+    ["added", { en: "Random pitch variation for profile hover sounds.", pt: "Variação aleatória de pitch nos sons de hover do mini perfil." }],
+    ["added", { en: "Lazy preload system for flavor images, videos and sounds.", pt: "Sistema de preload sob demanda para imagens, vídeos e sons dos flavors." }],
+    ["added", { en: "Preload only starts after interacting with the flavor selector.", pt: "O preload só começa depois de interagir com o seletor de flavors." }],
+    ["added", { en: "Secret Windows-style terminal in the Extra settings tab.", pt: "Terminal secreto estilo Windows na aba Extra das configurações." }],
+    ["added", { en: "Terminal commands such as help, about, status, time, date, clear, cls and exit.", pt: "Comandos no terminal como help, about, status, time, date, clear, cls e exit." }],
+    ["added", { en: "Hidden easter egg terminal commands.", pt: "Comandos secretos de easter egg no terminal." }],
+    ["added", { en: "Draggable terminal window.", pt: "Janela do terminal arrastável." }],
+    ["added", { en: "Resizable terminal window using the bottom-right corner.", pt: "Janela do terminal redimensionável pelo canto inferior direito." }],
+    ["added", { en: "Fullscreen and restore button for the terminal.", pt: "Botão de tela cheia e restaurar para o terminal." }],
+    ["added", { en: "Minimize button that turns the terminal into a floating icon.", pt: "Botão de minimizar que transforma o terminal em um ícone flutuante." }],
+    ["added", { en: "Linux Mint Cinnamon style terminal for the Lime flavor.", pt: "Terminal estilo Linux Mint Cinnamon para o flavor Lime." }],
+    ["added", { en: "Linux-style terminal text for the Lime flavor.", pt: "Texto estilo terminal Linux para o flavor Lime." }],
+    ["added", { en: "Lime flavor with nature, grass and pixel-style decorative elements.", pt: "Flavor Lime com elementos decorativos de natureza, grama e estilo pixelado." }],
+    ["added", { en: "Rose thorn decoration around the main content on the Lime flavor.", pt: "Decoração de espinhos de rosas ao redor da caixa principal no flavor Lime." }],
+    ["added", { en: "Strawberry flavor with a dark cute boutique style.", pt: "Flavor Strawberry com estilo boutique fofo em modo escuro." }],
+    ["added", { en: "Strawberry decorative scallop border on the main content.", pt: "Borda decorativa estilo lojinha fofa no conteúdo principal do Strawberry." }],
+    ["added", { en: "Strawberry flavor dot in the settings flavor selector.", pt: "Bolinha do flavor Strawberry no seletor de flavors das configurações." }],
+
+    ["improved", { en: "FAQ section now follows the selected flavor colors.", pt: "A seção FAQ agora acompanha as cores do flavor selecionado." }],
+    ["improved", { en: "Quote of the Day colors now update correctly per flavor.", pt: "As cores do Quote of the Day agora mudam corretamente por flavor." }],
+    ["improved", { en: "Favorite Stuff cards now match the selected flavor.", pt: "Os cards de Favorite Stuff agora combinam com o flavor selecionado." }],
+    ["improved", { en: "Settings panel now better matches each flavor.", pt: "O painel de configurações agora combina melhor com cada flavor." }],
+    ["improved", { en: "Buttons now transition colors more smoothly.", pt: "Os botões agora transicionam cores de forma mais suave." }],
+    ["improved", { en: "Theme and flavor switching visuals are smoother.", pt: "A troca de tema e flavor ficou visualmente mais suave." }],
+    ["improved", { en: "Animated wallpaper switching is less abrupt.", pt: "A troca de wallpaper animado ficou menos brusca." }],
+    ["improved", { en: "Low Quality Mode compatibility with flavor backgrounds.", pt: "Compatibilidade do Modo Leve com os backgrounds dos flavors." }],
+    ["improved", { en: "Minimized terminal keeps the current command log.", pt: "Terminal minimizado mantém o log atual dos comandos." }],
+    ["improved", { en: "Terminal controls now work better on mobile and touch screens.", pt: "Controles do terminal agora funcionam melhor no mobile e em telas touch." }],
+
+    ["changed", { en: "The old ??? code input was replaced with an Open Terminal button.", pt: "O antigo campo de código ??? foi substituído por um botão Open Terminal." }],
+    ["changed", { en: "Opening any easter egg now closes the terminal first.", pt: "Abrir qualquer easter egg agora fecha o terminal primeiro." }],
+    ["changed", { en: "The Strawberry flavor was redesigned into a dark pastel boutique theme.", pt: "O flavor Strawberry foi redesenhado para um tema boutique pastel escuro." }],
+    ["changed", { en: "The Lime flavor was redesigned with a more natural pixel/Minecraft-inspired style.", pt: "O flavor Lime foi redesenhado com um estilo mais natural, pixelado e inspirado em Minecraft." }],
+    ["changed", { en: "The settings button now uses the current flavor click sound.", pt: "O botão de configurações agora usa o som de clique do flavor atual." }],
+
+    ["fixed", { en: "Background flashing white when disabling animated wallpaper.", pt: "Piscar branco no fundo ao desativar o wallpaper animado." }],
+    ["fixed", { en: "Static wallpaper not appearing after disabling animated wallpaper.", pt: "Wallpaper estático não aparecendo após desativar o wallpaper animado." }],
+    ["fixed", { en: "Animated wallpapers not appearing correctly after flavor changes.", pt: "Wallpapers animados não aparecendo corretamente após trocar de flavor." }],
+    ["fixed", { en: "Previous flavor video staying visible when the new flavor has no animated wallpaper.", pt: "Vídeo do flavor anterior continuando visível quando o novo flavor não tinha wallpaper animado." }],
+    ["fixed", { en: "Banner stretching and positioning issues.", pt: "Problemas de banner esticado e mal posicionado." }],
+    ["fixed", { en: "Coconut buttons losing their correct style.", pt: "Botões do Coconut perdendo o estilo correto." }],
+    ["fixed", { en: "Hover background transparency animation not applying to all elements.", pt: "Animação de transparência no hover do background não aplicando em todos os elementos." }],
+    ["fixed", { en: "Strawberry top decoration icons rendering incorrectly.", pt: "Ícones decorativos do Strawberry renderizando incorretamente." }],
+    ["fixed", { en: "Terminal layout issues on smaller screens.", pt: "Problemas de layout do terminal em telas menores." }],
+    ["fixed", { en: "Terminal background blur affecting the entire website.", pt: "Blur do fundo do terminal afetando o site inteiro." }],
+    ["fixed", { en: "Several JavaScript issues related to flavor switching, terminal controls and background handling.", pt: "Vários problemas de JavaScript relacionados à troca de flavors, controles do terminal e controle de background." }]
+  ]
+},
 ];
 
 function getUpdateLogLang() {
