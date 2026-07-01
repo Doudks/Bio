@@ -622,7 +622,7 @@ const flavorAssets = {
     banner: "https://i.imgur.com/vuJ9RxI.jpeg",
     background: "https://i.imgur.com/qV65bIs.jpeg",
     video: "",
-    bannerPosition: "center 70%",
+    bannerPosition: "center 24%",
     backgroundPosition: "center"
   }
 
