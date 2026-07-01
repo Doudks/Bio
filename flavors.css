@@ -1,0 +1,3262 @@
+/* =========================================================
+  SITE FLAVORS
+  vanilla  = original
+  blueberry = neon / LED
+  peach = pixel art
+  coconut = sketch / oversimplified
+  cherry = gothic / horror
+  lime = minecraft / nature / sakura
+  strawberry = dark cute boutique / pastel pink
+========================================================= */
+
+/* =========================================================
+  BASE FLAVOR SYSTEM
+========================================================= */
+
+body[data-flavor] {
+  --flavor-transition:
+    background 0.45s ease,
+    color 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease,
+    filter 0.45s ease,
+    transform 0.25s ease;
+}
+
+body[data-flavor] .content,
+body[data-flavor] .profile-wrapper,
+body[data-flavor] .toggle-btn,
+body[data-flavor] .shuffle-btn,
+body[data-flavor] .music-btn,
+body[data-flavor] #music-btn,
+body[data-flavor] .settings-trigger-btn,
+body[data-flavor] .social-btn,
+body[data-flavor] .friend-card,
+body[data-flavor] .text-block,
+body[data-flavor] .fact,
+body[data-flavor] .love-list li,
+body[data-flavor] .hate-list li,
+body[data-flavor] .friends-list li,
+body[data-flavor] .qotd-box,
+body[data-flavor] .faq-box,
+body[data-flavor] .settings-panel,
+body[data-flavor] .settings-info-card,
+body[data-flavor] .settings-row,
+body[data-flavor] .mini-player,
+body[data-flavor] .cmd-window,
+body[data-flavor] .open-terminal-btn {
+  transition: var(--flavor-transition);
+}
+
+/* =========================================================
+  VANILLA
+  Original look. No aggressive overrides.
+========================================================= */
+
+body[data-flavor="vanilla"] {
+  --accent: #c91441;
+  --accent-soft: #ff8fbd;
+}
+
+/* =========================================================
+  BLUEBERRY
+  Neon / LED / cyber night
+========================================================= */
+
+body[data-flavor="blueberry"] {
+  --accent: #5b7cff;
+  --accent-soft: #9fd7ff;
+
+  --text-main: #f4f8ff;
+  --text-dim: rgba(220, 235, 255, 0.72);
+
+  --panel: rgba(38, 58, 130, 0.22);
+  --panel-2: rgba(74, 108, 210, 0.26);
+  --border-soft: rgba(150, 205, 255, 0.34);
+
+  --body-text: #f4f8ff;
+  --heading-border: rgba(130, 190, 255, 0.42);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(14, 24, 60, 0.70),
+      rgba(4, 8, 26, 0.82)
+    );
+
+  --social-btn-bg: rgba(80, 120, 255, 0.14);
+
+  --faq-box-bg:
+    linear-gradient(
+      135deg,
+      rgba(8, 18, 54, 0.92),
+      rgba(20, 8, 60, 0.90)
+    );
+  --faq-box-border: rgba(95, 160, 255, 0.28);
+  --faq-box-glow: rgba(80, 150, 255, 0.16);
+  --faq-box-topline: rgba(150, 215, 255, 0.72);
+  --faq-text: rgba(245, 250, 255, 0.95);
+}
+
+body[data-flavor="blueberry"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(90, 120, 255, 0.42), transparent 28%),
+    radial-gradient(circle at 80% 25%, rgba(0, 220, 255, 0.28), transparent 30%),
+    linear-gradient(135deg, #050714, #090d32, #12002f, #001f38);
+  background-size: cover;
+  background-blend-mode: screen;
+}
+
+body[data-flavor="blueberry"] #bg-parallax::before {
+  background:
+    linear-gradient(rgba(0, 0, 12, 0.54), rgba(0, 0, 20, 0.74)),
+    repeating-linear-gradient(
+      90deg,
+      rgba(120, 180, 255, 0.035) 0,
+      rgba(120, 180, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 7px
+    );
+}
+
+body[data-flavor="blueberry"] #bg-video {
+  filter: saturate(1.35) hue-rotate(28deg) brightness(0.78) contrast(1.14);
+}
+
+body[data-flavor="blueberry"] .banner {
+  border-bottom-color: rgba(140, 210, 255, 0.82);
+  box-shadow:
+    0 0 22px rgba(70, 145, 255, 0.36),
+    0 0 52px rgba(80, 80, 255, 0.18);
+}
+
+body[data-flavor="blueberry"] .content,
+body[data-flavor="blueberry"] .profile-wrapper,
+body[data-flavor="blueberry"] .settings-panel,
+body[data-flavor="blueberry"] .mini-player,
+body[data-flavor="blueberry"] .qotd-box,
+body[data-flavor="blueberry"] .faq-box {
+  border: 1px solid rgba(140, 205, 255, 0.20);
+  box-shadow:
+    0 0 18px rgba(70, 145, 255, 0.16),
+    0 0 42px rgba(80, 80, 255, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+body[data-flavor="blueberry"] .profile-wrapper::before {
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0deg,
+    #9fd7ff 42deg,
+    #5b7cff 90deg,
+    #d6a4ff 145deg,
+    transparent 260deg,
+    #9fd7ff 320deg,
+    transparent 360deg
+  );
+  filter:
+    blur(4px)
+    drop-shadow(0 0 12px rgba(159, 215, 255, 0.95))
+    drop-shadow(0 0 28px rgba(91, 124, 255, 0.70));
+}
+
+body[data-flavor="blueberry"] .profile-name {
+  background: linear-gradient(to bottom, #ffffff 0%, #9fd7ff 45%, #5b7cff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0 0 10px rgba(159, 215, 255, 0.34),
+    0 0 24px rgba(91, 124, 255, 0.28);
+}
+
+body[data-flavor="blueberry"] h2 {
+  color: #eaf5ff;
+  text-shadow:
+    0 0 8px rgba(159, 215, 255, 0.34),
+    0 0 18px rgba(91, 124, 255, 0.18);
+}
+
+body[data-flavor="blueberry"] .toggle-btn,
+body[data-flavor="blueberry"] .shuffle-btn {
+  background:
+    linear-gradient(135deg, #5b7cff, #6735ff, #121a74);
+  color: #ffffff;
+  box-shadow:
+    0 0 12px rgba(91, 124, 255, 0.34),
+    0 0 28px rgba(91, 124, 255, 0.16);
+}
+
+body[data-flavor="blueberry"] .toggle-btn:hover,
+body[data-flavor="blueberry"] .shuffle-btn:hover,
+body[data-flavor="blueberry"] .social-btn:hover,
+body[data-flavor="blueberry"] .friend-card:hover {
+  background:
+    linear-gradient(135deg, #9fd7ff, #5b7cff, #4d20d6);
+  box-shadow:
+    0 0 18px rgba(159, 215, 255, 0.38),
+    0 0 36px rgba(91, 124, 255, 0.26);
+}
+
+body[data-flavor="blueberry"] .fact,
+body[data-flavor="blueberry"] .text-block,
+body[data-flavor="blueberry"] .love-list li,
+body[data-flavor="blueberry"] .hate-list li,
+body[data-flavor="blueberry"] .friends-list li,
+body[data-flavor="blueberry"] .friend-card,
+body[data-flavor="blueberry"] .social-btn,
+body[data-flavor="blueberry"] .settings-info-card,
+body[data-flavor="blueberry"] .settings-row {
+  background: rgba(55, 85, 170, 0.16);
+  border: 1px solid rgba(140, 205, 255, 0.16);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+    0 0 12px rgba(91, 124, 255, 0.08);
+}
+
+body[data-flavor="blueberry"] .cmd-window {
+  background: #050816;
+  border-color: rgba(140, 205, 255, 0.32);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.78),
+    0 0 24px rgba(91, 124, 255, 0.30),
+    0 0 60px rgba(0, 220, 255, 0.10);
+}
+
+body[data-flavor="blueberry"] .cmd-titlebar {
+  background: linear-gradient(90deg, #eef8ff, #cce5ff);
+}
+
+body[data-flavor="blueberry"] .cmd-screen,
+body[data-flavor="blueberry"] .cmd-input {
+  color: #bfe7ff;
+}
+
+body[data-flavor="blueberry"] .cmd-prompt,
+body[data-flavor="blueberry"] .cmd-line {
+  color: #bfe7ff;
+}
+
+body[data-flavor="blueberry"] .cmd-line.error {
+  color: #ff7cba;
+}
+
+body[data-flavor="blueberry"] .open-terminal-btn,
+body[data-flavor="blueberry"] .cmd-minimized-icon {
+  border-color: rgba(140, 205, 255, 0.28);
+  background: rgba(10, 18, 52, 0.92);
+  box-shadow:
+    0 0 18px rgba(91, 124, 255, 0.24),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+  PEACH
+  Pixel art / retro game
+========================================================= */
+
+body[data-flavor="peach"] {
+  --accent: #ff8a5b;
+  --accent-soft: #ffd09f;
+
+  --text-main: #fff2df;
+  --text-dim: rgba(255, 238, 215, 0.72);
+
+  --panel: rgba(75, 42, 35, 0.58);
+  --panel-2: rgba(120, 65, 48, 0.72);
+  --border-soft: rgba(255, 196, 140, 0.42);
+
+  --body-text: #fff2df;
+  --heading-border: rgba(255, 196, 140, 0.55);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(70, 38, 33, 0.86),
+      rgba(36, 22, 28, 0.92)
+    );
+
+  --social-btn-bg: rgba(255, 138, 91, 0.18);
+}
+
+body[data-flavor="peach"],
+body[data-flavor="peach"] button,
+body[data-flavor="peach"] input {
+  font-family:
+    "Courier New",
+    "Consolas",
+    monospace;
+}
+
+body[data-flavor="peach"] #bg-parallax {
+  image-rendering: pixelated;
+  background-image:
+    linear-gradient(135deg, #2a1720, #4b2430, #7a3d3a, #1f2635);
+  background-size: cover;
+}
+
+body[data-flavor="peach"] #bg-parallax::before {
+  background:
+    rgba(25, 12, 18, 0.62),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 11px,
+      rgba(255, 210, 150, 0.055) 12px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 11px,
+      rgba(255, 210, 150, 0.045) 12px
+    );
+}
+
+body[data-flavor="peach"] #bg-video {
+  filter: saturate(1.15) sepia(0.25) brightness(0.72) contrast(1.18);
+  image-rendering: pixelated;
+}
+
+body[data-flavor="peach"] .content,
+body[data-flavor="peach"] .profile-wrapper,
+body[data-flavor="peach"] .settings-panel,
+body[data-flavor="peach"] .mini-player,
+body[data-flavor="peach"] .qotd-box,
+body[data-flavor="peach"] .faq-box,
+body[data-flavor="peach"] .cmd-window {
+  border-radius: 0 !important;
+  border: 3px solid rgba(255, 196, 140, 0.72);
+  box-shadow:
+    6px 6px 0 rgba(0, 0, 0, 0.55),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body[data-flavor="peach"] .profile-wrapper {
+  background:
+    linear-gradient(135deg, rgba(92, 46, 40, 0.95), rgba(45, 24, 32, 0.98));
+}
+
+body[data-flavor="peach"] .profile-name {
+  font-family: "Courier New", Consolas, monospace;
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background: none;
+  -webkit-text-fill-color: #ffd09f;
+  color: #ffd09f;
+  text-shadow:
+    3px 3px 0 #5b2434,
+    5px 5px 0 #1c1018;
+}
+
+body[data-flavor="peach"] h2 {
+  font-family: "Courier New", Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffd09f;
+  text-shadow: 2px 2px 0 #5b2434;
+}
+
+body[data-flavor="peach"] .toggle-btn,
+body[data-flavor="peach"] .shuffle-btn,
+body[data-flavor="peach"] .music-btn,
+body[data-flavor="peach"] #music-btn,
+body[data-flavor="peach"] .settings-trigger-btn,
+body[data-flavor="peach"] .open-terminal-btn {
+  border-radius: 0 !important;
+  border: 2px solid #ffd09f;
+  background: #9b4f3f;
+  color: #fff2df;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+body[data-flavor="peach"] .toggle-btn:hover,
+body[data-flavor="peach"] .shuffle-btn:hover,
+body[data-flavor="peach"] .music-btn:hover,
+body[data-flavor="peach"] #music-btn:hover,
+body[data-flavor="peach"] .settings-trigger-btn:hover,
+body[data-flavor="peach"] .open-terminal-btn:hover {
+  transform: translate(-2px, -2px);
+  background: #d96f4f;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.62);
+}
+
+body[data-flavor="peach"] .toggle-btn:active,
+body[data-flavor="peach"] .shuffle-btn:active,
+body[data-flavor="peach"] .open-terminal-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.62);
+}
+
+body[data-flavor="peach"] .fact,
+body[data-flavor="peach"] .text-block,
+body[data-flavor="peach"] .love-list li,
+body[data-flavor="peach"] .hate-list li,
+body[data-flavor="peach"] .friends-list li,
+body[data-flavor="peach"] .friend-card,
+body[data-flavor="peach"] .social-btn,
+body[data-flavor="peach"] .settings-info-card,
+body[data-flavor="peach"] .settings-row {
+  border-radius: 0 !important;
+  border: 2px solid rgba(255, 196, 140, 0.58);
+  background: rgba(74, 39, 36, 0.82);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.38);
+}
+
+body[data-flavor="peach"] .qotd-box::after {
+  border-radius: 0;
+}
+
+body[data-flavor="peach"] .cmd-window {
+  background: #1c1018;
+}
+
+body[data-flavor="peach"] .cmd-titlebar {
+  background: #ffd09f;
+  color: #241018;
+}
+
+body[data-flavor="peach"] .cmd-screen {
+  background: #1c1018;
+  color: #ffe7bf;
+}
+
+body[data-flavor="peach"] .cmd-line,
+body[data-flavor="peach"] .cmd-prompt,
+body[data-flavor="peach"] .cmd-input {
+  color: #ffe7bf;
+}
+
+body[data-flavor="peach"] .cmd-minimized-icon {
+  border-radius: 0;
+  background: #1c1018;
+  border: 2px solid #ffd09f;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.55);
+}
+
+/* =========================================================
+  CHERRY
+  Gothic / dark red / dramatic
+========================================================= */
+
+body[data-flavor="cherry"] {
+  --accent: #e30039;
+  --accent-soft: #ff5f8f;
+
+  --text-main: #fff0f4;
+  --text-dim: rgba(255, 220, 230, 0.68);
+
+  --panel: rgba(60, 0, 18, 0.42);
+  --panel-2: rgba(95, 0, 28, 0.52);
+  --border-soft: rgba(255, 55, 105, 0.28);
+
+  --body-text: #fff0f4;
+  --heading-border: rgba(227, 0, 57, 0.48);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(35, 0, 14, 0.82),
+      rgba(8, 0, 8, 0.92)
+    );
+
+  --social-btn-bg: rgba(227, 0, 57, 0.12);
+}
+
+body[data-flavor="cherry"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(227, 0, 57, 0.32), transparent 32%),
+    linear-gradient(135deg, #050006, #19000b, #330014, #080006);
+  background-size: cover;
+}
+
+body[data-flavor="cherry"] #bg-parallax::before {
+  background:
+    rgba(0, 0, 0, 0.72),
+    repeating-linear-gradient(
+      135deg,
+      rgba(227, 0, 57, 0.035) 0,
+      rgba(227, 0, 57, 0.035) 1px,
+      transparent 1px,
+      transparent 9px
+    );
+}
+
+body[data-flavor="cherry"] #bg-video {
+  filter: saturate(1.4) hue-rotate(-14deg) brightness(0.55) contrast(1.25);
+}
+
+body[data-flavor="cherry"] .content,
+body[data-flavor="cherry"] .profile-wrapper,
+body[data-flavor="cherry"] .settings-panel,
+body[data-flavor="cherry"] .mini-player,
+body[data-flavor="cherry"] .qotd-box,
+body[data-flavor="cherry"] .faq-box,
+body[data-flavor="cherry"] .cmd-window {
+  border: 1px solid rgba(227, 0, 57, 0.34);
+  box-shadow:
+    0 0 24px rgba(227, 0, 57, 0.16),
+    0 18px 60px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+body[data-flavor="cherry"] .profile-name {
+  background: linear-gradient(to bottom, #ffffff 0%, #ff5f8f 44%, #210008 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0 0 10px rgba(227, 0, 57, 0.38),
+    0 0 26px rgba(227, 0, 57, 0.22);
+}
+
+body[data-flavor="cherry"] h2 {
+  color: #fff0f4;
+  text-shadow:
+    0 0 8px rgba(227, 0, 57, 0.36),
+    0 0 22px rgba(227, 0, 57, 0.16);
+}
+
+body[data-flavor="cherry"] .toggle-btn,
+body[data-flavor="cherry"] .shuffle-btn {
+  background:
+    linear-gradient(135deg, #e30039, #710018, #120006);
+  box-shadow:
+    0 0 14px rgba(227, 0, 57, 0.30),
+    0 0 34px rgba(227, 0, 57, 0.12);
+}
+
+body[data-flavor="cherry"] .toggle-btn:hover,
+body[data-flavor="cherry"] .shuffle-btn:hover,
+body[data-flavor="cherry"] .social-btn:hover,
+body[data-flavor="cherry"] .friend-card:hover {
+  background:
+    linear-gradient(135deg, #ff5f8f, #e30039, #550014);
+  box-shadow:
+    0 0 18px rgba(255, 95, 143, 0.30),
+    0 0 42px rgba(227, 0, 57, 0.18);
+}
+
+body[data-flavor="cherry"] .fact,
+body[data-flavor="cherry"] .text-block,
+body[data-flavor="cherry"] .love-list li,
+body[data-flavor="cherry"] .hate-list li,
+body[data-flavor="cherry"] .friends-list li,
+body[data-flavor="cherry"] .friend-card,
+body[data-flavor="cherry"] .social-btn,
+body[data-flavor="cherry"] .settings-info-card,
+body[data-flavor="cherry"] .settings-row {
+  background: rgba(45, 0, 18, 0.54);
+  border: 1px solid rgba(227, 0, 57, 0.20);
+}
+
+body[data-flavor="cherry"] .cmd-window {
+  background: #090006;
+  border-color: rgba(227, 0, 57, 0.34);
+}
+
+body[data-flavor="cherry"] .cmd-titlebar {
+  background: linear-gradient(90deg, #1d0009, #3b0012);
+  color: #fff0f4;
+}
+
+body[data-flavor="cherry"] .cmd-title-left,
+body[data-flavor="cherry"] .cmd-control-btn {
+  color: #fff0f4;
+}
+
+body[data-flavor="cherry"] .cmd-screen {
+  background: #090006;
+}
+
+body[data-flavor="cherry"] .cmd-line,
+body[data-flavor="cherry"] .cmd-prompt,
+body[data-flavor="cherry"] .cmd-input {
+  color: #ffd6e0;
+}
+
+body[data-flavor="cherry"] .cmd-line.error {
+  color: #ff3769;
+}
+
+/* =========================================================
+  MOBILE FIXES FOR ALL FLAVORS
+========================================================= */
+
+@media (max-width: 640px) {
+  body[data-flavor="peach"] .profile-name {
+    font-size: 44px;
+  }
+
+  body[data-flavor="coconut"] .profile-name {
+    font-size: 52px;
+  }
+
+  body[data-flavor] .content {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+@media (hover: none) {
+  body[data-flavor="peach"] .toggle-btn:hover,
+  body[data-flavor="peach"] .shuffle-btn:hover,
+  body[data-flavor="peach"] .open-terminal-btn:hover {
+    transform: none;
+  }
+
+  body[data-flavor="coconut"] .toggle-btn:hover,
+  body[data-flavor="coconut"] .shuffle-btn:hover,
+  body[data-flavor="coconut"] .open-terminal-btn:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+  LOW QUALITY MODE COMPATIBILITY
+========================================================= */
+
+body.low-quality-mode[data-flavor] *,
+body.low-quality-mode[data-flavor] *::before,
+body.low-quality-mode[data-flavor] *::after {
+  transition-duration: 0s !important;
+  animation-duration: 0s !important;
+}
+
+body.low-quality-mode[data-flavor="blueberry"] .content,
+body.low-quality-mode[data-flavor="blueberry"] .profile-wrapper,
+body.low-quality-mode[data-flavor="blueberry"] .settings-panel,
+body.low-quality-mode[data-flavor="blueberry"] .mini-player,
+body.low-quality-mode[data-flavor="blueberry"] .qotd-box,
+body.low-quality-mode[data-flavor="blueberry"] .faq-box,
+body.low-quality-mode[data-flavor="blueberry"] .cmd-window,
+body.low-quality-mode[data-flavor="cherry"] .content,
+body.low-quality-mode[data-flavor="cherry"] .profile-wrapper,
+body.low-quality-mode[data-flavor="cherry"] .settings-panel,
+body.low-quality-mode[data-flavor="cherry"] .mini-player,
+body.low-quality-mode[data-flavor="cherry"] .qotd-box,
+body.low-quality-mode[data-flavor="cherry"] .faq-box,
+body.low-quality-mode[data-flavor="cherry"] .cmd-window {
+  box-shadow: none !important;
+}
+
+/* =========================================================
+  FLAVOR THEME SYSTEM
+  Default = dark
+  body.light-theme = light version of each flavor
+========================================================= */
+
+body[data-flavor] {
+  color-scheme: dark;
+}
+
+body.light-theme[data-flavor] {
+  color-scheme: light;
+}
+
+/* =========================================================
+  VANILLA LIGHT
+========================================================= */
+
+body.light-theme[data-flavor="vanilla"] {
+  --accent: #c91441;
+  --accent-soft: #c53d6a;
+
+  --text-main: #111111;
+  --text-dim: rgba(0, 0, 0, 0.66);
+
+  --panel: rgba(255, 255, 255, 0.62);
+  --panel-2: rgba(255, 255, 255, 0.78);
+  --border-soft: rgba(0, 0, 0, 0.08);
+
+  --bg-panel: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(225,225,225,0.68));
+  --body-text: #111111;
+  --heading-border: rgba(0, 0, 0, 0.16);
+  --social-btn-bg: rgba(255,255,255,0.55);
+}
+
+body.light-theme[data-flavor="vanilla"] #bg-video {
+  filter: invert(1) brightness(0.72) contrast(1.08);
+}
+
+body.light-theme[data-flavor="vanilla"] #bg-parallax {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.38), rgba(255,255,255,0.38)),
+    url("https://i.imgur.com/xtzaH3v.png");
+  background-blend-mode: lighten;
+  filter: invert(1) brightness(0.72) contrast(1.08);
+}
+
+body.light-theme[data-flavor="vanilla"] #bg-parallax::before {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* =========================================================
+  BLUEBERRY LIGHT
+========================================================= */
+
+body.light-theme[data-flavor="blueberry"] {
+  --accent: #4169ff;
+  --accent-soft: #4cc9ff;
+
+  --text-main: #071229;
+  --text-dim: rgba(7, 18, 41, 0.68);
+
+  --panel: rgba(230, 244, 255, 0.72);
+  --panel-2: rgba(215, 235, 255, 0.88);
+  --border-soft: rgba(65, 105, 255, 0.18);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(235, 247, 255, 0.72),
+      rgba(205, 226, 255, 0.78)
+    );
+
+  --body-text: #071229;
+  --heading-border: rgba(65, 105, 255, 0.24);
+  --social-btn-bg: rgba(235, 247, 255, 0.68);
+}
+
+body.light-theme[data-flavor="blueberry"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(120, 190, 255, 0.38), transparent 30%),
+    radial-gradient(circle at 80% 25%, rgba(90, 120, 255, 0.24), transparent 32%),
+    linear-gradient(135deg, #dff5ff, #cfe1ff, #eef6ff);
+  background-blend-mode: normal;
+  filter: none;
+}
+
+body.light-theme[data-flavor="blueberry"] #bg-parallax::before {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+body.light-theme[data-flavor="blueberry"] #bg-video {
+  filter: brightness(1.12) saturate(1.15) hue-rotate(14deg);
+  opacity: 0.55;
+}
+
+body.light-theme[data-flavor="blueberry"] .content,
+body.light-theme[data-flavor="blueberry"] .profile-wrapper,
+body.light-theme[data-flavor="blueberry"] .settings-panel,
+body.light-theme[data-flavor="blueberry"] .mini-player,
+body.light-theme[data-flavor="blueberry"] .qotd-box,
+body.light-theme[data-flavor="blueberry"] .faq-box {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(245, 251, 255, 0.78),
+      rgba(218, 236, 255, 0.82)
+    );
+  color: #071229;
+  border-color: rgba(65, 105, 255, 0.18);
+  box-shadow:
+    0 0 18px rgba(65, 105, 255, 0.12),
+    0 18px 40px rgba(80, 130, 200, 0.16);
+}
+
+body.light-theme[data-flavor="blueberry"] .profile-name {
+  background: linear-gradient(to bottom, #071229 0%, #4169ff 55%, #4cc9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0 0 8px rgba(65, 105, 255, 0.14),
+    0 0 18px rgba(76, 201, 255, 0.16);
+}
+
+/* =========================================================
+  PEACH LIGHT
+========================================================= */
+
+body.light-theme[data-flavor="peach"] {
+  --accent: #e86f45;
+  --accent-soft: #ff9f68;
+
+  --text-main: #2b1410;
+  --text-dim: rgba(43, 20, 16, 0.68);
+
+  --panel: rgba(255, 228, 198, 0.74);
+  --panel-2: rgba(255, 215, 178, 0.88);
+  --border-soft: rgba(130, 65, 45, 0.18);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(255, 232, 204, 0.80),
+      rgba(255, 206, 172, 0.82)
+    );
+
+  --body-text: #2b1410;
+  --heading-border: rgba(130, 65, 45, 0.28);
+  --social-btn-bg: rgba(255, 230, 200, 0.72);
+}
+
+body.light-theme[data-flavor="peach"] #bg-parallax {
+  background-image:
+    linear-gradient(135deg, #ffe9c9, #ffc9a9, #fff1d8);
+  filter: none;
+}
+
+body.light-theme[data-flavor="peach"] #bg-parallax::before {
+  background:
+    rgba(255, 245, 225, 0.26),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 11px,
+      rgba(80, 35, 25, 0.035) 12px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 11px,
+      rgba(80, 35, 25, 0.03) 12px
+    );
+}
+
+body.light-theme[data-flavor="peach"] #bg-video {
+  opacity: 0.28;
+  filter: sepia(0.25) brightness(1.25) contrast(0.95);
+}
+
+body.light-theme[data-flavor="peach"] .content,
+body.light-theme[data-flavor="peach"] .profile-wrapper,
+body.light-theme[data-flavor="peach"] .settings-panel,
+body.light-theme[data-flavor="peach"] .mini-player,
+body.light-theme[data-flavor="peach"] .qotd-box,
+body.light-theme[data-flavor="peach"] .faq-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 237, 208, 0.88),
+      rgba(255, 207, 178, 0.86)
+    );
+  color: #2b1410;
+  border-color: rgba(130, 65, 45, 0.38);
+}
+
+body.light-theme[data-flavor="peach"] .profile-name {
+  background: none;
+  -webkit-text-fill-color: #7a3426;
+  color: #7a3426;
+  text-shadow:
+    2px 2px 0 #ffd09f,
+    4px 4px 0 rgba(120, 60, 40, 0.22);
+}
+
+/* =========================================================
+  COCONUT DARK
+  Agora Coconut padrão é escuro
+========================================================= */
+
+body[data-flavor="coconut"] {
+  --accent: #f4ead2;
+  --accent-soft: #ffffff;
+
+  --text-main: #fff8e8;
+  --text-dim: rgba(255, 248, 232, 0.68);
+
+  --panel: rgba(32, 28, 24, 0.72);
+  --panel-2: rgba(46, 40, 34, 0.86);
+  --border-soft: rgba(255, 248, 232, 0.20);
+
+  --body-text: #fff8e8;
+  --heading-border: rgba(255, 248, 232, 0.28);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(34, 30, 26, 0.84),
+      rgba(14, 13, 12, 0.92)
+    );
+
+  --social-btn-bg: rgba(255, 248, 232, 0.08);
+}
+
+body[data-flavor="coconut"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255, 248, 232, 0.08), transparent 26%),
+    radial-gradient(circle at 80% 70%, rgba(255, 248, 232, 0.06), transparent 30%),
+    linear-gradient(135deg, #070706, #171411, #26201a);
+  background-blend-mode: normal;
+  filter: none;
+}
+
+body[data-flavor="coconut"] #bg-parallax::before {
+  background:
+    rgba(0, 0, 0, 0.42),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 248, 232, 0.025) 0,
+      rgba(255, 248, 232, 0.025) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+}
+
+body[data-flavor="coconut"] #bg-video {
+  opacity: 0.12;
+  filter: grayscale(1) contrast(1.25) brightness(0.78);
+}
+
+body[data-flavor="coconut"] .content,
+body[data-flavor="coconut"] .profile-wrapper,
+body[data-flavor="coconut"] .settings-panel,
+body[data-flavor="coconut"] .mini-player,
+body[data-flavor="coconut"] .qotd-box,
+body[data-flavor="coconut"] .faq-box,
+body[data-flavor="coconut"] .cmd-window {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(34, 30, 26, 0.88),
+      rgba(16, 15, 14, 0.94)
+    );
+  color: #fff8e8;
+  border: 2px solid rgba(255, 248, 232, 0.72);
+  box-shadow:
+    5px 6px 0 rgba(0, 0, 0, 0.35);
+}
+
+body[data-flavor="coconut"] .profile-name {
+  background: none;
+  -webkit-text-fill-color: #fff8e8;
+  color: #fff8e8;
+  text-shadow: none;
+}
+
+body[data-flavor="coconut"] h2 {
+  color: #fff8e8;
+  border-bottom-color: rgba(255, 248, 232, 0.42);
+}
+
+body[data-flavor="coconut"] .fact,
+body[data-flavor="coconut"] .text-block,
+body[data-flavor="coconut"] .love-list li,
+body[data-flavor="coconut"] .hate-list li,
+body[data-flavor="coconut"] .friends-list li,
+body[data-flavor="coconut"] .friend-card,
+body[data-flavor="coconut"] .social-btn,
+body[data-flavor="coconut"] .settings-info-card,
+body[data-flavor="coconut"] .settings-row {
+  background: rgba(255, 248, 232, 0.08);
+  color: #fff8e8;
+  border-color: rgba(255, 248, 232, 0.55);
+}
+
+/* =========================================================
+  COCONUT LIGHT
+  Aqui sim vira papel/sketch claro
+========================================================= */
+
+body.light-theme[data-flavor="coconut"] {
+  --accent: #1d1d1d;
+  --accent-soft: #777777;
+
+  --text-main: #1d1d1d;
+  --text-dim: rgba(29, 29, 29, 0.68);
+
+  --panel: rgba(255, 255, 248, 0.74);
+  --panel-2: rgba(255, 255, 248, 0.90);
+  --border-soft: rgba(29, 29, 29, 0.22);
+
+  --body-text: #1d1d1d;
+  --heading-border: rgba(29, 29, 29, 0.32);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 248, 0.74),
+      rgba(245, 240, 225, 0.86)
+    );
+
+  --social-btn-bg: rgba(255, 255, 248, 0.68);
+}
+
+body.light-theme[data-flavor="coconut"] #bg-parallax {
+  background-image:
+    linear-gradient(rgba(250, 246, 230, 0.88), rgba(250, 246, 230, 0.88)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.035) 0,
+      rgba(0, 0, 0, 0.035) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  background-blend-mode: normal;
+  filter: none;
+}
+
+body.light-theme[data-flavor="coconut"] #bg-parallax::before {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(0, 0, 0, 0.03), transparent 24%),
+    radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.025), transparent 28%);
+}
+
+body.light-theme[data-flavor="coconut"] #bg-video {
+  opacity: 0.08;
+  filter: grayscale(1) contrast(1.5) brightness(1.25);
+}
+
+body.light-theme[data-flavor="coconut"] .content,
+body.light-theme[data-flavor="coconut"] .profile-wrapper,
+body.light-theme[data-flavor="coconut"] .settings-panel,
+body.light-theme[data-flavor="coconut"] .mini-player,
+body.light-theme[data-flavor="coconut"] .qotd-box,
+body.light-theme[data-flavor="coconut"] .faq-box,
+body.light-theme[data-flavor="coconut"] .cmd-window {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 248, 0.88),
+      rgba(246, 240, 222, 0.92)
+    );
+  color: #1d1d1d;
+  border: 2px solid #1d1d1d;
+  box-shadow:
+    5px 6px 0 rgba(29, 29, 29, 0.18);
+}
+
+body.light-theme[data-flavor="coconut"] .profile-name {
+  background: none;
+  -webkit-text-fill-color: #1d1d1d;
+  color: #1d1d1d;
+  text-shadow: none;
+}
+
+body.light-theme[data-flavor="coconut"] h2 {
+  color: #1d1d1d;
+  border-bottom-color: rgba(29, 29, 29, 0.32);
+}
+
+body.light-theme[data-flavor="coconut"] .fact,
+body.light-theme[data-flavor="coconut"] .text-block,
+body.light-theme[data-flavor="coconut"] .love-list li,
+body.light-theme[data-flavor="coconut"] .hate-list li,
+body.light-theme[data-flavor="coconut"] .friends-list li,
+body.light-theme[data-flavor="coconut"] .friend-card,
+body.light-theme[data-flavor="coconut"] .social-btn,
+body.light-theme[data-flavor="coconut"] .settings-info-card,
+body.light-theme[data-flavor="coconut"] .settings-row {
+  background: rgba(255, 253, 243, 0.86);
+  color: #1d1d1d;
+  border-color: rgba(29, 29, 29, 0.76);
+}
+
+/* =========================================================
+  CHERRY LIGHT
+========================================================= */
+
+body.light-theme[data-flavor="cherry"] {
+  --accent: #c80032;
+  --accent-soft: #ff4f82;
+
+  --text-main: #2a000c;
+  --text-dim: rgba(42, 0, 12, 0.68);
+
+  --panel: rgba(255, 228, 237, 0.72);
+  --panel-2: rgba(255, 210, 225, 0.84);
+  --border-soft: rgba(200, 0, 50, 0.18);
+
+  --body-text: #2a000c;
+  --heading-border: rgba(200, 0, 50, 0.25);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(255, 235, 242, 0.78),
+      rgba(255, 211, 226, 0.84)
+    );
+
+  --social-btn-bg: rgba(255, 235, 242, 0.70);
+}
+
+body.light-theme[data-flavor="cherry"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(255, 95, 143, 0.28), transparent 34%),
+    linear-gradient(135deg, #fff0f4, #ffd6e1, #fff8fa);
+  background-size: cover;
+  filter: none;
+}
+
+body.light-theme[data-flavor="cherry"] #bg-parallax::before {
+  background:
+    rgba(255, 255, 255, 0.26),
+    repeating-linear-gradient(
+      135deg,
+      rgba(200, 0, 50, 0.035) 0,
+      rgba(200, 0, 50, 0.035) 1px,
+      transparent 1px,
+      transparent 9px
+    );
+}
+
+body.light-theme[data-flavor="cherry"] #bg-video {
+  opacity: 0.34;
+  filter: saturate(1.1) hue-rotate(-10deg) brightness(1.18) contrast(0.96);
+}
+
+body.light-theme[data-flavor="cherry"] .content,
+body.light-theme[data-flavor="cherry"] .profile-wrapper,
+body.light-theme[data-flavor="cherry"] .settings-panel,
+body.light-theme[data-flavor="cherry"] .mini-player,
+body.light-theme[data-flavor="cherry"] .qotd-box,
+body.light-theme[data-flavor="cherry"] .faq-box {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 240, 245, 0.82),
+      rgba(255, 218, 230, 0.84)
+    );
+  color: #2a000c;
+  border-color: rgba(200, 0, 50, 0.18);
+  box-shadow:
+    0 0 18px rgba(200, 0, 50, 0.10),
+    0 18px 40px rgba(100, 0, 30, 0.12);
+}
+
+body.light-theme[data-flavor="cherry"] .profile-name {
+  background: linear-gradient(to bottom, #2a000c 0%, #c80032 56%, #ff4f82 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0 0 8px rgba(200, 0, 50, 0.12),
+    0 0 18px rgba(255, 79, 130, 0.12);
+}
+
+/* =========================================================
+  FIX: QOTD COLORS PER FLAVOR
+========================================================= */
+
+/* ---------- DEFAULT / DARK ---------- */
+
+body[data-flavor="vanilla"] .qotd-box {
+  --qotd-text-color: rgba(255, 255, 255, 0.94);
+  --qotd-label-color: #ff4f85;
+  --qotd-author-color: #ff5e8f;
+  --qotd-mark-color: rgba(201, 20, 65, 0.96);
+  --qotd-star-color: var(--accent-soft);
+}
+
+body[data-flavor="blueberry"] .qotd-box {
+  --qotd-text-color: rgba(235, 248, 255, 0.96);
+  --qotd-label-color: #9fd7ff;
+  --qotd-author-color: #7ebcff;
+  --qotd-mark-color: rgba(159, 215, 255, 0.92);
+  --qotd-star-color: #9fd7ff;
+}
+
+body[data-flavor="peach"] .qotd-box {
+  --qotd-text-color: #ffe7bf;
+  --qotd-label-color: #ffd09f;
+  --qotd-author-color: #ff9f68;
+  --qotd-mark-color: rgba(255, 138, 91, 0.92);
+  --qotd-star-color: #ffd09f;
+}
+
+body[data-flavor="coconut"] .qotd-box {
+  --qotd-text-color: #fff8e8;
+  --qotd-label-color: #f4ead2;
+  --qotd-author-color: #d8ccb0;
+  --qotd-mark-color: rgba(255, 248, 232, 0.88);
+  --qotd-star-color: #fff8e8;
+}
+
+body[data-flavor="cherry"] .qotd-box {
+  --qotd-text-color: #fff0f4;
+  --qotd-label-color: #ff5f8f;
+  --qotd-author-color: #ff3769;
+  --qotd-mark-color: rgba(227, 0, 57, 0.96);
+  --qotd-star-color: #ff5f8f;
+}
+
+/* ---------- LIGHT MODE ---------- */
+
+body.light-theme[data-flavor="vanilla"] .qotd-box {
+  --qotd-text-color: rgba(20, 20, 20, 0.88);
+  --qotd-label-color: #c91441;
+  --qotd-author-color: #c53d6a;
+  --qotd-mark-color: rgba(201, 20, 65, 0.72);
+  --qotd-star-color: #c53d6a;
+}
+
+body.light-theme[data-flavor="blueberry"] .qotd-box {
+  --qotd-text-color: #071229;
+  --qotd-label-color: #4169ff;
+  --qotd-author-color: #2779c9;
+  --qotd-mark-color: rgba(65, 105, 255, 0.64);
+  --qotd-star-color: #4169ff;
+}
+
+body.light-theme[data-flavor="peach"] .qotd-box {
+  --qotd-text-color: #2b1410;
+  --qotd-label-color: #9b4f3f;
+  --qotd-author-color: #d96f4f;
+  --qotd-mark-color: rgba(155, 79, 63, 0.68);
+  --qotd-star-color: #e86f45;
+}
+
+body.light-theme[data-flavor="coconut"] .qotd-box {
+  --qotd-text-color: #1d1d1d;
+  --qotd-label-color: #1d1d1d;
+  --qotd-author-color: #555555;
+  --qotd-mark-color: rgba(29, 29, 29, 0.68);
+  --qotd-star-color: #1d1d1d;
+}
+
+body.light-theme[data-flavor="cherry"] .qotd-box {
+  --qotd-text-color: #2a000c;
+  --qotd-label-color: #c80032;
+  --qotd-author-color: #b90038;
+  --qotd-mark-color: rgba(200, 0, 50, 0.66);
+  --qotd-star-color: #c80032;
+}
+
+/* ---------- APPLY COLORS ---------- */
+
+body[data-flavor] #qotd-text {
+  color: var(--qotd-text-color) !important;
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--qotd-star-color), transparent 78%),
+    0 0 18px color-mix(in srgb, var(--qotd-mark-color), transparent 84%);
+}
+
+body[data-flavor] .qotd-label {
+  color: var(--qotd-label-color) !important;
+  text-shadow:
+    0 0 8px color-mix(in srgb, var(--qotd-label-color), transparent 70%),
+    0 0 16px color-mix(in srgb, var(--qotd-label-color), transparent 86%);
+}
+
+body[data-flavor] .qotd-author {
+  color: var(--qotd-author-color) !important;
+}
+
+body[data-flavor] .qotd-mark {
+  color: var(--qotd-mark-color) !important;
+  text-shadow:
+    0 0 14px color-mix(in srgb, var(--qotd-mark-color), transparent 76%),
+    0 0 24px color-mix(in srgb, var(--qotd-mark-color), transparent 86%);
+}
+
+body[data-flavor] .qotd-top-star,
+body[data-flavor] .qotd-bottom-star {
+  color: var(--qotd-star-color) !important;
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--qotd-star-color), transparent 62%),
+    0 0 22px color-mix(in srgb, var(--qotd-star-color), transparent 78%);
+}
+
+body[data-flavor] .qotd-ornament-dot {
+  background: var(--qotd-star-color) !important;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--qotd-star-color), transparent 72%);
+}
+
+body[data-flavor] .qotd-box::after {
+  border-color: var(--qotd-mark-color) !important;
+}
+
+/* =========================================================
+  FIX: FAQ COLORS PER FLAVOR
+========================================================= */
+
+/* ================= DARK / DEFAULT ================= */
+
+body[data-flavor="vanilla"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(8, 8, 12, 0.92), rgba(18, 10, 18, 0.9));
+  --faq-box-border: rgba(227, 0, 57, 0.16);
+  --faq-box-glow: rgba(227, 0, 57, 0.07);
+  --faq-box-topline: rgba(255, 31, 90, 0.4);
+  --faq-box-sheen-1: rgba(227, 0, 57, 0.05);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.02);
+  --faq-box-sheen-3: rgba(227, 0, 57, 0.04);
+  --faq-text: rgba(255, 255, 255, 0.94);
+  --faq-label-color: #ff204f;
+  --faq-divider: rgba(255, 255, 255, 0.18);
+  --faq-arrow-bg-1: rgba(255,255,255,0.08);
+  --faq-arrow-bg-2: rgba(255,255,255,0.03);
+  --faq-arrow-border: rgba(255, 255, 255, 0.14);
+  --faq-arrow-text: #f4f4f4;
+  --faq-arrow-hover-border: rgba(255, 31, 90, 0.45);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.12);
+  --faq-arrow-hover-bg-2: rgba(255,31,90,0.10);
+  --faq-arrow-hover-glow: rgba(255, 31, 90, 0.18);
+}
+
+body[data-flavor="blueberry"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(5, 12, 42, 0.94), rgba(15, 8, 58, 0.92));
+  --faq-box-border: rgba(159, 215, 255, 0.32);
+  --faq-box-glow: rgba(91, 124, 255, 0.18);
+  --faq-box-topline: rgba(159, 215, 255, 0.72);
+  --faq-box-sheen-1: rgba(159, 215, 255, 0.08);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.035);
+  --faq-box-sheen-3: rgba(91, 124, 255, 0.07);
+  --faq-text: rgba(235, 248, 255, 0.96);
+  --faq-label-color: #9fd7ff;
+  --faq-divider: rgba(159, 215, 255, 0.26);
+  --faq-arrow-bg-1: rgba(159,215,255,0.14);
+  --faq-arrow-bg-2: rgba(91,124,255,0.08);
+  --faq-arrow-border: rgba(159, 215, 255, 0.30);
+  --faq-arrow-text: #dff5ff;
+  --faq-arrow-hover-border: rgba(159, 215, 255, 0.68);
+  --faq-arrow-hover-bg-1: rgba(159,215,255,0.22);
+  --faq-arrow-hover-bg-2: rgba(91,124,255,0.18);
+  --faq-arrow-hover-glow: rgba(159, 215, 255, 0.34);
+}
+
+body[data-flavor="peach"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(50, 25, 28, 0.94), rgba(92, 46, 40, 0.90));
+  --faq-box-border: rgba(255, 208, 159, 0.55);
+  --faq-box-glow: rgba(255, 138, 91, 0.13);
+  --faq-box-topline: rgba(255, 208, 159, 0.78);
+  --faq-box-sheen-1: rgba(255, 208, 159, 0.06);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.025);
+  --faq-box-sheen-3: rgba(255, 138, 91, 0.06);
+  --faq-text: #ffe7bf;
+  --faq-label-color: #ff8a5b;
+  --faq-divider: rgba(255, 208, 159, 0.32);
+  --faq-arrow-bg-1: rgba(255,208,159,0.14);
+  --faq-arrow-bg-2: rgba(255,138,91,0.08);
+  --faq-arrow-border: rgba(255, 208, 159, 0.36);
+  --faq-arrow-text: #ffe7bf;
+  --faq-arrow-hover-border: rgba(255, 208, 159, 0.76);
+  --faq-arrow-hover-bg-1: rgba(255,208,159,0.22);
+  --faq-arrow-hover-bg-2: rgba(255,138,91,0.16);
+  --faq-arrow-hover-glow: rgba(255, 138, 91, 0.30);
+}
+
+body[data-flavor="coconut"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(34, 30, 26, 0.94), rgba(14, 13, 12, 0.92));
+  --faq-box-border: rgba(255, 248, 232, 0.62);
+  --faq-box-glow: rgba(255, 248, 232, 0.08);
+  --faq-box-topline: rgba(255, 248, 232, 0.70);
+  --faq-box-sheen-1: rgba(255, 248, 232, 0.045);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.02);
+  --faq-box-sheen-3: rgba(255, 248, 232, 0.035);
+  --faq-text: #fff8e8;
+  --faq-label-color: #f4ead2;
+  --faq-divider: rgba(255, 248, 232, 0.30);
+  --faq-arrow-bg-1: rgba(255,248,232,0.12);
+  --faq-arrow-bg-2: rgba(255,248,232,0.045);
+  --faq-arrow-border: rgba(255, 248, 232, 0.38);
+  --faq-arrow-text: #fff8e8;
+  --faq-arrow-hover-border: rgba(255, 248, 232, 0.80);
+  --faq-arrow-hover-bg-1: rgba(255,248,232,0.18);
+  --faq-arrow-hover-bg-2: rgba(255,248,232,0.08);
+  --faq-arrow-hover-glow: rgba(255, 248, 232, 0.22);
+}
+
+body[data-flavor="cherry"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(30, 0, 10, 0.96), rgba(65, 0, 22, 0.92));
+  --faq-box-border: rgba(255, 95, 143, 0.32);
+  --faq-box-glow: rgba(227, 0, 57, 0.16);
+  --faq-box-topline: rgba(255, 95, 143, 0.72);
+  --faq-box-sheen-1: rgba(227, 0, 57, 0.07);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.02);
+  --faq-box-sheen-3: rgba(255, 95, 143, 0.06);
+  --faq-text: #fff0f4;
+  --faq-label-color: #ff5f8f;
+  --faq-divider: rgba(255, 95, 143, 0.28);
+  --faq-arrow-bg-1: rgba(255,95,143,0.12);
+  --faq-arrow-bg-2: rgba(227,0,57,0.08);
+  --faq-arrow-border: rgba(255, 95, 143, 0.30);
+  --faq-arrow-text: #fff0f4;
+  --faq-arrow-hover-border: rgba(255, 95, 143, 0.72);
+  --faq-arrow-hover-bg-1: rgba(255,95,143,0.20);
+  --faq-arrow-hover-bg-2: rgba(227,0,57,0.16);
+  --faq-arrow-hover-glow: rgba(227, 0, 57, 0.34);
+}
+
+/* ================= LIGHT MODE ================= */
+
+body.light-theme[data-flavor="blueberry"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(235, 247, 255, 0.88), rgba(205, 226, 255, 0.88));
+  --faq-box-border: rgba(65, 105, 255, 0.24);
+  --faq-box-glow: rgba(65, 105, 255, 0.08);
+  --faq-box-topline: rgba(65, 105, 255, 0.34);
+  --faq-box-sheen-1: rgba(65, 105, 255, 0.04);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.22);
+  --faq-box-sheen-3: rgba(76, 201, 255, 0.05);
+  --faq-text: #071229;
+  --faq-label-color: #4169ff;
+  --faq-divider: rgba(65, 105, 255, 0.18);
+  --faq-arrow-bg-1: rgba(255,255,255,0.82);
+  --faq-arrow-bg-2: rgba(205,226,255,0.90);
+  --faq-arrow-border: rgba(65,105,255,0.22);
+  --faq-arrow-text: #071229;
+  --faq-arrow-hover-border: rgba(65,105,255,0.42);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.96);
+  --faq-arrow-hover-bg-2: rgba(65,105,255,0.12);
+  --faq-arrow-hover-glow: rgba(65,105,255,0.18);
+}
+
+body.light-theme[data-flavor="peach"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(255, 237, 208, 0.90), rgba(255, 207, 178, 0.88));
+  --faq-box-border: rgba(155, 79, 63, 0.36);
+  --faq-box-glow: rgba(255, 138, 91, 0.08);
+  --faq-box-topline: rgba(155, 79, 63, 0.36);
+  --faq-box-sheen-1: rgba(155, 79, 63, 0.045);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.24);
+  --faq-box-sheen-3: rgba(255, 138, 91, 0.04);
+  --faq-text: #2b1410;
+  --faq-label-color: #d96f4f;
+  --faq-divider: rgba(155, 79, 63, 0.22);
+  --faq-arrow-bg-1: rgba(255,255,255,0.66);
+  --faq-arrow-bg-2: rgba(255,207,178,0.88);
+  --faq-arrow-border: rgba(155,79,63,0.25);
+  --faq-arrow-text: #2b1410;
+  --faq-arrow-hover-border: rgba(155,79,63,0.48);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.82);
+  --faq-arrow-hover-bg-2: rgba(255,138,91,0.14);
+  --faq-arrow-hover-glow: rgba(255,138,91,0.18);
+}
+
+body.light-theme[data-flavor="coconut"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(255, 255, 248, 0.90), rgba(246, 240, 222, 0.92));
+  --faq-box-border: rgba(29, 29, 29, 0.45);
+  --faq-box-glow: rgba(29, 29, 29, 0.05);
+  --faq-box-topline: rgba(29, 29, 29, 0.32);
+  --faq-box-sheen-1: rgba(29, 29, 29, 0.035);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.20);
+  --faq-box-sheen-3: rgba(29, 29, 29, 0.025);
+  --faq-text: #1d1d1d;
+  --faq-label-color: #1d1d1d;
+  --faq-divider: rgba(29, 29, 29, 0.20);
+  --faq-arrow-bg-1: rgba(255,255,248,0.95);
+  --faq-arrow-bg-2: rgba(235,228,210,0.92);
+  --faq-arrow-border: rgba(29,29,29,0.25);
+  --faq-arrow-text: #1d1d1d;
+  --faq-arrow-hover-border: rgba(29,29,29,0.48);
+  --faq-arrow-hover-bg-1: rgba(255,255,248,1);
+  --faq-arrow-hover-bg-2: rgba(29,29,29,0.08);
+  --faq-arrow-hover-glow: rgba(29,29,29,0.12);
+}
+
+body.light-theme[data-flavor="cherry"] {
+  --faq-box-bg: linear-gradient(135deg, rgba(255, 240, 245, 0.90), rgba(255, 218, 230, 0.88));
+  --faq-box-border: rgba(200, 0, 50, 0.24);
+  --faq-box-glow: rgba(200, 0, 50, 0.07);
+  --faq-box-topline: rgba(200, 0, 50, 0.32);
+  --faq-box-sheen-1: rgba(200, 0, 50, 0.04);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.22);
+  --faq-box-sheen-3: rgba(255, 79, 130, 0.05);
+  --faq-text: #2a000c;
+  --faq-label-color: #c80032;
+  --faq-divider: rgba(200, 0, 50, 0.18);
+  --faq-arrow-bg-1: rgba(255,255,255,0.82);
+  --faq-arrow-bg-2: rgba(255,218,230,0.88);
+  --faq-arrow-border: rgba(200,0,50,0.22);
+  --faq-arrow-text: #2a000c;
+  --faq-arrow-hover-border: rgba(200,0,50,0.42);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.96);
+  --faq-arrow-hover-bg-2: rgba(200,0,50,0.10);
+  --faq-arrow-hover-glow: rgba(200,0,50,0.16);
+}
+
+/* ================= APPLY / FORCE ================= */
+
+body[data-flavor] .faq-box {
+  background: var(--faq-box-bg) !important;
+  border-color: var(--faq-box-border) !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 0 14px var(--faq-box-glow),
+    0 10px 24px rgba(0, 0, 0, 0.16) !important;
+}
+
+body[data-flavor] .faq-label {
+  color: var(--faq-label-color) !important;
+  text-shadow: none !important;
+}
+
+body[data-flavor] .faq-line {
+  color: var(--faq-text) !important;
+}
+
+body[data-flavor] .faq-line + .faq-line::before {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--faq-divider),
+    transparent
+  ) !important;
+}
+
+body[data-flavor] .faq-box::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--faq-box-topline),
+    transparent
+  ) !important;
+}
+
+body[data-flavor] .faq-arrow {
+  color: var(--faq-arrow-text) !important;
+  background: radial-gradient(circle at 30% 30%, var(--faq-arrow-bg-1), var(--faq-arrow-bg-2)) !important;
+  border-color: var(--faq-arrow-border) !important;
+}
+
+body[data-flavor] .faq-arrow:hover {
+  border-color: var(--faq-arrow-hover-border) !important;
+  background: radial-gradient(circle at 30% 30%, var(--faq-arrow-hover-bg-1), var(--faq-arrow-hover-bg-2)) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 0 16px var(--faq-arrow-hover-glow) !important;
+}
+
+/* =========================================================
+  FIX: FAVORITE STUFF PER FLAVOR
+  Cards + image modal
+========================================================= */
+
+/* ================= BASE ================= */
+
+body[data-flavor] .game-card,
+body[data-flavor] .game-modal-content,
+body[data-flavor] .game-modal-title,
+body[data-flavor] .game-modal-close {
+  transition:
+    background 0.85s ease,
+    color 0.85s ease,
+    border-color 0.85s ease,
+    box-shadow 0.85s ease,
+    filter 0.85s ease,
+    transform 0.22s ease;
+}
+
+body[data-flavor] .game-card {
+  border: 1px solid var(--fav-card-border, rgba(255,255,255,0.10)) !important;
+  background: var(--fav-card-bg, rgba(255,255,255,0.05)) !important;
+  box-shadow: var(--fav-card-shadow, 0 8px 24px rgba(0,0,0,0.35)) !important;
+}
+
+body[data-flavor] .game-card img {
+  transition:
+    transform 0.28s ease,
+    filter 0.85s ease,
+    opacity 0.85s ease;
+  filter: var(--fav-img-filter, none);
+}
+
+body[data-flavor] .game-card:hover {
+  border-color: var(--fav-card-hover-border, var(--accent-soft)) !important;
+  background: var(--fav-card-hover-bg, rgba(255,255,255,0.08)) !important;
+  box-shadow: var(--fav-card-hover-shadow, 0 12px 30px rgba(0,0,0,0.45)) !important;
+}
+
+body[data-flavor] .game-modal-overlay {
+  background: var(--fav-modal-overlay, rgba(0,0,0,0.72)) !important;
+}
+
+body[data-flavor] .game-modal-content {
+  background: var(--fav-modal-bg, linear-gradient(180deg, rgba(35,0,30,0.92), rgba(10,0,20,0.96))) !important;
+  border: var(--fav-modal-border, 1px solid rgba(255,255,255,0.10)) !important;
+  box-shadow: var(--fav-modal-shadow, 0 20px 60px rgba(0,0,0,0.65)) !important;
+}
+
+body[data-flavor] .game-modal-content img {
+  border-radius: var(--fav-modal-img-radius, 18px) !important;
+  border: var(--fav-modal-img-border, none) !important;
+  filter: var(--fav-img-filter, none);
+}
+
+body[data-flavor] .game-modal-title {
+  color: var(--fav-modal-title, var(--text-main)) !important;
+  text-shadow: var(--fav-modal-title-shadow, none) !important;
+}
+
+body[data-flavor] .game-modal-close {
+  background: var(--fav-close-bg, rgba(255,255,255,0.08)) !important;
+  color: var(--fav-close-color, var(--text-main)) !important;
+  border: var(--fav-close-border, none) !important;
+}
+
+/* ================= VANILLA ================= */
+
+body[data-flavor="vanilla"] {
+  --fav-card-bg: rgba(255,255,255,0.04);
+  --fav-card-border: rgba(255,255,255,0.08);
+  --fav-card-shadow:
+    0 8px 24px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.06);
+
+  --fav-card-hover-border: rgba(255,143,189,0.36);
+  --fav-card-hover-bg: rgba(255,255,255,0.07);
+  --fav-card-hover-shadow:
+    0 12px 30px rgba(0,0,0,0.45),
+    0 0 18px rgba(230,0,84,0.22);
+
+  --fav-modal-overlay: rgba(0,0,0,0.72);
+  --fav-modal-bg: linear-gradient(180deg, rgba(35,0,30,0.92), rgba(10,0,20,0.96));
+  --fav-modal-border: 1px solid rgba(255,143,189,0.18);
+  --fav-modal-title: #ffd1e4;
+  --fav-modal-title-shadow: 0 0 14px rgba(201,20,65,0.22);
+}
+
+/* ================= BLUEBERRY ================= */
+
+body[data-flavor="blueberry"] {
+  --fav-card-bg: rgba(55,85,170,0.16);
+  --fav-card-border: rgba(140,205,255,0.20);
+  --fav-card-shadow:
+    0 0 16px rgba(91,124,255,0.14),
+    0 8px 24px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+
+  --fav-card-hover-border: rgba(159,215,255,0.68);
+  --fav-card-hover-bg: rgba(91,124,255,0.18);
+  --fav-card-hover-shadow:
+    0 0 22px rgba(159,215,255,0.34),
+    0 12px 32px rgba(0,0,0,0.45);
+
+  --fav-modal-overlay: rgba(0,8,28,0.78);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(9,18,58,0.96), rgba(4,8,26,0.98));
+  --fav-modal-border: 1px solid rgba(159,215,255,0.34);
+  --fav-modal-shadow:
+    0 24px 70px rgba(0,0,0,0.72),
+    0 0 28px rgba(91,124,255,0.26);
+  --fav-modal-title: #dff5ff;
+  --fav-modal-title-shadow:
+    0 0 10px rgba(159,215,255,0.38),
+    0 0 24px rgba(91,124,255,0.24);
+}
+
+/* ================= PEACH ================= */
+
+body[data-flavor="peach"] {
+  --fav-card-bg: rgba(74,39,36,0.82);
+  --fav-card-border: rgba(255,196,140,0.78);
+  --fav-card-shadow:
+    4px 4px 0 rgba(0,0,0,0.56),
+    inset 0 0 0 2px rgba(255,255,255,0.04);
+
+  --fav-card-hover-border: #ffd09f;
+  --fav-card-hover-bg: #9b4f3f;
+  --fav-card-hover-shadow:
+    6px 6px 0 rgba(0,0,0,0.66);
+
+  --fav-modal-overlay: rgba(28,12,10,0.72);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(74,39,36,0.98), rgba(28,16,18,0.98));
+  --fav-modal-border: 3px solid #ffd09f;
+  --fav-modal-shadow:
+    8px 8px 0 rgba(0,0,0,0.72),
+    0 0 0 2px rgba(255,138,91,0.36);
+
+  --fav-modal-img-radius: 0;
+  --fav-modal-img-border: 2px solid rgba(255,208,159,0.88);
+
+  --fav-modal-title: #ffd09f;
+  --fav-modal-title-shadow:
+    2px 2px 0 #5b2434,
+    4px 4px 0 rgba(0,0,0,0.45);
+
+  --fav-close-bg: #9b4f3f;
+  --fav-close-color: #fff2df;
+  --fav-close-border: 2px solid #ffd09f;
+}
+
+/* Peach pixel force */
+body[data-flavor="peach"] .game-card,
+body[data-flavor="peach"] .game-modal-content,
+body[data-flavor="peach"] .game-modal-close {
+  border-radius: 0 !important;
+}
+
+body[data-flavor="peach"] .game-card img {
+  image-rendering: auto;
+}
+
+body[data-flavor="peach"] .game-modal-title {
+  font-family: "Courier New", Consolas, monospace !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+body[data-flavor="peach"] .game-modal-content {
+  border-radius: 0 !important;
+}
+
+body[data-flavor="peach"] .game-modal-close:hover {
+  background: #d96f4f !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.55);
+}
+
+/* ================= COCONUT ================= */
+
+body[data-flavor="coconut"] {
+  --fav-card-bg: rgba(255,248,232,0.08);
+  --fav-card-border: rgba(255,248,232,0.55);
+  --fav-card-shadow:
+    4px 5px 0 rgba(0,0,0,0.32);
+
+  --fav-card-hover-border: rgba(255,248,232,0.88);
+  --fav-card-hover-bg: rgba(255,248,232,0.14);
+  --fav-card-hover-shadow:
+    5px 6px 0 rgba(0,0,0,0.38);
+
+  --fav-modal-overlay: rgba(0,0,0,0.68);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(34,30,26,0.98), rgba(14,13,12,0.98));
+  --fav-modal-border: 2px solid rgba(255,248,232,0.72);
+  --fav-modal-shadow:
+    6px 7px 0 rgba(0,0,0,0.42);
+
+  --fav-modal-title: #fff8e8;
+  --fav-modal-img-border: 2px solid rgba(255,248,232,0.55);
+
+  --fav-close-bg: rgba(255,248,232,0.10);
+  --fav-close-color: #fff8e8;
+  --fav-close-border: 2px solid rgba(255,248,232,0.55);
+}
+
+body[data-flavor="coconut"] .game-card,
+body[data-flavor="coconut"] .game-modal-content,
+body[data-flavor="coconut"] .game-modal-close {
+  border-radius: 16px 12px 18px 13px !important;
+}
+
+/* ================= CHERRY ================= */
+
+body[data-flavor="cherry"] {
+  --fav-card-bg: rgba(45,0,18,0.54);
+  --fav-card-border: rgba(227,0,57,0.24);
+  --fav-card-shadow:
+    0 0 18px rgba(227,0,57,0.12),
+    0 8px 24px rgba(0,0,0,0.42),
+    inset 0 0 0 1px rgba(255,255,255,0.035);
+
+  --fav-card-hover-border: rgba(255,95,143,0.58);
+  --fav-card-hover-bg: rgba(90,0,28,0.58);
+  --fav-card-hover-shadow:
+    0 0 24px rgba(227,0,57,0.24),
+    0 12px 34px rgba(0,0,0,0.55);
+
+  --fav-modal-overlay: rgba(10,0,6,0.82);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(35,0,14,0.98), rgba(8,0,8,0.98));
+  --fav-modal-border: 1px solid rgba(255,95,143,0.34);
+  --fav-modal-shadow:
+    0 24px 80px rgba(0,0,0,0.78),
+    0 0 30px rgba(227,0,57,0.28);
+
+  --fav-modal-title: #fff0f4;
+  --fav-modal-title-shadow:
+    0 0 12px rgba(255,95,143,0.30),
+    0 0 28px rgba(227,0,57,0.24);
+
+  --fav-close-bg: rgba(227,0,57,0.13);
+  --fav-close-color: #fff0f4;
+  --fav-close-border: 1px solid rgba(255,95,143,0.28);
+}
+
+/* ================= LIGHT MODE ================= */
+
+body.light-theme[data-flavor="blueberry"] {
+  --fav-card-bg: rgba(235,247,255,0.72);
+  --fav-card-border: rgba(65,105,255,0.18);
+  --fav-modal-overlay: rgba(210,230,255,0.62);
+  --fav-modal-bg: linear-gradient(180deg, rgba(245,251,255,0.96), rgba(218,236,255,0.98));
+  --fav-modal-title: #071229;
+}
+
+body.light-theme[data-flavor="peach"] {
+  --fav-card-bg: rgba(255,228,198,0.78);
+  --fav-card-border: rgba(130,65,45,0.30);
+  --fav-modal-overlay: rgba(255,210,170,0.56);
+  --fav-modal-bg: linear-gradient(180deg, rgba(255,237,208,0.98), rgba(255,207,178,0.98));
+  --fav-modal-title: #7a3426;
+}
+
+body.light-theme[data-flavor="coconut"] {
+  --fav-card-bg: rgba(255,253,243,0.86);
+  --fav-card-border: rgba(29,29,29,0.58);
+  --fav-modal-overlay: rgba(245,240,225,0.58);
+  --fav-modal-bg: linear-gradient(180deg, rgba(255,255,248,0.98), rgba(246,240,222,0.98));
+  --fav-modal-title: #1d1d1d;
+  --fav-close-color: #1d1d1d;
+}
+
+body.light-theme[data-flavor="cherry"] {
+  --fav-card-bg: rgba(255,228,237,0.72);
+  --fav-card-border: rgba(200,0,50,0.18);
+  --fav-modal-overlay: rgba(255,215,230,0.58);
+  --fav-modal-bg: linear-gradient(180deg, rgba(255,240,245,0.98), rgba(255,218,230,0.98));
+  --fav-modal-title: #2a000c;
+}
+
+/* =========================================================
+  LIME FLAVOR - CLEAN MINECRAFT / NATURE / SAKURA
+  One single Lime block. No old duplicated patches.
+========================================================= */
+
+body[data-flavor="lime"] {
+  --accent: #d2ff1a;
+  --accent-soft: #f3ff9d;
+
+  --text-main: #fff8e8;
+  --text-dim: rgba(255, 248, 232, 0.72);
+
+  --panel: rgba(78, 100, 18, 0.78);
+  --panel-2: rgba(122, 148, 32, 0.84);
+  --border-soft: rgba(255, 194, 220, 0.30);
+
+  --body-text: #fff8e8;
+  --heading-border: rgba(255, 194, 220, 0.24);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(46, 56, 10, 0.88),
+      rgba(24, 28, 8, 0.94)
+    );
+
+  --social-btn-bg: rgba(210, 255, 26, 0.12);
+
+  /* QOTD */
+  --qotd-text-color: #fff8e8;
+  --qotd-label-color: #ffc7dd;
+  --qotd-author-color: #ffd7e8;
+  --qotd-mark-color: rgba(255, 194, 220, 0.88);
+  --qotd-star-color: #ffe6f2;
+
+  /* FAQ */
+  --faq-box-bg:
+    linear-gradient(135deg, rgba(52, 66, 16, 0.92), rgba(30, 38, 10, 0.94));
+  --faq-box-border: rgba(255, 194, 220, 0.30);
+  --faq-box-glow: transparent;
+  --faq-box-topline: rgba(255, 194, 220, 0.22);
+  --faq-box-sheen-1: rgba(255, 194, 220, 0.04);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.02);
+  --faq-box-sheen-3: rgba(210, 255, 26, 0.04);
+  --faq-text: #fff8e8;
+  --faq-label-color: #ffd7e8;
+  --faq-divider: rgba(255, 194, 220, 0.20);
+  --faq-arrow-bg-1: #d7ee72;
+  --faq-arrow-bg-2: #a9ca42;
+  --faq-arrow-border: rgba(255, 194, 220, 0.34);
+  --faq-arrow-text: #2d290b;
+  --faq-arrow-hover-border: rgba(255, 226, 237, 0.56);
+  --faq-arrow-hover-bg-1: #f5f6a3;
+  --faq-arrow-hover-bg-2: #c9e061;
+  --faq-arrow-hover-glow: transparent;
+
+  /* Favorite Stuff */
+  --fav-card-bg:
+    linear-gradient(180deg, rgba(112, 136, 34, 0.86), rgba(64, 80, 18, 0.94));
+  --fav-card-border: rgba(255, 194, 220, 0.28);
+  --fav-card-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.04),
+    4px 4px 0 rgba(49, 56, 16, 0.62);
+  --fav-card-hover-border: rgba(255, 226, 237, 0.56);
+  --fav-card-hover-bg:
+    linear-gradient(180deg, rgba(126, 152, 38, 0.90), rgba(74, 92, 20, 0.96));
+  --fav-card-hover-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.04),
+    5px 5px 0 rgba(49, 56, 16, 0.68);
+  --fav-modal-overlay: rgba(28, 30, 10, 0.76);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(60, 72, 18, 0.96), rgba(34, 40, 10, 0.98));
+  --fav-modal-border: 2px solid rgba(255, 194, 220, 0.34);
+  --fav-modal-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.04),
+    6px 6px 0 rgba(41, 46, 12, 0.72);
+  --fav-modal-title: #fff7df;
+  --fav-modal-title-shadow: none;
+  --fav-close-bg: linear-gradient(180deg, #d7ee72, #a9ca42);
+  --fav-close-color: #2d290b;
+  --fav-close-border: 2px solid rgba(255, 194, 220, 0.34);
+  --fav-modal-img-radius: 0;
+  --fav-modal-img-border: 2px solid rgba(255, 226, 237, 0.30);
+}
+
+body[data-flavor="lime"],
+body[data-flavor="lime"] button,
+body[data-flavor="lime"] input {
+  font-family: "Courier New", Consolas, monospace;
+}
+
+body[data-flavor="lime"] #bg-parallax {
+  background-blend-mode: normal !important;
+  filter: saturate(1.02) brightness(0.96);
+}
+
+body[data-flavor="lime"] #bg-parallax::before {
+  background:
+    linear-gradient(rgba(28, 32, 10, 0.22), rgba(18, 22, 8, 0.44)) !important;
+}
+
+body[data-flavor="lime"] #bg-video {
+  filter: saturate(1.02) brightness(0.95) contrast(1.03);
+}
+
+body[data-flavor="lime"] .banner {
+  border-bottom: 2px solid rgba(255, 194, 220, 0.28) !important;
+  box-shadow: none !important;
+}
+
+body[data-flavor="lime"] .content,
+body[data-flavor="lime"] .profile-wrapper,
+body[data-flavor="lime"] .faq-box,
+body[data-flavor="lime"] .settings-panel,
+body[data-flavor="lime"] .mini-player,
+body[data-flavor="lime"] .cmd-window,
+body[data-flavor="lime"] .game-card,
+body[data-flavor="lime"] .game-modal-content,
+body[data-flavor="lime"] .fact,
+body[data-flavor="lime"] .text-block,
+body[data-flavor="lime"] .friend-card,
+body[data-flavor="lime"] .social-btn,
+body[data-flavor="lime"] .settings-row,
+body[data-flavor="lime"] .settings-info-card,
+body[data-flavor="lime"] .love-list li,
+body[data-flavor="lime"] .hate-list li,
+body[data-flavor="lime"] .friends-list li {
+  border-radius: 0 !important;
+  background:
+    linear-gradient(180deg, rgba(61, 76, 18, 0.86), rgba(36, 44, 12, 0.92)) !important;
+  border: 2px solid rgba(255, 194, 220, 0.28) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.045),
+    4px 4px 0 rgba(36, 42, 10, 0.70) !important;
+  color: #fff8e8 !important;
+}
+
+body[data-flavor="lime"] .profile-wrapper::before {
+  display: none !important;
+}
+
+body[data-flavor="lime"] .profile-name {
+  background: linear-gradient(to bottom, #fffef6 0%, #fff5c9 35%, #ffd5e8 70%, #ffc1dc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 2px 2px 0 rgba(72, 52, 20, 0.40);
+}
+
+body[data-flavor="lime"] h2 {
+  color: #fff3da !important;
+  text-shadow: 2px 2px 0 rgba(63, 53, 18, 0.42);
+  border-bottom-color: rgba(255, 194, 220, 0.22) !important;
+}
+
+body[data-flavor="lime"] .toggle-btn,
+body[data-flavor="lime"] .shuffle-btn,
+body[data-flavor="lime"] .music-btn,
+body[data-flavor="lime"] #music-btn,
+body[data-flavor="lime"] .settings-trigger-btn,
+body[data-flavor="lime"] .open-terminal-btn,
+body[data-flavor="lime"] .faq-arrow,
+body[data-flavor="lime"] .game-modal-close,
+body[data-flavor="lime"] .flavor-option-btn,
+body[data-flavor="lime"] .settings-tab-btn,
+body[data-flavor="lime"] .update-log-main-btn,
+body[data-flavor="lime"] .update-log-version {
+  border-radius: 0 !important;
+  background: linear-gradient(180deg, #d7ee72 0%, #a9ca42 100%) !important;
+  color: #2d290b !important;
+  border: 2px solid #f8c6de !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.08),
+    3px 3px 0 rgba(73, 77, 23, 0.52) !important;
+}
+
+body[data-flavor="lime"] .toggle-btn:hover,
+body[data-flavor="lime"] .shuffle-btn:hover,
+body[data-flavor="lime"] .music-btn:hover,
+body[data-flavor="lime"] #music-btn:hover,
+body[data-flavor="lime"] .settings-trigger-btn:hover,
+body[data-flavor="lime"] .open-terminal-btn:hover,
+body[data-flavor="lime"] .faq-arrow:hover,
+body[data-flavor="lime"] .game-modal-close:hover,
+body[data-flavor="lime"] .flavor-option-btn:hover,
+body[data-flavor="lime"] .settings-tab-btn:hover,
+body[data-flavor="lime"] .update-log-main-btn:hover,
+body[data-flavor="lime"] .update-log-version:hover {
+  background: linear-gradient(180deg, #f5f6a3 0%, #c9e061 100%) !important;
+  color: #2d290b !important;
+  transform: translate(-1px, -1px);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.08),
+    4px 4px 0 rgba(73, 77, 23, 0.56) !important;
+}
+
+/* Lime QOTD: resetado para não brigar com as decorações originais */
+body[data-flavor="lime"] .qotd-box {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 145px !important;
+  padding: 28px 34px 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 0 !important;
+  border: 3px solid rgba(255, 194, 220, 0.45) !important;
+  background-image:
+    linear-gradient(to right, #ffc7dd 0 28px, transparent 28px 42px, #ffc7dd 42px 70px, transparent 70px),
+    linear-gradient(to top, #5d7818 0 6px, #8ea92e 6px 10px, transparent 10px),
+    linear-gradient(180deg, rgba(50, 66, 14, 0.94), rgba(30, 42, 10, 0.97)) !important;
+  background-size: 112px 4px, 100% 100%, 100% 100% !important;
+  background-position: top left, bottom left, center !important;
+  background-repeat: repeat-x, no-repeat, no-repeat !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.035),
+    5px 5px 0 rgba(40, 48, 12, 0.72) !important;
+}
+
+body[data-flavor="lime"] .qotd-box::before,
+body[data-flavor="lime"] .qotd-box::after {
+  content: none !important;
+  display: none !important;
+}
+
+body[data-flavor="lime"] .qotd-content {
+  width: 100% !important;
+  max-width: 720px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-align: center !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+body[data-flavor="lime"] .qotd-mark,
+body[data-flavor="lime"] .qotd-top-star,
+body[data-flavor="lime"] .qotd-bottom-star,
+body[data-flavor="lime"] .qotd-ornament-dot,
+body[data-flavor="lime"] .qotd-bottom-ornament {
+  display: none !important;
+}
+
+body[data-flavor="lime"] .qotd-label,
+body[data-flavor="lime"] #qotd-text,
+body[data-flavor="lime"] .qotd-author {
+  position: static !important;
+  transform: none !important;
+  inset: auto !important;
+  margin: 0 !important;
+  font-family: "Courier New", Consolas, monospace !important;
+  font-weight: 900 !important;
+  text-shadow: 2px 2px 0 rgba(40, 48, 12, 0.70) !important;
+}
+
+body[data-flavor="lime"] .qotd-label {
+  color: #ffc7dd !important;
+  font-size: 12px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+}
+
+body[data-flavor="lime"] #qotd-text {
+  color: #fff8e8 !important;
+  font-size: clamp(16px, 2.1vw, 22px) !important;
+  font-style: normal !important;
+  line-height: 1.35 !important;
+  letter-spacing: 1.5px !important;
+}
+
+body[data-flavor="lime"] .qotd-author {
+  color: #ffc7dd !important;
+  font-size: 15px !important;
+}
+
+body[data-flavor="lime"] .cmd-window {
+  background: #27300d !important;
+  border: 2px solid rgba(255, 194, 220, 0.36) !important;
+  box-shadow: 5px 5px 0 rgba(41, 46, 12, 0.74) !important;
+}
+
+body[data-flavor="lime"] .cmd-titlebar {
+  background: linear-gradient(180deg, #d7ee72, #a9ca42) !important;
+  color: #2d290b !important;
+}
+
+body[data-flavor="lime"] .cmd-title-left,
+body[data-flavor="lime"] .cmd-control-btn {
+  color: #2d290b !important;
+}
+
+body[data-flavor="lime"] .cmd-screen,
+body[data-flavor="lime"] .cmd-input,
+body[data-flavor="lime"] .cmd-prompt,
+body[data-flavor="lime"] .cmd-line {
+  background: #27300d !important;
+  color: #fff7df !important;
+}
+
+body[data-flavor="lime"] .cmd-line.error {
+  color: #ffd5e8 !important;
+}
+
+body.light-theme[data-flavor="lime"] {
+  --accent: #b7d74c;
+  --accent-soft: #f3ff9d;
+
+  --text-main: #342f12;
+  --text-dim: rgba(52, 47, 18, 0.72);
+
+  --panel: rgba(234, 245, 176, 0.82);
+  --panel-2: rgba(253, 223, 238, 0.44);
+  --border-soft: rgba(184, 198, 102, 0.28);
+
+  --body-text: #342f12;
+  --heading-border: rgba(255, 194, 220, 0.24);
+
+  --bg-panel:
+    linear-gradient(180deg, rgba(241, 247, 198, 0.88), rgba(255, 228, 241, 0.56));
+
+  --social-btn-bg: rgba(235, 243, 187, 0.84);
+
+  --qotd-text-color: #342f12;
+  --qotd-label-color: #b85f8b;
+  --qotd-author-color: #b85f8b;
+  --qotd-mark-color: rgba(207, 143, 176, 0.76);
+  --qotd-star-color: #cf8fb0;
+
+  --faq-box-bg:
+    linear-gradient(135deg, rgba(240, 246, 202, 0.94), rgba(224, 236, 171, 0.96));
+  --faq-box-border: rgba(207, 143, 176, 0.30);
+  --faq-box-glow: transparent;
+  --faq-box-topline: rgba(207, 143, 176, 0.18);
+  --faq-text: #342f12;
+  --faq-label-color: #cf8fb0;
+  --faq-divider: rgba(207, 143, 176, 0.18);
+  --faq-arrow-bg-1: #fce4f1;
+  --faq-arrow-bg-2: #e6f29d;
+  --faq-arrow-border: rgba(184, 198, 102, 0.38);
+  --faq-arrow-text: #342f12;
+
+  --fav-card-bg: rgba(234, 245, 176, 0.82);
+  --fav-card-border: rgba(207, 143, 176, 0.30);
+  --fav-modal-overlay: rgba(245, 225, 236, 0.58);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(241, 247, 198, 0.98), rgba(255, 228, 241, 0.92));
+  --fav-modal-title: #342f12;
+  --fav-close-color: #342f12;
+}
+
+body.light-theme[data-flavor="lime"] .content,
+body.light-theme[data-flavor="lime"] .profile-wrapper,
+body.light-theme[data-flavor="lime"] .qotd-box,
+body.light-theme[data-flavor="lime"] .faq-box,
+body.light-theme[data-flavor="lime"] .settings-panel,
+body.light-theme[data-flavor="lime"] .mini-player,
+body.light-theme[data-flavor="lime"] .cmd-window,
+body.light-theme[data-flavor="lime"] .game-card,
+body.light-theme[data-flavor="lime"] .game-modal-content,
+body.light-theme[data-flavor="lime"] .fact,
+body.light-theme[data-flavor="lime"] .text-block,
+body.light-theme[data-flavor="lime"] .friend-card,
+body.light-theme[data-flavor="lime"] .social-btn,
+body.light-theme[data-flavor="lime"] .settings-row,
+body.light-theme[data-flavor="lime"] .settings-info-card,
+body.light-theme[data-flavor="lime"] .love-list li,
+body.light-theme[data-flavor="lime"] .hate-list li,
+body.light-theme[data-flavor="lime"] .friends-list li {
+  background:
+    linear-gradient(180deg, rgba(241, 247, 198, 0.92), rgba(221, 236, 162, 0.96)) !important;
+  border: 2px solid rgba(255, 194, 220, 0.40) !important;
+  color: #342f12 !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.26),
+    4px 4px 0 rgba(179, 186, 111, 0.52) !important;
+}
+
+body.light-theme[data-flavor="lime"] .toggle-btn,
+body.light-theme[data-flavor="lime"] .shuffle-btn,
+body.light-theme[data-flavor="lime"] .music-btn,
+body.light-theme[data-flavor="lime"] #music-btn,
+body.light-theme[data-flavor="lime"] .settings-trigger-btn,
+body.light-theme[data-flavor="lime"] .open-terminal-btn,
+body.light-theme[data-flavor="lime"] .faq-arrow,
+body.light-theme[data-flavor="lime"] .game-modal-close,
+body.light-theme[data-flavor="lime"] .flavor-option-btn,
+body.light-theme[data-flavor="lime"] .settings-tab-btn,
+body.light-theme[data-flavor="lime"] .update-log-main-btn,
+body.light-theme[data-flavor="lime"] .update-log-version {
+  background: linear-gradient(180deg, #fce4f1 0%, #e6f29d 100%) !important;
+  color: #342f12 !important;
+  border: 2px solid rgba(190, 203, 112, 0.46) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.18),
+    3px 3px 0 rgba(188, 194, 128, 0.52) !important;
+}
+
+body.light-theme[data-flavor="lime"] .qotd-box {
+  border-color: rgba(198, 135, 166, 0.48) !important;
+  background-image:
+    linear-gradient(to right, #f3a9cb 0 28px, transparent 28px 42px, #f3a9cb 42px 70px, transparent 70px),
+    linear-gradient(to top, #91aa35 0 6px, #c5d96e 6px 10px, transparent 10px),
+    linear-gradient(180deg, rgba(232, 242, 171, 0.96), rgba(211, 229, 142, 0.98)) !important;
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.24),
+    5px 5px 0 rgba(164, 174, 98, 0.55) !important;
+}
+
+body.light-theme[data-flavor="lime"] .qotd-label,
+body.light-theme[data-flavor="lime"] .qotd-author {
+  color: #b85f8b !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.55) !important;
+}
+
+body.light-theme[data-flavor="lime"] #qotd-text {
+  color: #343412 !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.55) !important;
+}
+
+/* =========================================================
+  BANNER SIZE PER FLAVOR
+========================================================= */
+
+body[data-flavor] {
+  --banner-height: 245px;
+  --banner-profile-bottom: -80px;
+}
+
+body[data-flavor] .banner {
+  height: var(--banner-height) !important;
+  min-height: var(--banner-height) !important;
+  background-size: cover !important;
+  transition:
+    height 0.65s ease,
+    min-height 0.65s ease,
+    background-position 0.65s ease,
+    filter 0.65s ease,
+    box-shadow 0.65s ease,
+    border-color 0.65s ease;
+}
+
+body[data-flavor] .banner .profile-wrapper {
+  bottom: var(--banner-profile-bottom) !important;
+  transition:
+    opacity 1s ease,
+    filter 1s ease,
+    bottom 0.65s ease,
+    transform 0.65s ease,
+    background 0.65s ease,
+    border-color 0.65s ease,
+    box-shadow 0.65s ease;
+}
+
+body[data-flavor="vanilla"] {
+  --banner-height: 245px;
+  --banner-profile-bottom: -80px;
+}
+
+body[data-flavor="blueberry"] {
+  --banner-height: 230px;
+  --banner-profile-bottom: -78px;
+}
+
+body[data-flavor="peach"] {
+  --banner-height: 220px;
+  --banner-profile-bottom: -74px;
+}
+
+body[data-flavor="lime"] {
+  --banner-height: 190px;
+  --banner-profile-bottom: -68px;
+}
+
+body[data-flavor="coconut"] {
+  --banner-height: 230px;
+  --banner-profile-bottom: -78px;
+}
+
+body[data-flavor="cherry"] {
+  --banner-height: 245px;
+  --banner-profile-bottom: -80px;
+}
+
+body[data-flavor="strawberry"] {
+  --banner-height: 230px;
+  --banner-profile-bottom: -78px;
+}
+
+/* =========================================================
+  FIX: COCONUT BUTTONS
+========================================================= */
+
+/* ---------- Coconut Dark ---------- */
+
+body[data-flavor="coconut"] .toggle-btn,
+body[data-flavor="coconut"] .shuffle-btn,
+body[data-flavor="coconut"] .music-btn,
+body[data-flavor="coconut"] #music-btn,
+body[data-flavor="coconut"] .settings-trigger-btn,
+body[data-flavor="coconut"] .open-terminal-btn,
+body[data-flavor="coconut"] .faq-arrow,
+body[data-flavor="coconut"] .game-modal-close,
+body[data-flavor="coconut"] .flavor-option-btn,
+body[data-flavor="coconut"] .settings-tab-btn,
+body[data-flavor="coconut"] .update-log-main-btn,
+body[data-flavor="coconut"] .update-log-version {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 248, 232, 0.16),
+      rgba(255, 248, 232, 0.08)
+    ) !important;
+
+  color: #fff8e8 !important;
+  border: 2px solid rgba(255, 248, 232, 0.62) !important;
+  border-radius: 14px 10px 16px 12px !important;
+
+  box-shadow:
+    3px 4px 0 rgba(0, 0, 0, 0.32),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+
+  text-shadow: none !important;
+}
+
+body[data-flavor="coconut"] .toggle-btn:hover,
+body[data-flavor="coconut"] .shuffle-btn:hover,
+body[data-flavor="coconut"] .music-btn:hover,
+body[data-flavor="coconut"] #music-btn:hover,
+body[data-flavor="coconut"] .settings-trigger-btn:hover,
+body[data-flavor="coconut"] .open-terminal-btn:hover,
+body[data-flavor="coconut"] .faq-arrow:hover,
+body[data-flavor="coconut"] .game-modal-close:hover,
+body[data-flavor="coconut"] .flavor-option-btn:hover,
+body[data-flavor="coconut"] .settings-tab-btn:hover,
+body[data-flavor="coconut"] .update-log-main-btn:hover,
+body[data-flavor="coconut"] .update-log-version:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 248, 232, 0.26),
+      rgba(255, 248, 232, 0.13)
+    ) !important;
+
+  color: #ffffff !important;
+  border-color: rgba(255, 248, 232, 0.88) !important;
+
+  transform: translateY(-1px) rotate(-0.25deg);
+
+  box-shadow:
+    4px 5px 0 rgba(0, 0, 0, 0.38),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ---------- Coconut Light ---------- */
+
+body.light-theme[data-flavor="coconut"] .toggle-btn,
+body.light-theme[data-flavor="coconut"] .shuffle-btn,
+body.light-theme[data-flavor="coconut"] .music-btn,
+body.light-theme[data-flavor="coconut"] #music-btn,
+body.light-theme[data-flavor="coconut"] .settings-trigger-btn,
+body.light-theme[data-flavor="coconut"] .open-terminal-btn,
+body.light-theme[data-flavor="coconut"] .faq-arrow,
+body.light-theme[data-flavor="coconut"] .game-modal-close,
+body.light-theme[data-flavor="coconut"] .flavor-option-btn,
+body.light-theme[data-flavor="coconut"] .settings-tab-btn,
+body.light-theme[data-flavor="coconut"] .update-log-main-btn,
+body.light-theme[data-flavor="coconut"] .update-log-version {
+  background: #fffdf3 !important;
+  color: #1d1d1d !important;
+  border: 2px solid #1d1d1d !important;
+  border-radius: 14px 10px 16px 12px !important;
+
+  box-shadow:
+    3px 4px 0 rgba(29, 29, 29, 0.22) !important;
+
+  text-shadow: none !important;
+}
+
+body.light-theme[data-flavor="coconut"] .toggle-btn:hover,
+body.light-theme[data-flavor="coconut"] .shuffle-btn:hover,
+body.light-theme[data-flavor="coconut"] .music-btn:hover,
+body.light-theme[data-flavor="coconut"] #music-btn:hover,
+body.light-theme[data-flavor="coconut"] .settings-trigger-btn:hover,
+body.light-theme[data-flavor="coconut"] .open-terminal-btn:hover,
+body.light-theme[data-flavor="coconut"] .faq-arrow:hover,
+body.light-theme[data-flavor="coconut"] .game-modal-close:hover,
+body.light-theme[data-flavor="coconut"] .flavor-option-btn:hover,
+body.light-theme[data-flavor="coconut"] .settings-tab-btn:hover,
+body.light-theme[data-flavor="coconut"] .update-log-main-btn:hover,
+body.light-theme[data-flavor="coconut"] .update-log-version:hover {
+  background: #f7efd8 !important;
+  color: #1d1d1d !important;
+
+  transform: translateY(-1px) rotate(-0.25deg);
+
+  box-shadow:
+    4px 5px 0 rgba(29, 29, 29, 0.25) !important;
+}
+
+/* =========================================================
+  LIME THORN FRAME
+========================================================= */
+
+body[data-flavor="lime"] .content {
+  position: relative;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+body[data-flavor="lime"] .content::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background-image: url("https://i.imgur.com/RbySv5W.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 110% 150%;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0.70;
+
+  transition:
+    opacity 0.85s ease,
+    filter 0.85s ease;
+}
+
+/* quando passa o mouse no background */
+body[data-flavor="lime"].hover-bg .content::before {
+  opacity: 0.3 !important;
+  filter: blur(2px);
+}
+
+/* =========================================================
+  STRAWBERRY FLAVOR
+  Dark cute boutique / pastel pink / bows / flowers
+========================================================= */
+
+body[data-flavor="strawberry"] {
+  --accent: #ff9fc8;
+  --accent-soft: #ffd6ea;
+
+  --text-main: #fff4fa;
+  --text-dim: rgba(255, 230, 242, 0.76);
+
+  --panel: rgba(38, 12, 32, 0.78);
+  --panel-2: rgba(74, 22, 54, 0.82);
+  --border-soft: rgba(255, 214, 234, 0.42);
+
+  --body-text: #fff4fa;
+  --heading-border: rgba(255, 214, 234, 0.34);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(42, 12, 34, 0.82),
+      rgba(20, 6, 22, 0.92)
+    );
+
+  --social-btn-bg: rgba(255, 159, 200, 0.14);
+
+  --qotd-text-color: #fff8fb;
+  --qotd-label-color: #ffd6ea;
+  --qotd-author-color: #ffb7d7;
+  --qotd-mark-color: rgba(255, 159, 200, 0.90);
+  --qotd-star-color: #ffd6ea;
+
+  --faq-box-bg:
+    linear-gradient(180deg, rgba(48, 14, 38, 0.94), rgba(22, 6, 22, 0.96));
+  --faq-box-border: rgba(255, 214, 234, 0.34);
+  --faq-box-glow: rgba(255, 159, 200, 0.12);
+  --faq-box-topline: rgba(255, 214, 234, 0.58);
+  --faq-box-sheen-1: rgba(255, 214, 234, 0.08);
+  --faq-box-sheen-2: rgba(255, 255, 255, 0.035);
+  --faq-box-sheen-3: rgba(190, 180, 255, 0.06);
+  --faq-text: #fff4fa;
+  --faq-label-color: #ffd6ea;
+  --faq-divider: rgba(255, 214, 234, 0.24);
+  --faq-arrow-bg-1: rgba(255, 214, 234, 0.20);
+  --faq-arrow-bg-2: rgba(255, 159, 200, 0.12);
+  --faq-arrow-border: rgba(255, 214, 234, 0.34);
+  --faq-arrow-text: #fff4fa;
+  --faq-arrow-hover-border: rgba(255, 240, 248, 0.76);
+  --faq-arrow-hover-bg-1: rgba(255, 240, 248, 0.30);
+  --faq-arrow-hover-bg-2: rgba(255, 159, 200, 0.20);
+  --faq-arrow-hover-glow: rgba(255, 159, 200, 0.28);
+
+  --fav-card-bg:
+    linear-gradient(180deg, rgba(255, 214, 234, 0.12), rgba(255, 159, 200, 0.08));
+  --fav-card-border: rgba(255, 214, 234, 0.24);
+  --fav-card-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(255,255,255,0.04);
+
+  --fav-card-hover-border: rgba(255, 240, 248, 0.66);
+  --fav-card-hover-bg:
+    linear-gradient(180deg, rgba(255, 214, 234, 0.18), rgba(255, 159, 200, 0.14));
+  --fav-card-hover-shadow:
+    0 0 18px rgba(255, 159, 200, 0.22),
+    0 14px 32px rgba(0,0,0,0.46);
+
+  --fav-modal-overlay: rgba(20, 4, 18, 0.82);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(52, 14, 40, 0.98), rgba(18, 5, 20, 0.98));
+  --fav-modal-border: 1px solid rgba(255, 214, 234, 0.34);
+  --fav-modal-shadow:
+    0 24px 74px rgba(0,0,0,0.74),
+    0 0 28px rgba(255,159,200,0.18);
+
+  --fav-modal-title: #fff4fa;
+  --fav-modal-title-shadow: 0 0 12px rgba(255, 214, 234, 0.28);
+
+  --fav-close-bg: rgba(255, 214, 234, 0.14);
+  --fav-close-color: #fff4fa;
+  --fav-close-border: 1px solid rgba(255, 214, 234, 0.32);
+}
+
+/* dark cute boutique background */
+body[data-flavor="strawberry"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(255, 214, 234, 0.24), transparent 24%),
+    radial-gradient(circle at 88% 18%, rgba(190, 180, 255, 0.18), transparent 25%),
+    radial-gradient(circle at 50% 95%, rgba(255, 159, 200, 0.13), transparent 36%),
+    linear-gradient(135deg, #120512, #261024, #3a1533, #170719) !important;
+  background-blend-mode: screen;
+  filter: none !important;
+}
+
+body[data-flavor="strawberry"] #bg-parallax::before {
+  background:
+    radial-gradient(circle at 16px 16px, rgba(255,255,255,0.13) 0 2px, transparent 3px),
+    radial-gradient(circle at 54px 48px, rgba(255,214,234,0.16) 0 2px, transparent 3px),
+    linear-gradient(rgba(16, 4, 16, 0.48), rgba(10, 2, 10, 0.74)) !important;
+  background-size:
+    80px 80px,
+    90px 90px,
+    cover !important;
+}
+
+body[data-flavor="strawberry"] #bg-video {
+  filter:
+    hue-rotate(-18deg)
+    saturate(1.05)
+    brightness(0.64)
+    contrast(1.04) !important;
+}
+
+body[data-flavor="strawberry"] .banner {
+  border-bottom: 3px solid rgba(255, 214, 234, 0.72) !important;
+  box-shadow:
+    0 0 22px rgba(255, 159, 200, 0.22),
+    0 0 52px rgba(190, 180, 255, 0.10) !important;
+}
+
+body[data-flavor="strawberry"] .content,
+body[data-flavor="strawberry"] .profile-wrapper,
+body[data-flavor="strawberry"] .settings-panel,
+body[data-flavor="strawberry"] .mini-player,
+body[data-flavor="strawberry"] .qotd-box,
+body[data-flavor="strawberry"] .faq-box,
+body[data-flavor="strawberry"] .cmd-window {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(48, 14, 38, 0.82),
+      rgba(18, 5, 20, 0.92)
+    ) !important;
+  border: 2px solid rgba(255, 214, 234, 0.42) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 18px 44px rgba(0,0,0,0.42),
+    0 0 18px rgba(255,159,200,0.12),
+    inset 0 0 0 1px rgba(255,255,255,0.06) !important;
+}
+
+/* top boutique scallop */
+body[data-flavor="strawberry"] .content {
+  position: relative;
+  overflow: hidden !important;
+  isolation: isolate;
+  padding-top: 34px;
+}
+
+body[data-flavor="strawberry"] .content::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 28px;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 18px 18px 0 0;
+  opacity: 0.95;
+  background:
+    linear-gradient(to bottom, rgba(255, 214, 234, 0.22), rgba(255, 214, 234, 0.10)),
+    radial-gradient(circle at 16px 0px, rgba(255, 214, 234, 0.85) 0 16px, transparent 17px);
+  background-size:
+    100% 100%,
+    32px 32px;
+  background-repeat:
+    no-repeat,
+    repeat-x;
+  background-position:
+    top left,
+    top left;
+  transition:
+    opacity 0.8s ease,
+    filter 0.8s ease;
+}
+
+/* safe CSS-only pearls. No emoji/font icons. */
+body[data-flavor="strawberry"] .content::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 999px;
+  background: rgba(255, 240, 248, 0.92);
+  box-shadow:
+    -190px 0 0 rgba(255, 214, 234, 0.78),
+    -150px 0 0 rgba(255, 214, 234, 0.62),
+    -110px 0 0 rgba(255, 214, 234, 0.78),
+    -70px 0 0 rgba(255, 214, 234, 0.62),
+    -35px 0 0 rgba(255, 214, 234, 0.78),
+    35px 0 0 rgba(255, 214, 234, 0.78),
+    70px 0 0 rgba(255, 214, 234, 0.62),
+    110px 0 0 rgba(255, 214, 234, 0.78),
+    150px 0 0 rgba(255, 214, 234, 0.62),
+    190px 0 0 rgba(255, 214, 234, 0.78);
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(255, 159, 200, 0.22));
+  transition:
+    opacity 0.8s ease,
+    filter 0.8s ease;
+}
+
+body[data-flavor="strawberry"] .content > * {
+  position: relative;
+  z-index: 3;
+}
+
+body[data-flavor="strawberry"].hover-bg .content::before,
+body[data-flavor="strawberry"].hover-bg .content::after {
+  opacity: 0 !important;
+  filter: blur(2px) !important;
+}
+
+/* profile */
+body[data-flavor="strawberry"] .profile-wrapper {
+  background:
+    linear-gradient(180deg, rgba(52, 14, 40, 0.88), rgba(18, 5, 20, 0.96)) !important;
+  border-color: rgba(255, 240, 248, 0.58) !important;
+}
+
+body[data-flavor="strawberry"] .profile-wrapper::before {
+  background: conic-gradient(
+    from var(--neon-angle),
+    transparent 0deg,
+    #fff0f7 42deg,
+    #ffd6ea 86deg,
+    #ff9fc8 142deg,
+    #beb4ff 190deg,
+    transparent 260deg,
+    #ffd6ea 320deg,
+    transparent 360deg
+  ) !important;
+  filter:
+    blur(4px)
+    drop-shadow(0 0 12px rgba(255,214,234,0.78))
+    drop-shadow(0 0 26px rgba(255,159,200,0.42)) !important;
+}
+
+body[data-flavor="strawberry"] .profile-name {
+  background:
+    linear-gradient(
+      to bottom,
+      #ffffff 0%,
+      #fff0f7 28%,
+      #ffd6ea 54%,
+      #ff9fc8 78%,
+      #beb4ff 100%
+    ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  text-shadow:
+    0 0 10px rgba(255,214,234,0.26),
+    0 0 22px rgba(255,159,200,0.18) !important;
+}
+
+body[data-flavor="strawberry"] h2 {
+  color: #fff4fa !important;
+  border-bottom-color: rgba(255, 214, 234, 0.32) !important;
+  text-shadow:
+    0 0 8px rgba(255,214,234,0.18),
+    0 0 18px rgba(255,159,200,0.10) !important;
+}
+
+/* boutique buttons */
+body[data-flavor="strawberry"] .toggle-btn,
+body[data-flavor="strawberry"] .shuffle-btn,
+body[data-flavor="strawberry"] .music-btn,
+body[data-flavor="strawberry"] #music-btn,
+body[data-flavor="strawberry"] .settings-trigger-btn,
+body[data-flavor="strawberry"] .open-terminal-btn,
+body[data-flavor="strawberry"] .faq-arrow,
+body[data-flavor="strawberry"] .game-modal-close,
+body[data-flavor="strawberry"] .flavor-option-btn,
+body[data-flavor="strawberry"] .settings-tab-btn,
+body[data-flavor="strawberry"] .update-log-main-btn,
+body[data-flavor="strawberry"] .update-log-version {
+  background:
+    linear-gradient(90deg, #ffe3f0 0%, #ffb7d7 42%, #beb4ff 100%) !important;
+  color: #351025 !important;
+  border: 1px solid rgba(255, 240, 248, 0.62) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.22),
+    0 0 14px rgba(255,159,200,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.30) !important;
+  text-shadow: none !important;
+}
+
+body[data-flavor="strawberry"] .toggle-btn:hover,
+body[data-flavor="strawberry"] .shuffle-btn:hover,
+body[data-flavor="strawberry"] .music-btn:hover,
+body[data-flavor="strawberry"] #music-btn:hover,
+body[data-flavor="strawberry"] .settings-trigger-btn:hover,
+body[data-flavor="strawberry"] .open-terminal-btn:hover,
+body[data-flavor="strawberry"] .faq-arrow:hover,
+body[data-flavor="strawberry"] .game-modal-close:hover,
+body[data-flavor="strawberry"] .flavor-option-btn:hover,
+body[data-flavor="strawberry"] .settings-tab-btn:hover,
+body[data-flavor="strawberry"] .update-log-main-btn:hover,
+body[data-flavor="strawberry"] .update-log-version:hover {
+  background:
+    linear-gradient(90deg, #ffffff 0%, #ffd6ea 44%, #d8d1ff 100%) !important;
+  color: #351025 !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.28),
+    0 0 18px rgba(255,214,234,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.42) !important;
+}
+
+/* lists/cards */
+body[data-flavor="strawberry"] .fact,
+body[data-flavor="strawberry"] .text-block,
+body[data-flavor="strawberry"] .love-list li,
+body[data-flavor="strawberry"] .hate-list li,
+body[data-flavor="strawberry"] .friends-list li,
+body[data-flavor="strawberry"] .friend-card,
+body[data-flavor="strawberry"] .social-btn,
+body[data-flavor="strawberry"] .settings-info-card,
+body[data-flavor="strawberry"] .settings-row,
+body[data-flavor="strawberry"] .game-card {
+  background:
+    linear-gradient(180deg, rgba(255, 214, 234, 0.12), rgba(190, 180, 255, 0.07)),
+    rgba(255, 159, 200, 0.06) !important;
+  border: 1px solid rgba(255, 214, 234, 0.22) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.22),
+    inset 0 0 0 1px rgba(255,255,255,0.035) !important;
+}
+
+/* QOTD */
+body[data-flavor="strawberry"] .qotd-box {
+  background:
+    linear-gradient(180deg, rgba(255, 214, 234, 0.08), rgba(190, 180, 255, 0.05)),
+    linear-gradient(180deg, rgba(46, 12, 38, 0.86), rgba(18, 5, 20, 0.88)) !important;
+  border: 2px solid rgba(255, 214, 234, 0.46) !important;
+  border-radius: 16px !important;
+}
+
+body[data-flavor="strawberry"] .qotd-box::after {
+  border-color: rgba(255, 159, 200, 0.66) !important;
+}
+
+body[data-flavor="strawberry"] .qotd-label,
+body[data-flavor="strawberry"] .qotd-author,
+body[data-flavor="strawberry"] .qotd-mark,
+body[data-flavor="strawberry"] .qotd-top-star,
+body[data-flavor="strawberry"] .qotd-bottom-star {
+  color: #ffd6ea !important;
+}
+
+/* terminal */
+body[data-flavor="strawberry"] .cmd-window {
+  background: #160516 !important;
+  border-color: rgba(255, 214, 234, 0.36) !important;
+}
+
+body[data-flavor="strawberry"] .cmd-titlebar {
+  background: linear-gradient(90deg, #ffe3f0, #ffb7d7, #beb4ff) !important;
+  color: #351025 !important;
+}
+
+body[data-flavor="strawberry"] .cmd-title-left,
+body[data-flavor="strawberry"] .cmd-control-btn {
+  color: #351025 !important;
+}
+
+body[data-flavor="strawberry"] .cmd-screen,
+body[data-flavor="strawberry"] .cmd-input,
+body[data-flavor="strawberry"] .cmd-prompt,
+body[data-flavor="strawberry"] .cmd-line {
+  background: #160516 !important;
+  color: #ffd6ea !important;
+}
+
+body[data-flavor="strawberry"] .cmd-line.error {
+  color: #ff8fbf !important;
+}
+
+/* =========================================================
+  STRAWBERRY LIGHT MODE
+========================================================= */
+
+body.light-theme[data-flavor="strawberry"] {
+  --accent: #ff5f9f;
+  --accent-soft: #ff9fc8;
+
+  --text-main: #3a0b25;
+  --text-dim: rgba(58, 11, 37, 0.68);
+
+  --panel: rgba(255, 236, 245, 0.76);
+  --panel-2: rgba(255, 216, 234, 0.84);
+  --border-soft: rgba(255, 95, 159, 0.22);
+
+  --body-text: #3a0b25;
+  --heading-border: rgba(255, 95, 159, 0.26);
+
+  --bg-panel:
+    linear-gradient(
+      180deg,
+      rgba(255, 240, 247, 0.84),
+      rgba(255, 218, 236, 0.86)
+    );
+
+  --social-btn-bg: rgba(255, 236, 245, 0.72);
+
+  --qotd-text-color: #3a0b25;
+  --qotd-label-color: #d94b86;
+  --qotd-author-color: #c93674;
+  --qotd-mark-color: rgba(217, 75, 134, 0.70);
+  --qotd-star-color: #d94b86;
+
+  --faq-box-bg:
+    linear-gradient(135deg, rgba(255, 240, 247, 0.92), rgba(255, 218, 236, 0.88));
+  --faq-box-border: rgba(217, 75, 134, 0.24);
+  --faq-box-glow: rgba(217, 75, 134, 0.08);
+  --faq-box-topline: rgba(217, 75, 134, 0.34);
+  --faq-text: #3a0b25;
+  --faq-label-color: #d94b86;
+  --faq-divider: rgba(217, 75, 134, 0.18);
+  --faq-arrow-bg-1: rgba(255,255,255,0.88);
+  --faq-arrow-bg-2: rgba(255,218,236,0.90);
+  --faq-arrow-border: rgba(217,75,134,0.22);
+  --faq-arrow-text: #3a0b25;
+  --faq-arrow-hover-border: rgba(217,75,134,0.42);
+  --faq-arrow-hover-bg-1: rgba(255,255,255,0.98);
+  --faq-arrow-hover-bg-2: rgba(255,95,159,0.12);
+  --faq-arrow-hover-glow: rgba(217,75,134,0.18);
+
+  --fav-card-bg: rgba(255, 236, 245, 0.74);
+  --fav-card-border: rgba(217,75,134,0.18);
+  --fav-modal-overlay: rgba(255, 215, 234, 0.58);
+  --fav-modal-bg:
+    linear-gradient(180deg, rgba(255, 240, 247, 0.98), rgba(255, 218, 236, 0.98));
+  --fav-modal-title: #3a0b25;
+  --fav-close-color: #3a0b25;
+}
+
+body.light-theme[data-flavor="strawberry"] #bg-parallax {
+  background-image:
+    radial-gradient(circle at 18% 18%, rgba(255, 193, 220, 0.38), transparent 30%),
+    radial-gradient(circle at 82% 22%, rgba(255, 120, 173, 0.20), transparent 32%),
+    linear-gradient(135deg, #fff0f7, #ffd9e9, #fff8fb) !important;
+  background-blend-mode: normal;
+  filter: none;
+}
+
+body.light-theme[data-flavor="strawberry"] #bg-parallax::before {
+  background: rgba(255,255,255,0.18) !important;
+}
+
+body.light-theme[data-flavor="strawberry"] #bg-video {
+  opacity: 0.36;
+  filter:
+    hue-rotate(-18deg)
+    saturate(1.04)
+    brightness(1.15)
+    contrast(0.96);
+}
+
+body.light-theme[data-flavor="strawberry"] .content,
+body.light-theme[data-flavor="strawberry"] .profile-wrapper,
+body.light-theme[data-flavor="strawberry"] .settings-panel,
+body.light-theme[data-flavor="strawberry"] .mini-player,
+body.light-theme[data-flavor="strawberry"] .qotd-box,
+body.light-theme[data-flavor="strawberry"] .faq-box,
+body.light-theme[data-flavor="strawberry"] .cmd-window {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 244, 250, 0.82),
+      rgba(255, 222, 238, 0.86)
+    ) !important;
+  color: #3a0b25 !important;
+  border-color: rgba(217, 75, 134, 0.20) !important;
+  box-shadow:
+    0 0 18px rgba(217,75,134,0.10),
+    0 18px 40px rgba(160, 40, 90, 0.12) !important;
+}
+
+body.light-theme[data-flavor="strawberry"] .profile-name {
+  background:
+    linear-gradient(to bottom, #3a0b25 0%, #d94b86 58%, #ff9fc8 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  text-shadow:
+    0 0 8px rgba(217,75,134,0.12),
+    0 0 18px rgba(255,159,200,0.12) !important;
+}
+
+body.light-theme[data-flavor="strawberry"] .toggle-btn,
+body.light-theme[data-flavor="strawberry"] .shuffle-btn,
+body.light-theme[data-flavor="strawberry"] .music-btn,
+body.light-theme[data-flavor="strawberry"] #music-btn,
+body.light-theme[data-flavor="strawberry"] .settings-trigger-btn,
+body.light-theme[data-flavor="strawberry"] .open-terminal-btn,
+body.light-theme[data-flavor="strawberry"] .faq-arrow,
+body.light-theme[data-flavor="strawberry"] .game-modal-close,
+body.light-theme[data-flavor="strawberry"] .flavor-option-btn,
+body.light-theme[data-flavor="strawberry"] .settings-tab-btn,
+body.light-theme[data-flavor="strawberry"] .update-log-main-btn,
+body.light-theme[data-flavor="strawberry"] .update-log-version {
+  background:
+    linear-gradient(135deg, #fff0f7, #ffc1dc, #ff9fc8) !important;
+  color: #3a0b25 !important;
+  border-color: rgba(217,75,134,0.20) !important;
+}
+
+body.light-theme[data-flavor="strawberry"] .content::before,
+body.light-theme[data-flavor="strawberry"] .content::after {
+  display: none !important;
+}
+
+/* =========================================================
+  HARD FIX: GLOBAL BACKGROUND HOVER FADE
+  Sempre deixar o hover-bg transicionar suave
+========================================================= */
+
+html body:not(.low-quality-mode) .toggle-btn,
+html body:not(.low-quality-mode) .shuffle-btn,
+html body:not(.low-quality-mode) .music-btn,
+html body:not(.low-quality-mode) #music-btn,
+html body:not(.low-quality-mode) .social-btn,
+html body:not(.low-quality-mode) .friend-card,
+html body:not(.low-quality-mode) .text-block,
+html body:not(.low-quality-mode) .fact,
+html body:not(.low-quality-mode) .love-list li,
+html body:not(.low-quality-mode) .hate-list li,
+html body:not(.low-quality-mode) .friends-list li,
+html body:not(.low-quality-mode) .profile-wrapper,
+html body:not(.low-quality-mode) .content,
+html body:not(.low-quality-mode) .qotd-section,
+html body:not(.low-quality-mode) .qotd-box,
+html body:not(.low-quality-mode) .faq-box,
+html body:not(.low-quality-mode) .game-card,
+html body:not(.low-quality-mode) .settings-info-card,
+html body:not(.low-quality-mode) .settings-row {
+  transition:
+    opacity 1s ease,
+    filter 1s ease,
+    background 0.75s ease,
+    border-color 0.75s ease,
+    box-shadow 0.75s ease,
+    color 0.75s ease,
+    transform 0.25s ease,
+    bottom 0.65s ease,
+    height 0.65s ease,
+    min-height 0.65s ease !important;
+}
+
+html body:not(.low-quality-mode).hover-bg .toggle-btn,
+html body:not(.low-quality-mode).hover-bg .shuffle-btn,
+html body:not(.low-quality-mode).hover-bg .music-btn,
+html body:not(.low-quality-mode).hover-bg #music-btn,
+html body:not(.low-quality-mode).hover-bg .social-btn,
+html body:not(.low-quality-mode).hover-bg .friend-card,
+html body:not(.low-quality-mode).hover-bg .text-block,
+html body:not(.low-quality-mode).hover-bg .fact,
+html body:not(.low-quality-mode).hover-bg .love-list li,
+html body:not(.low-quality-mode).hover-bg .hate-list li,
+html body:not(.low-quality-mode).hover-bg .friends-list li,
+html body:not(.low-quality-mode).hover-bg .profile-wrapper,
+html body:not(.low-quality-mode).hover-bg .qotd-section,
+html body:not(.low-quality-mode).hover-bg .qotd-box,
+html body:not(.low-quality-mode).hover-bg .faq-box,
+html body:not(.low-quality-mode).hover-bg .game-card,
+html body:not(.low-quality-mode).hover-bg .settings-info-card,
+html body:not(.low-quality-mode).hover-bg .settings-row {
+  opacity: 0.22 !important;
+  filter: saturate(0.8) !important;
+  box-shadow: none !important;
+}
+
+/* a caixa central pode ficar um pouco mais visível que o resto */
+html body:not(.low-quality-mode).hover-bg .content {
+  opacity: 0.28 !important;
+}
+
+/* thorns do Lime também entram na transição geral */
+html body:not(.low-quality-mode)[data-flavor="lime"] .content::before {
+  transition:
+    opacity 1s ease,
+    filter 1s ease !important;
+}
+
+html body:not(.low-quality-mode)[data-flavor="lime"].hover-bg .content::before {
+  opacity: 0 !important;
+  filter: blur(2px) !important;
+}
+
+/* =========================================================
+  LIME TERMINAL - LINUX MINT CINNAMON + MINT TEXT ONLY
+========================================================= */
+
+html body[data-flavor="lime"] .cmd-window {
+  background: #3f3f3f !important;
+  color: #eeeeee !important;
+  border: 1px solid #222 !important;
+  border-radius: 2px !important;
+  overflow: hidden !important;
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.62) !important;
+  font-family: "DejaVu Sans Mono", "Ubuntu Mono", Consolas, monospace !important;
+}
+
+html body[data-flavor="lime"] .cmd-titlebar {
+  height: 24px !important;
+  padding: 0 8px !important;
+  background: #303030 !important;
+  color: #e6e6e6 !important;
+  border-bottom: 1px solid #242424 !important;
+  box-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-title-left {
+  color: #e6e6e6 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  gap: 6px !important;
+}
+
+html body[data-flavor="lime"] .cmd-icon {
+  width: 13px !important;
+  height: 13px !important;
+  border-radius: 2px !important;
+  background: #8cc665 !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  box-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-icon::before {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 5px;
+  background: #1b1b1b;
+  border-radius: 1px;
+}
+
+html body[data-flavor="lime"] .cmd-window-controls {
+  gap: 8px !important;
+}
+
+html body[data-flavor="lime"] .cmd-control-btn {
+  width: 16px !important;
+  height: 16px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: #d6d6d6 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  transform: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-control-btn:hover {
+  background: rgba(255, 255, 255, 0.10) !important;
+  color: #ffffff !important;
+  transform: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-close-btn {
+  color: #8cc665 !important;
+}
+
+html body[data-flavor="lime"] .cmd-close-btn:hover {
+  background: #8cc665 !important;
+  color: #1b1b1b !important;
+}
+
+html body[data-flavor="lime"] .cmd-screen {
+  position: relative !important;
+  background: #3f3f3f !important;
+  color: #eeeeee !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding-top: 25px !important;
+  font-family: "DejaVu Sans Mono", "Ubuntu Mono", Consolas, monospace !important;
+}
+
+html body[data-flavor="lime"] .cmd-screen::before {
+  content: "File    Edit    View    Search    Terminal    Help";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 25px;
+  padding-left: 7px;
+
+  display: flex;
+  align-items: center;
+
+  background: #303030 !important;
+  color: #eeeeee !important;
+  border-bottom: 1px solid #2a2a2a !important;
+
+  font-family: Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+
+  pointer-events: none;
+  z-index: 5;
+}
+
+html body[data-flavor="lime"] .cmd-output,
+html body[data-flavor="lime"] .cmd-output * {
+  background: transparent !important;
+  text-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-output {
+  color: #eeeeee !important;
+  font-size: 13px !important;
+  line-height: 1.25 !important;
+  padding: 8px 8px 0 !important;
+}
+
+html body[data-flavor="lime"] .cmd-line {
+  color: #eeeeee !important;
+  text-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-line.error {
+  color: #ff7777 !important;
+}
+
+html body[data-flavor="lime"] .cmd-line.success {
+  color: #8cff5f !important;
+}
+
+html body[data-flavor="lime"] .cmd-form {
+  background: #3f3f3f !important;
+  border-top: none !important;
+  padding: 2px 8px 8px !important;
+}
+
+html body[data-flavor="lime"] .cmd-prompt {
+  color: #8cff5f !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .cmd-input {
+  background: transparent !important;
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .mint-text-output {
+  margin: 0 !important;
+  padding: 4px 0 0 !important;
+
+  font-family:
+    "DejaVu Sans Mono",
+    "Ubuntu Mono",
+    "Liberation Mono",
+    Consolas,
+    monospace !important;
+
+  font-size: 13px !important;
+  line-height: 1.34 !important;
+  white-space: pre-wrap !important;
+
+  color: #eeeeee !important;
+  background: transparent !important;
+  text-shadow: none !important;
+}
+
+html body[data-flavor="lime"] .mint-user {
+  color: #8cff5f !important;
+  font-weight: 700 !important;
+}
+
+html body[data-flavor="lime"] .mint-separator {
+  color: #eeeeee !important;
+}
+
+html body[data-flavor="lime"] .mint-key {
+  color: #8cff5f !important;
+  font-weight: 700 !important;
+}
+
+html body[data-flavor="lime"] .mint-color-row {
+  display: flex !important;
+  margin-top: 14px !important;
+  gap: 0 !important;
+}
+
+html body[data-flavor="lime"] .mint-color {
+  display: block !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+html body[data-flavor="lime"] .mint-c1 { background: #3f3f3f !important; }
+html body[data-flavor="lime"] .mint-c2 { background: #ff3333 !important; }
+html body[data-flavor="lime"] .mint-c3 { background: #8cff5f !important; }
+html body[data-flavor="lime"] .mint-c4 { background: #e6d34a !important; }
+html body[data-flavor="lime"] .mint-c5 { background: #5891d8 !important; }
+html body[data-flavor="lime"] .mint-c6 { background: #a77fd6 !important; }
+html body[data-flavor="lime"] .mint-c7 { background: #58d6d6 !important; }
+html body[data-flavor="lime"] .mint-c8 { background: #eeeeee !important; }
+
+html body[data-flavor="lime"] .cmd-resize-handle {
+  border-color: transparent #bdbdbd #bdbdbd transparent !important;
+  opacity: 0.65 !important;
+}
+
+html body[data-flavor="lime"] .cmd-minimized-icon {
+  background: #303030 !important;
+  color: #eeeeee !important;
+  border: 1px solid #222 !important;
+  border-radius: 2px !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.42) !important;
+}
+
+html body[data-flavor="lime"] .cmd-minimized-icon-symbol {
+  color: #8cff5f !important;
+}
+
+html body[data-flavor="lime"] .cmd-minimized-icon-text {
+  color: #eeeeee !important;
+}
