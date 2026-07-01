@@ -3,16 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const languageToggleBtn = document.getElementById('language-toggle-btn');
   const bgVideoToggleBtn = document.getElementById('bg-video-toggle-btn');
   const lowQualityToggleBtn = document.getElementById('low-quality-toggle-btn');
+  const flavorOptionBtns = document.querySelectorAll('.flavor-option-btn');
+  const settingsFlavorTitle = document.getElementById('settings-flavor-title');
   const settingsBtn = document.getElementById('settings-btn');
   const settingsPanel = document.getElementById('settings-panel');
   const settingsCloseBtn = document.getElementById('settings-close-btn');
   const settingsPanelTitle = document.getElementById('settings-panel-title');
   const settingsTabButtons = document.querySelectorAll('.settings-tab-btn');
   const settingsViews = document.querySelectorAll('.settings-view');
+  const bannerImg = document.querySelector('.banner');
+  const bgParallax = document.getElementById('bg-parallax');
+  const bgVideo = document.getElementById('bg-video');
 
   const translations = {
     en: {
     settingsTitle: 'Settings',
+    settingsFlavorTitle: 'Site flavor',
     languageLabel: 'Language: English',
     themeDark: 'Dark mode',
     themeLight: 'Light mode',
@@ -43,11 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     settingsNotesText2: 'There are a bunch of easter eggs around the website👀.',
     settingsCreditsTitle: 'Credits',
     settingsCreditsText: "The website's concept, design and updates are made by me. Code assisted by AI and some ideas coming from my friends.",
-    moonbiteHint: 'Two words, put them together.',
     moonbitePlaceholder: 'Enter code',
-    moonbiteButton: 'OK',
-    moonbiteAccepted: 'Accepted.',
-    moonbiteWrong: 'Nothing happened.',
       aboutContent: {
         likes: `
           <ul class="love-list">
@@ -110,9 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'Cheetahs are my fav animal',
         "I have more than 3000 hours of Sol's RNG",
         'France is my fav nation',
-        'Tomboys over femboys',
+        'Tomboys over femboys', 
         '1+1 = 2',
         'Loona? perfection',
+        'Windows > linux and you wont change my mind',
         '🥀',
         'Amd > Intel',
         'Reshiram best pokemon.',
@@ -148,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeDark: 'Modo escuro',
     themeLight: 'Modo claro',
     openPlayer: 'Abrir player',
+    settingsFlavorTitle: 'Flavor do site',
     shuffleFacts: 'Embaralhar fatos',
     aboutMe: 'Sobre Mim',
     favoriteStuff: 'Coisas Favoritas',
@@ -281,6 +285,448 @@ document.addEventListener('DOMContentLoaded', () => {
     return localStorage.getItem('site-language') || 'en';
   }
 
+const validFlavors = ['vanilla', 'blueberry', 'lime', 'peach', 'coconut', 'cherry', 'strawberry'];
+
+function getCurrentFlavor() {
+  const savedFlavor = localStorage.getItem('site-flavor');
+
+  if (validFlavors.includes(savedFlavor)) {
+    return savedFlavor;
+  }
+
+  const bodyFlavor = document.body.dataset.flavor;
+
+  if (validFlavors.includes(bodyFlavor)) {
+    return bodyFlavor;
+  }
+
+  return 'vanilla';
+}
+
+let flavorChangeTimeout = null;
+let themeChangeTimeout = null;
+let themeVisualTimeout = null;
+let flavorAssetRunId = 0;
+
+function preloadImage(url) {
+  return new Promise((resolve) => {
+    if (!url) {
+      resolve();
+      return;
+    }
+
+    const img = new Image();
+
+    img.onload = () => resolve();
+    img.onerror = () => resolve();
+
+    img.src = url;
+  });
+}
+
+function waitForVideoReady(video, timeout = 1800) {
+  return new Promise((resolve) => {
+    if (!video) {
+      resolve();
+      return;
+    }
+
+    if (video.readyState >= 2) {
+      resolve();
+      return;
+    }
+
+    let done = false;
+
+    const finish = () => {
+      if (done) return;
+      done = true;
+
+      video.removeEventListener("loadeddata", finish);
+      video.removeEventListener("canplay", finish);
+
+      resolve();
+    };
+
+    video.addEventListener("loadeddata", finish, { once: true });
+    video.addEventListener("canplay", finish, { once: true });
+
+    setTimeout(finish, timeout);
+  });
+}
+
+function setElementBackground(element, imageUrl, options = {}) {
+  if (!element || !imageUrl) return;
+
+  const {
+    important = false,
+    backgroundPosition = "center",
+    backgroundSize = "cover"
+  } = options;
+
+  const priority = important ? "important" : "";
+
+  element.style.setProperty("background-image", `url("${imageUrl}")`, priority);
+  element.style.setProperty("background-size", backgroundSize, priority);
+  element.style.setProperty("background-position", backgroundPosition, priority);
+  element.style.setProperty("background-repeat", "no-repeat", priority);
+  element.style.setProperty("background-blend-mode", "normal", priority);
+}
+
+async function applyFlavorAssets(flavor, options = {}) {
+  const runId = ++flavorAssetRunId;
+  const assets = flavorAssets[flavor] || flavorAssets.vanilla;
+
+  const {
+    preserveCurrentVideo = false
+  } = options;
+
+  if (!assets) return;
+
+  await Promise.all([
+    preloadImage(assets.banner),
+    preloadImage(assets.background)
+  ]);
+
+  if (runId !== flavorAssetRunId) return;
+
+  if (bannerImg && assets.banner) {
+    setElementBackground(bannerImg, assets.banner, {
+      backgroundPosition: assets.bannerPosition || "center",
+      backgroundSize: "cover"
+    });
+  }
+
+  if (bgParallax && assets.background) {
+    setElementBackground(bgParallax, assets.background, {
+      important: true,
+      backgroundPosition: assets.backgroundPosition || "center",
+      backgroundSize: "cover"
+    });
+
+    bgParallax.style.setProperty("opacity", "1", "important");
+    bgParallax.style.setProperty("visibility", "visible", "important");
+    bgParallax.style.setProperty("filter", "none", "important");
+  }
+
+  const hasAnimatedWallpaper = Boolean(assets.video);
+
+  const shouldUseVideo =
+    hasAnimatedWallpaper &&
+    getBackgroundVideoEnabled() &&
+    !document.body.classList.contains("low-quality-mode");
+
+  document.body.classList.toggle("flavor-static-bg", !shouldUseVideo);
+  document.body.classList.toggle("flavor-animated-bg", shouldUseVideo);
+
+  if (!bgVideo) {
+    flavorAssetsAlreadyApplied = true;
+    return;
+  }
+
+  const source = bgVideo.querySelector("source");
+
+  bgVideo.muted = true;
+  bgVideo.loop = true;
+  bgVideo.playsInline = true;
+
+  bgVideo.style.setProperty("display", "block", "important");
+  bgVideo.style.setProperty("visibility", "visible", "important");
+  bgVideo.style.setProperty("pointer-events", "none", "important");
+
+  if (!shouldUseVideo) {
+    bgVideo.style.setProperty("opacity", "0", "important");
+
+    setTimeout(() => {
+      const stillShouldNotUseVideo =
+        !getBackgroundVideoEnabled() ||
+        document.body.classList.contains("low-quality-mode") ||
+        document.body.classList.contains("flavor-static-bg");
+
+      if (stillShouldNotUseVideo) {
+        bgVideo.pause();
+      }
+    }, 900);
+
+    flavorAssetsAlreadyApplied = true;
+    return;
+  }
+
+  const currentSource = source
+    ? source.getAttribute("src")
+    : bgVideo.getAttribute("src");
+
+  const needsNewVideo =
+    bgVideo.dataset.currentVideo !== assets.video ||
+    currentSource !== assets.video;
+
+  /*
+    Tema mudando:
+    se é o mesmo vídeo, NÃO baixa a opacidade.
+    Isso impede o flash da imagem parada.
+  */
+  if (preserveCurrentVideo && !needsNewVideo) {
+    bgVideo.style.setProperty("opacity", "1", "important");
+    bgVideo.play().catch(() => {});
+    flavorAssetsAlreadyApplied = true;
+    return;
+  }
+
+  /*
+    Só faz fade out quando realmente vai trocar o arquivo do vídeo.
+  */
+  if (needsNewVideo) {
+    bgVideo.style.setProperty("opacity", "0", "important");
+
+    await new Promise(resolve => setTimeout(resolve, 420));
+
+    if (runId !== flavorAssetRunId) return;
+
+    if (source) {
+      source.src = assets.video;
+      source.type = "video/mp4";
+    } else {
+      bgVideo.src = assets.video;
+    }
+
+    bgVideo.dataset.currentVideo = assets.video;
+    bgVideo.load();
+  } else if (bgVideo.readyState < 2) {
+    bgVideo.load();
+  }
+
+  await waitForVideoReady(bgVideo, 2200);
+
+  if (runId !== flavorAssetRunId) return;
+
+  const stillShouldUseVideo =
+    Boolean(assets.video) &&
+    getBackgroundVideoEnabled() &&
+    !document.body.classList.contains("low-quality-mode");
+
+  if (!stillShouldUseVideo) return;
+
+  bgVideo.play().catch(() => {});
+
+  requestAnimationFrame(() => {
+    bgVideo.style.setProperty("opacity", "1", "important");
+  });
+
+  flavorAssetsAlreadyApplied = true;
+}
+
+function applyFlavor(flavor, instant = false) {
+  const safeFlavor = validFlavors.includes(flavor) ? flavor : "vanilla";
+  const isFirstApply = !flavorAssetsAlreadyApplied;
+
+  const applyChanges = () => {
+    document.body.dataset.flavor = safeFlavor;
+    localStorage.setItem("site-flavor", safeFlavor);
+    updateFlavorButtons();
+    applyFlavorAssets(safeFlavor);
+
+    document.dispatchEvent(new CustomEvent("site-flavor-changed", {
+      detail: { flavor: safeFlavor }
+    }));
+  };
+
+  clearTimeout(flavorChangeTimeout);
+
+  if (isFirstApply || instant) {
+    applyChanges();
+    return;
+  }
+
+  flavorChangeTimeout = setTimeout(applyChanges, 1500);
+}
+
+function applyTheme(theme, instant = false) {
+  const safeTheme = theme === "light" ? "light" : "dark";
+
+  clearTimeout(themeChangeTimeout);
+  clearTimeout(themeVisualTimeout);
+
+  document.body.classList.add("theme-transitioning");
+
+  document.body.classList.remove("light-theme");
+
+  if (safeTheme === "light") {
+    document.body.classList.add("light-theme");
+  }
+
+  localStorage.setItem("site-theme", safeTheme);
+  updateThemeButtonText();
+
+  applyFlavorAssets(getCurrentFlavor(), {
+    preserveCurrentVideo: true
+  });
+
+  document.dispatchEvent(new CustomEvent("site-theme-changed", {
+    detail: { theme: safeTheme }
+  }));
+
+  themeVisualTimeout = setTimeout(() => {
+    document.body.classList.remove("theme-transitioning");
+  }, 2100);
+}
+
+let flavorAssetsAlreadyApplied = false;
+
+const flavorAssets = {
+
+  vanilla: {
+    banner: "https://i.imgur.com/5JaJwBk.png",
+    background: "https://i.imgur.com/xtzaH3v.png",
+    video: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/starry-sky-moon-clouds-moewalls-com%20(1).mp4",
+    bannerPosition: "center 84%",
+    backgroundPosition: "center"
+  },
+
+  lime: {
+    banner: "https://cdn.imgchest.com/files/f7ec7b053ccf.jpg",
+    background: "https://i.imgur.com/WIFPjhW.jpeg",
+    bannerPosition: "center 50%",
+    backgroundPosition: "center"
+},
+
+  blueberry: {
+    banner: "https://i.imgur.com/nEqpaah.png",
+    background: "https://i.imgur.com/uEXSvCU.jpeg",
+    video: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/nightcitywallpaper.mp4",
+    bannerPosition: "center",
+    backgroundPosition: "center"
+  },
+
+  peach: {
+    banner: "https://cdn.imgchest.com/files/5c9c51da4a40.jpg",
+    background: "https://i.imgur.com/lhlYz0L.jpeg",
+    bannerPosition: "center 15%",
+    backgroundPosition: "center"
+  },
+
+  coconut: {
+    banner: "https://i.imgur.com/4Sa3cjg.jpeg",
+    background: "https://i.imgur.com/zIT7S6f.jpeg",
+    bannerPosition: "center 35%",
+    backgroundPosition: "center"
+  },
+
+  cherry: {
+    banner: "https://cdn.imgchest.com/files/008cd4c739ea.jpg",
+    background: "https://i.imgur.com/GJb1KAo.jpeg",
+    bannerPosition: "center 23%",
+    backgroundPosition: "center"
+  },
+
+  strawberry: {
+    banner: "https://i.imgur.com/vuJ9RxI.jpeg",
+    background: "https://i.imgur.com/qV65bIs.jpeg",
+    video: "",
+    bannerPosition: "center 70%",
+    backgroundPosition: "center"
+  }
+
+};
+
+/* =========================================================
+  LAZY PRELOAD FLAVOR MEDIA
+  Só começa quando clicar em algum botão de flavor
+========================================================= */
+
+let flavorMediaPreloadStarted = false;
+
+const flavorPreloadCache = {
+  images: [],
+  audios: [],
+  videos: []
+};
+
+function isValidPreloadUrl(url) {
+  return (
+    typeof url === "string" &&
+    url.trim() !== "" &&
+    !url.includes("COLOCA_AQUI")
+  );
+}
+
+function preloadFlavorImage(url) {
+  if (!isValidPreloadUrl(url)) return;
+
+  const img = new Image();
+  img.src = url;
+
+  flavorPreloadCache.images.push(img);
+}
+
+function preloadFlavorAudio(url) {
+  if (!isValidPreloadUrl(url)) return;
+
+  const audio = new Audio();
+  audio.preload = "auto";
+  audio.src = url;
+  audio.load();
+
+  flavorPreloadCache.audios.push(audio);
+}
+
+function preloadFlavorVideo(url) {
+  if (!isValidPreloadUrl(url)) return;
+
+  const video = document.createElement("video");
+
+  video.preload = "auto";
+  video.muted = true;
+  video.playsInline = true;
+  video.src = url;
+  video.load();
+
+  flavorPreloadCache.videos.push(video);
+}
+
+function preloadAllFlavorMediaOnce() {
+  if (flavorMediaPreloadStarted) return;
+
+  flavorMediaPreloadStarted = true;
+
+  Object.values(flavorAssets).forEach((assets) => {
+    preloadFlavorImage(assets.banner);
+    preloadFlavorImage(assets.background);
+    preloadFlavorVideo(assets.video);
+  });
+
+  Object.values(window.flavorSounds || {}).forEach((sounds) => {
+    preloadFlavorAudio(sounds.click);
+    preloadFlavorAudio(sounds.profileHover);
+  });
+
+  console.log("Flavor media preload iniciado.");
+}
+
+/* preload só quando clicar na área dos flavors */
+document.addEventListener(
+  "click",
+  (event) => {
+    const clickedFlavorArea = event.target.closest(
+      ".settings-flavor-card, .flavor-option-btn"
+    );
+
+    if (!clickedFlavorArea) return;
+
+    preloadAllFlavorMediaOnce();
+  },
+  { capture: true }
+);
+
+function updateFlavorButtons() {
+  const currentFlavor = getCurrentFlavor();
+
+  flavorOptionBtns.forEach((button) => {
+    const isActive = button.dataset.flavor === currentFlavor;
+
+    button.classList.toggle('active', isActive);
+    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  });
+}
   function getBackgroundVideoEnabled() {
   return localStorage.getItem('site-bg-video') !== 'off';
 }
@@ -295,6 +741,7 @@ function applyBackgroundVideo(enabled) {
   }
 
   updateBackgroundVideoButtonText();
+  applyFlavorAssets(getCurrentFlavor());
 }
 
 function updateBackgroundVideoButtonText() {
@@ -341,6 +788,7 @@ function applyLowQualityMode(enabled) {
   }
 
   updateLowQualityButtonText();
+  applyFlavorAssets(getCurrentFlavor());
 }
 
 function updateLowQualityButtonText() {
@@ -365,19 +813,7 @@ function updateLowQualityButtonText() {
   window.getSiteLanguage = getCurrentLanguage;
   window.getSiteText = getText;
 
-  function applyTheme(theme) {
-    document.body.classList.remove('light-theme');
 
-    if (theme === 'light') {
-      document.body.classList.add('light-theme');
-    }
-
-    localStorage.setItem('site-theme', theme);
-    updateThemeButtonText();
-    document.dispatchEvent(new CustomEvent('site-theme-changed', {
-      detail: { theme }
-    }));
-  }
 
   function updateThemeButtonText() {
   if (!themeToggleBtn) return;
@@ -411,7 +847,7 @@ function updateLowQualityButtonText() {
 
   function applyStaticTranslations() {
     const t = getText();
-
+    const settingsFlavorTitle = document.getElementById('settings-flavor-title');
     const aboutHeading = document.getElementById('about-me-heading');
     const favoritesHeading = document.getElementById('favorites-heading');
     const socialHeading = document.getElementById('social-heading');
@@ -439,10 +875,8 @@ function updateLowQualityButtonText() {
     const settingsNotesText2 = document.getElementById('settings-notes-text-2');
     const settingsCreditsTitle = document.getElementById('settings-credits-title');
     const settingsCreditsText = document.getElementById('settings-credits-text');
-    const moonbiteHintText = document.getElementById('moonbite-hint-text');
-    const moonbiteCodeInput = document.getElementById('moonbite-code-input');
-    const moonbiteCodeBtn = document.getElementById('moonbite-code-btn');
 
+    if (settingsFlavorTitle) settingsFlavorTitle.textContent = t.settingsFlavorTitle;
     if (settingsPanelTitle) settingsPanelTitle.textContent = t.settingsTitle;
         const settingsOthersTab = document.getElementById('settings-others-tab');
     if (settingsOthersTab) settingsOthersTab.textContent = t.settingsOthersTab;
@@ -456,9 +890,6 @@ function updateLowQualityButtonText() {
     if (settingsNotesText2) settingsNotesText2.textContent = t.settingsNotesText2;
     if (settingsCreditsTitle) settingsCreditsTitle.textContent = t.settingsCreditsTitle;
     if (settingsCreditsText) settingsCreditsText.textContent = t.settingsCreditsText;
-    if (moonbiteHintText) moonbiteHintText.textContent = t.moonbiteHint;
-    if (moonbiteCodeInput) moonbiteCodeInput.placeholder = t.moonbitePlaceholder;
-    if (moonbiteCodeBtn) moonbiteCodeBtn.textContent = t.moonbiteButton;
     if (btnLikes) btnLikes.textContent = t.likes;
     if (btnDislikes) btnDislikes.textContent = t.dislikes;
     if (btnAbout) btnAbout.textContent = t.whoIAm;
@@ -535,10 +966,11 @@ function switchSettingsView(viewName) {
   });
 }
 
-  applyTheme(getCurrentTheme());
+applyTheme(getCurrentTheme(), true);
 applyLanguage(getCurrentLanguage());
 applyBackgroundVideo(getBackgroundVideoEnabled());
 applyLowQualityMode(getLowQualityModeEnabled());
+applyFlavor(getCurrentFlavor(), true);
 
 settingsTabButtons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -560,11 +992,7 @@ if (updateLogMainBtn && updateLogList) {
   settingsBtn?.addEventListener('click', (e) => {
   e.stopPropagation();
 
-  const clickSound = document.getElementById('btn-click-sound');
-  if (clickSound) {
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {});
-  }
+  window.playFlavorSound?.("click");
 
   toggleSettingsPanel();
 });
@@ -603,6 +1031,9 @@ if (updateLogMainBtn && updateLogList) {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeSettingsPanel();
   });
-  
+  flavorOptionBtns.forEach((button) => {
+  button.addEventListener('click', () => {
+    applyFlavor(button.dataset.flavor);
+   });
+  });
 });
-
