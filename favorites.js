@@ -6,7 +6,9 @@ const favoritesData = [
     items: [
       { title: "War Thunder", img: "https://i.imgur.com/I4eq4p7.jpeg" },
       { title: "Forza Horizon 5", img: "https://i.imgur.com/bWlYfOu.jpeg" },
+      { title: "Forza Horizon 6", img: "https://static.wikia.nocookie.net/forzamotorsport/images/3/33/FH6_Boxart.jpg/revision/latest?cb=20260123050250" },
       { title: "Phasmophobia", img: "https://i.imgur.com/s3QdIAv.jpeg" },
+      {title: "CS2", img: "https://cdn.egamersworld.com/cdn-cgi/image/width=690,quality=75,format=webp/uploads/blog/1696414021417.webp" },
       { title: "Hollow Knight", img: "https://i.imgur.com/KPR6teq.jpeg" },
       { title: "Terraria", img: "https://i.imgur.com/9jEhRde.jpeg" },
       { title: "BeamNG.drive", img: "https://i.imgur.com/vadNBBj.png" },
