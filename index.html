@@ -23,7 +23,7 @@
 
   <meta property="og:title" content="Doldie’s Profile">
   <meta property="og:description" content="A dark personal profile with favorites, FAQ, aesthetics and more.">
-  <meta property="og:image" content="https://i.imgur.com/U6secL3.jpeg">
+  <meta property="og:image" content="https://i.imgur.com/N3QvuyO.jpeg">
   <meta property="og:url" content="https://doldie.github.io/Mybio">
   <meta property="og:type" content="website">
 
@@ -44,6 +44,13 @@
     6) Animations / responsive
   ========================================================== -->
   <style>
+    @font-face {
+  font-family: "Hellshunx";
+  src: url("https://raw.githubusercontent.com/Doudks/test/refs/heads/main/Hellshunx.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
     :root {
   --bg-darkness: 0.65;
   --neon-angle: 0deg;
@@ -194,16 +201,17 @@ body.light-theme {
     }
 
     .discord-status-indicator {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      position: absolute;
-      top: 2px;
-      right: 145px;
-      display: inline-block;
-      border: 3px solid rgba(20, 20, 20, 0.95);
-      box-sizing: border-box;
-    }
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  position: absolute;
+  right: -8px;
+  bottom: 28px;
+  display: inline-block;
+  border: 3px solid rgba(20, 20, 20, 0.95);
+  box-sizing: border-box;
+  z-index: 20;
+}
 
     .discord-status-indicator.online {
       background: #23a55a;
@@ -563,13 +571,19 @@ body.light-theme #bg-parallax::before {
     .profile-name {
       position: relative;
       z-index: 2;
-      font-size: 34px;
-      font-weight: 600;
-      letter-spacing: 2px;
+      font-family: "Hellshunx", 'Quicksand', sans-serif;
+      font-size: 68px;
+      font-weight: normal;
+      letter-spacing: 3px;
+      transform: translateY(12px);
       background: linear-gradient(to bottom, #ffffff 0%, #d9d9d9 40%, #000000 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 0 transparent;
+      text-shadow:
+        0 0 8px rgba(255,255,255,0.28),
+        0 0 14px rgba(200,200,200,0.22);
       color: transparent;
       text-shadow: 0 0 10px rgba(255,255,255,0.35), 0 0 18px rgba(200,200,200,0.35);
     }
@@ -577,20 +591,22 @@ body.light-theme #bg-parallax::before {
     /* =========================================================
       TEXT / CARDS / BUTTONS
     ========================================================== */
-        .toggle-btn,
-  .shuffle-btn,
-  .music-btn,
-  .music-nav-btn,
-  .settings-trigger-btn,
-  .social-btn,
-  .friend-card,
-  .text-block,
-  .fact,
-  .love-list li,
-  .hate-list li,
-  .friends-list li,
-  .profile-wrapper,
-  .content {
+.toggle-btn,
+.shuffle-btn,
+.music-btn,
+.music-nav-btn,
+.settings-trigger-btn,
+.social-btn,
+.friend-card,
+.text-block,
+.fact,
+.love-list li,
+.hate-list li,
+.friends-list li,
+.profile-wrapper,
+.content,
+.qotd-section,
+.qotd-box {
     transition:
       opacity 1s ease,
       background 1s ease,
@@ -1620,6 +1636,241 @@ body.manga-bg-video-active #bg-parallax::before {
     }
 }
 
+/* =========================================================
+  QUOTE OF THE DAY
+========================================================== */
+
+.qotd-section {
+  margin-bottom: 16px;
+}
+
+.qotd-box {
+  position: relative;
+  margin: 16px 0 24px;
+  padding: 42px 70px 30px;
+  border-radius: 14px;
+  border: none;
+  background:
+    linear-gradient(180deg, rgba(8, 8, 12, 0.76), rgba(16, 10, 18, 0.66));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.03),
+    0 0 22px rgba(201, 20, 65, 0.10),
+    0 10px 26px rgba(0,0,0,0.18);
+  overflow: visible;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  isolation: isolate;
+}
+
+.qotd-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 100%, rgba(201, 20, 65, 0.10), transparent 38%),
+    linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+  pointer-events: none;
+}
+
+.qotd-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 1px solid rgba(201, 20, 65, 0.68);
+  border-radius: inherit;
+  pointer-events: none;
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 8px) no-repeat,
+    linear-gradient(#000 0 0) bottom left / calc(50% - 48px) 8px no-repeat,
+    linear-gradient(#000 0 0) bottom right / calc(50% - 48px) 8px no-repeat;
+
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 8px) no-repeat,
+    linear-gradient(#000 0 0) bottom left / calc(50% - 48px) 8px no-repeat,
+    linear-gradient(#000 0 0) bottom right / calc(50% - 48px) 8px no-repeat;
+}
+
+.qotd-topline {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.qotd-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ff4f85;
+  text-transform: uppercase;
+}
+
+.qotd-top-star {
+  font-size: 13px;
+  color: var(--accent-soft);
+  opacity: 0.9;
+  text-shadow:
+    0 0 8px rgba(255, 143, 189, 0.40),
+    0 0 18px rgba(201, 20, 65, 0.18);
+  animation: qotdStarPulse 2.8s ease-in-out infinite;
+}
+
+.qotd-content {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+}
+
+#qotd-text {
+  margin: 0;
+  color: rgba(255,255,255,0.94);
+  font-size: 1.02rem;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 7px;
+  line-height: 1.45;
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.10),
+    0 0 18px rgba(201, 20, 65, 0.06);
+}
+
+.qotd-author {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ff5e8f;
+  text-align: center;
+}
+
+.qotd-mark {
+  position: absolute;
+  z-index: 2;
+  color: rgba(201, 20, 65, 0.96);
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow:
+    0 0 14px rgba(201, 20, 65, 0.22),
+    0 0 24px rgba(201, 20, 65, 0.14);
+}
+
+.qotd-mark-left {
+  top: 18px;
+  left: 24px;
+}
+
+.qotd-mark-right {
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.qotd-bottom-ornament {
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+  padding: 0 10px;
+}
+
+.qotd-ornament-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 143, 189, 0.72);
+  box-shadow: 0 0 8px rgba(255, 143, 189, 0.18);
+}
+
+.qotd-bottom-star {
+  color: var(--accent-soft);
+  font-size: 15px;
+  line-height: 1;
+  text-shadow:
+    0 0 10px rgba(255, 143, 189, 0.45),
+    0 0 22px rgba(201, 20, 65, 0.20);
+  animation: qotdStarPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes qotdStarPulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.14);
+  }
+}
+
+body.light-theme .qotd-box {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.70), rgba(235,235,235,0.80));
+  border-color: rgba(201, 20, 65, 0.22);
+}
+
+body.light-theme #qotd-text {
+  color: rgba(20,20,20,0.88);
+}
+
+body.light-theme .qotd-author {
+  color: #c53d6a;
+}
+
+body.light-theme .qotd-mark {
+  color: rgba(201, 20, 65, 0.72);
+}
+
+body.hover-bg .qotd-section,
+body.hover-bg .qotd-box {
+  opacity: 0.22;
+  box-shadow: none !important;
+  filter: saturate(0.8);
+}
+
+@media (max-width: 640px) {
+  .qotd-box {
+    padding: 28px 44px 24px;
+  }
+
+  .qotd-label {
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  #qotd-text {
+    font-size: 0.92rem;
+    letter-spacing: 4px;
+  }
+
+  .qotd-author {
+    font-size: 0.82rem;
+  }
+
+  .qotd-mark {
+    font-size: 42px;
+  }
+
+  .qotd-mark-left {
+    left: 16px;
+  }
+
+  .qotd-mark-right {
+    right: 16px;
+  }
+}
+
     /* =========================================================
       RESPONSIVE
     ========================================================== */
@@ -1654,9 +1905,13 @@ body.manga-bg-video-active #bg-parallax::before {
     justify-content: flex-end;
   }
 }
+
   </style>
+
+<link rel="stylesheet" href="flavors.css">
+
 </head>
-<body class="loading">
+<body class="loading" data-flavor="vanilla">
   <!-- =========================================================
     FIXED BACKGROUND
   ========================================================== -->
@@ -1698,20 +1953,20 @@ body.manga-bg-video-active #bg-parallax::before {
   <header class="banner">
     <div class="profile-wrapper">
       <div class="profile-pic">
-        <div class="avatar-mask">
-          <img id="avatar-img" src="https://i.imgur.com/DX81yVk.png" alt="Avatar">
-        </div>
-        <div class="decoration-mask">
-          <img id="avatar-decoration" alt="Avatar decoration">
-        </div>
-      </div>
+  <div class="avatar-mask">
+    <img id="avatar-img" src="https://i.imgur.com/DX81yVk.png" alt="Avatar">
+  </div>
 
-      <div class="profile-text">
-        <div class="profile-name" id="discord-username">Doldie</div>
-        <div class="discord-presence">
-          <span id="discord-status" class="discord-status-indicator offline"></span>
-        </div>
-      </div>
+  <div class="decoration-mask">
+    <img id="avatar-decoration" alt="Avatar decoration">
+  </div>
+
+  <span id="discord-status" class="discord-status-indicator offline"></span>
+</div>
+
+<div class="profile-text">
+  <div class="profile-name" id="discord-username">Doldie</div>
+</div>
     </div>
   </header>
 
@@ -1719,6 +1974,34 @@ body.manga-bg-video-active #bg-parallax::before {
     MAIN CONTENT
   ========================================================== -->
   <main class="content">
+
+    <!-- QUOTE OF THE DAY -->
+    <section class="qotd-section" aria-labelledby="qotd-heading">
+  <div class="qotd-box">
+    <div id="qotd-heading" class="qotd-topline">
+      <span class="qotd-top-star" aria-hidden="true">✦</span>
+      <span class="qotd-label">QUOTE OF THE DAY</span>
+      <span class="qotd-top-star" aria-hidden="true">✦</span>
+    </div>
+
+    <span class="qotd-mark qotd-mark-left">❝</span>
+
+    <div class="qotd-content">
+      <p id="qotd-text">“𝐓𝐡𝐞 𝐙𝐑𝟏 𝐢𝐬 𝐣𝐮𝐬𝐭 𝐟𝐚𝐬𝐭𝐞𝐫.”</p>
+      <!--            https://fancytexty.com/ fancy bold                 --->
+      <p class="qotd-author">— Date of update —</p>
+    </div>
+
+    <span class="qotd-mark qotd-mark-right">❞</span>
+
+    <div class="qotd-bottom-ornament" aria-hidden="true">
+      <span class="qotd-ornament-dot"></span>
+      <span class="qotd-bottom-star">✦</span>
+      <span class="qotd-ornament-dot"></span>
+    </div>
+  </div>
+</section>
+
     <!-- ABOUT ME -->
     <section aria-labelledby="about-me-heading">
       <h2 id="about-me-heading">About Me</h2>
@@ -1874,6 +2157,9 @@ body.manga-bg-video-active #bg-parallax::before {
 </div>
 <div class="settings-panel-body">
   <div id="settings-view-main" class="settings-view show">
+
+
+    
     <button id="theme-toggle-btn" class="settings-row" type="button">
       <span class="settings-row-label">Light mode</span>
       <span class="settings-switch" aria-hidden="true"></span>
@@ -1893,6 +2179,47 @@ body.manga-bg-video-active #bg-parallax::before {
       <span class="settings-row-label">Low quality mode</span>
       <span class="settings-switch" aria-hidden="true"></span>
     </button>
+
+    <div class="settings-flavor-card">
+  <span id="settings-flavor-title" class="settings-info-title">Site flavor</span>
+
+  <div class="flavor-options">
+    <button class="flavor-option-btn" type="button" data-flavor="vanilla">
+      <span class="flavor-dot flavor-vanilla"></span>
+      <span>Vanilla</span>
+    </button>
+
+    <button class="flavor-option-btn" type="button" data-flavor="lime">
+    <span class="flavor-dot flavor-lime"></span>
+    <span>Lime</span>
+   </button>
+
+    <button class="flavor-option-btn" type="button" data-flavor="blueberry">
+      <span class="flavor-dot flavor-blueberry"></span>
+      <span>Blueberry</span>
+    </button>
+
+    <button class="flavor-option-btn" type="button" data-flavor="peach">
+      <span class="flavor-dot flavor-peach"></span>
+      <span>Peach</span>
+    </button>
+
+    <button class="flavor-option-btn" type="button" data-flavor="coconut">
+      <span class="flavor-dot flavor-coconut"></span>
+      <span>Coconut</span>
+    </button>
+
+    <button class="flavor-option-btn" type="button" data-flavor="cherry">
+      <span class="flavor-dot flavor-cherry"></span>
+      <span>Cherry</span>
+    </button>
+
+    <button class="flavor-option-btn" type="button" data-flavor="strawberry">
+      <span class="flavor-dot flavor-strawberry"></span>
+      <span>Strawberry</span>
+    </button>
+  </div>
+    </div>
   </div>
   
   <!-- =============================================================================================
@@ -1922,23 +2249,14 @@ body.manga-bg-video-active #bg-parallax::before {
     <p id="settings-credits-text">The Website's Concept, design and updates are made by me. Code assisted by AI and some ideas coming from my friends.</p>
   </div>
 
-  <div class="settings-info-card moonbite-card">
-    <span class="settings-info-title">???</span>
-    <p id="moonbite-hint-text">Two words, put them together.</p>
+  <div class="settings-info-card terminal-card">
+  <span class="settings-info-title">???</span>
+  <p>Access hidden system tools.</p>
 
-    <div class="moonbite-code-box">
-      <input
-        id="moonbite-code-input"
-        class="moonbite-code-input"
-        type="text"
-        placeholder="Enter code"
-        autocomplete="off"
-      >
-
-      <button id="moonbite-code-btn" class="moonbite-code-btn" type="button">
-        OK
-      </button>
-    </div>
+  <button id="open-terminal-btn" class="open-terminal-btn" type="button">
+    Open Terminal
+  </button>
+</div>
 
     <div id="moonbite-code-message" class="moonbite-code-message"></div>
   </div>
@@ -2056,6 +2374,50 @@ body.manga-bg-video-active #bg-parallax::before {
   >
 </div>
 
+<div id="cmd-terminal-modal" class="cmd-terminal-modal hidden" aria-hidden="true">
+  <div class="cmd-terminal-backdrop"></div>
+
+  <div class="cmd-window">
+    <div class="cmd-titlebar">
+      <div class="cmd-title-left">
+        <span class="cmd-icon">C:\</span>
+        <span>Command Prompt</span>
+      </div>
+
+      <div class="cmd-window-controls">
+        <button id="cmd-minimize-btn" class="cmd-control-btn" type="button" aria-label="Minimize">─</button>
+        <button id="cmd-maximize-btn" class="cmd-control-btn" type="button" aria-label="Maximize">□</button>
+        <button id="cmd-close-btn" class="cmd-control-btn cmd-close-btn" type="button" aria-label="Close">×</button>
+      </div>
+    </div>
+
+    <div id="cmd-screen" class="cmd-screen">
+      <div class="cmd-output" id="cmd-output"></div>
+
+      <form id="cmd-form" class="cmd-form">
+        <span id="cmd-prompt" class="cmd-prompt">C:\Users\Doldie&gt;</span>
+        <input
+          id="cmd-input"
+          class="cmd-input"
+          type="text"
+          autocomplete="off"
+          spellcheck="false"
+          enterkeyhint="send"
+          autofocus
+        >
+      </form>
+    </div>
+
+    <div id="cmd-resize-handle" class="cmd-resize-handle"></div>
+  </div>
+</div>
+
+<button id="cmd-minimized-icon" class="cmd-minimized-icon hidden" type="button">
+  <span class="cmd-minimized-icon-symbol">C:\</span>
+  <span class="cmd-minimized-icon-text">Command Prompt</span>
+</button>
+
+
   <!-- =========================================================
     EXTERNAL SCRIPTS
   ========================================================== -->
@@ -2067,6 +2429,7 @@ body.manga-bg-video-active #bg-parallax::before {
 <script defer src="music.js"></script>
 <script src="updateLog.js"></script>
 <script src="settings.js"></script>
+<script src="terminal.js"></script>
 
   <!-- =========================================================
     GLOBAL CONFIG
@@ -2111,7 +2474,7 @@ body.manga-bg-video-active #bg-parallax::before {
     const decorationUrl = 'https://cdn.discordapp.com/avatar-decoration-presets/a_c7d0b92c2c06bbb3fed297b34a51d5e5.png?size=160';
   </script>
 
-  <!-- =========================================================
+<!-- =========================================================
     MAIN INTERACTION SCRIPTS
   ========================================================== -->
   <script>
@@ -2352,58 +2715,186 @@ function openFactVideoModal() {
   <!-- =========================================================
     CLICK / HOVER / MODAL FX
   ========================================================== -->
-  <script>
-    const clickSound = document.getElementById('btn-click-sound');
-    const neonSound = document.getElementById('neon-sound');
-    const profileWrapper = document.querySelector('.profile-wrapper');
-    const gameModal = document.getElementById('game-modal');
-    const gameModalImg = document.getElementById('game-modal-img');
-    const gameModalTitle = document.getElementById('game-modal-title');
-    const closeGameModal = document.getElementById('close-game-modal');
-    const gameModalOverlay = document.querySelector('.game-modal-overlay');
+<script>
+  /* =========================================================
+    CLICK / HOVER FX PER FLAVOR
+  ========================================================== */
 
-    if (clickSound) clickSound.volume = 0.09;
-    if (neonSound) neonSound.volume = 0.14;
+  const flavorSounds = {
+    vanilla: {
+      click: "https://github.com/Doudks/Bio/raw/refs/heads/main/button-click.mp3",
+      profileHover: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/universfield-high-speed-02-192899.mp3",
+      clickVolume: 0.16,
+      hoverVolume: 0.14
+    },
 
-    document.addEventListener('click', (e) => {
-      const clickable = e.target.closest('button, .social-btn, .friend-card');
-      if (!clickable || !clickSound) return;
-      clickSound.currentTime = 0;
-      clickSound.play().catch(() => {});
-    });
+    blueberry: {
+      click: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/freesoundeffects-button-click-289742.mp3",
+      profileHover: "https://github.com/Doudks/Bio/raw/refs/heads/main/chargeup.mp3",
+      clickVolume: 0.16,
+      hoverVolume: 0.29
+    },
 
-    if (profileWrapper && neonSound) {
-      let neonCooldown = false;
-      profileWrapper.addEventListener('mouseenter', () => {
-        if (neonCooldown) return;
-        neonCooldown = true;
-        profileWrapper.classList.add('neon-active');
-        neonSound.currentTime = 0;
-        neonSound.play().catch(() => {});
-        setTimeout(() => {
-          profileWrapper.classList.remove('neon-active');
-          neonCooldown = false;
-        }, 1400);
-      });
+    peach: {
+      click: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/audley_fergine-ui-button-click-5-327756.mp3",
+      profileHover: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/u_b32baquv5u-8-bit-explosion-3-340456.mp3",
+      clickVolume: 0.70,
+      hoverVolume: 0.30
+    },
+
+    coconut: {
+      click: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/dragon-studio-button-press-382713.mp3",
+      profileHover: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/koiroylers-faster-whoosh-351718.mp3",
+      clickVolume: 0.22,
+      hoverVolume: 0.25
+    },
+
+    cherry: {
+      click: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/universfield-button-124476.mp3",
+      profileHover: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/yodguard-fast-tail-whip-attack-1-482523.mp3",
+      clickVolume: 0.10,
+      hoverVolume: 0.16
+    },
+
+    lime: {
+      click: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/thepixelguymaker-button-click-vintage-sound-fx-541135.mp3",
+      profileHover: "COLOCA_AQUI_O_HOVER_LIME.mp3",
+      clickVolume: 0.11,
+      hoverVolume: 0.15
+    },
+
+    strawberry: {
+      click: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/denielcz-immersivecontrol-button-click-sound-463065.mp3",
+      profileHover: "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/freesound_community-decidemp3-14575.mp3",
+      clickVolume: 0.50,
+      hoverVolume: 0.13
+    }
+  };
+  window.flavorSounds = flavorSounds;
+  const soundCache = new Map();
+
+  function getCurrentFlavorForSound() {
+    const flavor = document.body.dataset.flavor || localStorage.getItem("site-flavor") || "vanilla";
+    return flavorSounds[flavor] ? flavor : "vanilla";
+  }
+
+  function getSound(url) {
+    if (!url || url.includes("COLOCA_AQUI")) return null;
+
+    if (!soundCache.has(url)) {
+      const audio = new Audio(url);
+      audio.preload = "auto";
+      soundCache.set(url, audio);
     }
 
-   
+    return soundCache.get(url);
+  }
 
-    function closeModal() {
-      if (!gameModal) return;
-      gameModal.classList.add('hidden');
-      document.body.style.overflow = '';
-    }
+function getRandomPitchRate(min = 0.88, max = 1.12) {
+  return Number((min + Math.random() * (max - min)).toFixed(3));
+}
 
-    
-    closeGameModal?.addEventListener('click', closeModal);
-    gameModalOverlay?.addEventListener('click', closeModal);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && gameModal && !gameModal.classList.contains('hidden')) {
-        closeModal();
-      }
+function allowPitchChange(audio) {
+  audio.preservesPitch = false;
+  audio.mozPreservesPitch = false;
+  audio.webkitPreservesPitch = false;
+}
+
+function playFlavorSound(type) {
+  const flavor = getCurrentFlavorForSound();
+  const config = flavorSounds[flavor] || flavorSounds.vanilla;
+
+  const url = config[type];
+  const audio = getSound(url);
+
+  if (!audio) return;
+
+  audio.pause();
+  audio.currentTime = 0;
+
+  audio.volume = type === "click"
+    ? config.clickVolume ?? 0.1
+    : config.hoverVolume ?? 0.14;
+
+  if (type === "profileHover") {
+    allowPitchChange(audio);
+
+    const minPitch = config.hoverPitchMin ?? 0.88;
+    const maxPitch = config.hoverPitchMax ?? 1.12;
+
+    audio.playbackRate = getRandomPitchRate(minPitch, maxPitch);
+  } else {
+    audio.playbackRate = 1;
+  }
+  audio.play().catch(() => {});
+}
+
+  window.playFlavorSound = playFlavorSound;
+
+  /* click em botões/cards/links */
+  document.addEventListener("click", (e) => {
+    const clickable = e.target.closest([
+      "button",
+      "a",
+      ".social-btn",
+      ".friend-card",
+      ".game-card",
+      ".settings-row",
+      ".flavor-option-btn",
+      ".update-log-main-btn",
+      ".update-log-version"
+    ].join(","));
+
+    if (!clickable) return;
+
+    playFlavorSound("click");
+  });
+
+  /* hover no mini perfil principal */
+  const profileWrapper = document.querySelector(".profile-wrapper");
+
+  if (profileWrapper) {
+    let profileHoverCooldown = false;
+
+    profileWrapper.addEventListener("mouseenter", () => {
+      if (profileHoverCooldown) return;
+
+      profileHoverCooldown = true;
+
+      profileWrapper.classList.add("neon-active");
+      playFlavorSound("profileHover");
+
+      setTimeout(() => {
+        profileWrapper.classList.remove("neon-active");
+        profileHoverCooldown = false;
+      }, 1400);
     });
-  </script>
+  }
+
+  /* =========================================================
+    MODAL FX
+    Mantém o código antigo do modal funcionando
+  ========================================================== */
+
+  const gameModal = document.getElementById("game-modal");
+  const closeGameModal = document.getElementById("close-game-modal");
+  const gameModalOverlay = document.querySelector(".game-modal-overlay");
+
+  function closeModal() {
+    if (!gameModal) return;
+    gameModal.classList.add("hidden");
+    document.body.style.overflow = "";
+  }
+
+  closeGameModal?.addEventListener("click", closeModal);
+  gameModalOverlay?.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && gameModal && !gameModal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
+</script>
 
   <!-- =========================================================
     BACKGROUND DIM ON EMPTY HOVER AREAS
