@@ -3260,3 +3260,24 @@ html body[data-flavor="lime"] .cmd-minimized-icon-symbol {
 html body[data-flavor="lime"] .cmd-minimized-icon-text {
   color: #eeeeee !important;
 }
+/* ================= STRAWBERRY FLAVOR DOT FIX ================= */
+
+.flavor-strawberry {
+  background:
+    radial-gradient(circle at 30% 25%, #fff8fb 0 12%, transparent 13%),
+    linear-gradient(135deg, #fff0f7 0%, #ffd6ea 32%, #ff9fc8 62%, #beb4ff 100%) !important;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 214, 234, 0.16),
+    0 0 10px rgba(255, 159, 200, 0.34),
+    0 0 18px rgba(190, 180, 255, 0.18) !important;
+}
+body[data-flavor="strawberry"] .flavor-option-btn[data-flavor="strawberry"].active {
+  border-color: rgba(255, 214, 234, 0.72) !important;
+  background:
+    linear-gradient(90deg, #ffe3f0 0%, #ffb7d7 46%, #beb4ff 100%) !important;
+  color: #351025 !important;
+  box-shadow:
+    0 0 16px rgba(255, 159, 200, 0.26),
+    inset 0 1px 0 rgba(255,255,255,0.32) !important;
+}
