@@ -16,6 +16,10 @@ const faqItems = [
     answer: { en: "Answer only for close friends", pt: "Só respondo isso para amigos próximos" }
   },
   {
+    question: { en: "Where are you from?", pt: "De onde você é?" },
+    answer: { en: "Brazil", pt: "Brasil" }
+  },
+  {
     question: { en: "What are your hobbies?", pt: "Quais são seus hobbies?" },
     answer: { en: "Drawing anime, playing games, and studying astronomy", pt: "Desenhar anime, jogar e estudar astronomia" }
   },
@@ -293,7 +297,7 @@ const faqItems = [
   },
   {
     question: { en: "Do you like it when someone insists, or does that annoy you?", pt: "Você gosta quando alguém insiste ou isso te irrita?" },
-    answer: { en: "It annoys the ***** outta me", pt: "Isso me irrita pra krl" }
+    answer: { en: "It annoys the ***** outta me", pt: "me irrita pra krl" }
   },
   {
     question: { en: "Are you more rational or emotional?", pt: "Você é mais racional ou emocional?" },
