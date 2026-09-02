@@ -13,7 +13,8 @@
     comments: [],
     page: 0,
     totalComments: 0,
-    authRefreshToken: 0
+    authRefreshToken: 0,
+    passwordRecoveryMode: false
   };
 
   const elements = {};
@@ -31,6 +32,13 @@
       signupUsername: document.getElementById("community-signup-username"),
       signupEmail: document.getElementById("community-signup-email"),
       signupPassword: document.getElementById("community-signup-password"),
+      forgotPasswordButton: document.getElementById("community-forgot-password-btn"),
+      passwordRequestForm: document.getElementById("community-password-request-form"),
+      passwordRequestEmail: document.getElementById("community-password-request-email"),
+      passwordRequestBack: document.getElementById("community-password-request-back"),
+      passwordResetForm: document.getElementById("community-password-reset-form"),
+      passwordResetNew: document.getElementById("community-password-reset-new"),
+      passwordResetConfirm: document.getElementById("community-password-reset-confirm"),
       signoutButton: document.getElementById("community-signout-btn"),
       authMessage: document.getElementById("community-auth-message"),
       username: document.getElementById("community-username"),
@@ -66,15 +74,28 @@
     button.textContent = busy ? busyText : button.dataset.label;
   }
 
-  function switchAuthTab(tab) {
-    const showingLogin = tab === "login";
+  function showAuthView(view) {
+    const showingLogin = view === "login";
+    const showingSignup = view === "signup";
+    const showingRequest = view === "request-reset";
+    const showingReset = view === "reset-password";
+
     elements.loginForm.hidden = !showingLogin;
-    elements.signupForm.hidden = showingLogin;
+    elements.signupForm.hidden = !showingSignup;
+    elements.passwordRequestForm.hidden = !showingRequest;
+    elements.passwordResetForm.hidden = !showingReset;
+
+    elements.loginTab.parentElement.hidden = showingRequest || showingReset;
     elements.loginTab.classList.toggle("is-active", showingLogin);
-    elements.signupTab.classList.toggle("is-active", !showingLogin);
+    elements.signupTab.classList.toggle("is-active", showingSignup);
     elements.loginTab.setAttribute("aria-selected", String(showingLogin));
-    elements.signupTab.setAttribute("aria-selected", String(!showingLogin));
+    elements.signupTab.setAttribute("aria-selected", String(showingSignup));
     setAuthMessage("");
+  }
+
+  function switchAuthTab(tab) {
+    state.passwordRecoveryMode = false;
+    showAuthView(tab);
   }
 
   function getRedirectUrl() {
@@ -205,6 +226,16 @@
     if (token !== state.authRefreshToken) return;
 
     const signedIn = Boolean(session?.user);
+
+    if (state.passwordRecoveryMode) {
+      elements.loggedOut.hidden = false;
+      elements.loggedIn.hidden = true;
+      elements.commentForm.hidden = true;
+      elements.loginNotice.hidden = false;
+      showAuthView("reset-password");
+      return;
+    }
+
     elements.loggedOut.hidden = signedIn;
     elements.loggedIn.hidden = !signedIn;
     elements.commentForm.hidden = !signedIn;
@@ -416,6 +447,63 @@
     }
   }
 
+  async function handlePasswordResetRequest(event) {
+    event.preventDefault();
+    const email = elements.passwordRequestEmail.value.trim();
+    const submit = elements.passwordRequestForm.querySelector("button[type='submit']");
+    if (!email) return;
+
+    setButtonBusy(submit, true, "sending…");
+    setAuthMessage("");
+
+    try {
+      const redirectTo = getRedirectUrl();
+      const { error } = await state.client.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) throw error;
+      elements.passwordRequestForm.reset();
+      setAuthMessage("If an account exists for that email, a reset link has been sent.", "success");
+    } catch (error) {
+      setAuthMessage(friendlyAuthError(error), "error");
+    } finally {
+      setButtonBusy(submit, false, "sending…");
+    }
+  }
+
+  async function handlePasswordUpdate(event) {
+    event.preventDefault();
+    const password = elements.passwordResetNew.value;
+    const confirmPassword = elements.passwordResetConfirm.value;
+    const submit = elements.passwordResetForm.querySelector("button[type='submit']");
+
+    if (password.length < 6) {
+      setAuthMessage("Password must have at least 6 characters.", "error");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setAuthMessage("The passwords do not match.", "error");
+      return;
+    }
+
+    setButtonBusy(submit, true, "updating…");
+    setAuthMessage("");
+
+    try {
+      const { error } = await state.client.auth.updateUser({ password });
+      if (error) throw error;
+      state.passwordRecoveryMode = false;
+      elements.passwordResetForm.reset();
+      history.replaceState({}, document.title, getRedirectUrl());
+      setAuthMessage("Password updated. You're back in the archive.", "success");
+      const { data } = await state.client.auth.getSession();
+      await refreshAuth(data.session);
+    } catch (error) {
+      setAuthMessage(friendlyAuthError(error), "error");
+    } finally {
+      setButtonBusy(submit, false, "updating…");
+    }
+  }
+
   async function handleSignout() {
     setButtonBusy(elements.signoutButton, true, "leaving…");
     const { error } = await state.client.auth.signOut();
@@ -546,6 +634,14 @@
     elements.signupTab.addEventListener("click", () => switchAuthTab("signup"));
     elements.loginForm.addEventListener("submit", handleLogin);
     elements.signupForm.addEventListener("submit", handleSignup);
+    elements.forgotPasswordButton.addEventListener("click", () => {
+      const currentEmail = elements.loginEmail.value.trim();
+      if (currentEmail) elements.passwordRequestEmail.value = currentEmail;
+      showAuthView("request-reset");
+    });
+    elements.passwordRequestBack.addEventListener("click", () => showAuthView("login"));
+    elements.passwordRequestForm.addEventListener("submit", handlePasswordResetRequest);
+    elements.passwordResetForm.addEventListener("submit", handlePasswordUpdate);
     elements.signoutButton.addEventListener("click", handleSignout);
     elements.commentForm.addEventListener("submit", handleCommentSubmit);
     elements.commentsList.addEventListener("click", handleCommentAction);
@@ -575,12 +671,24 @@
     bindEvents();
     switchAuthTab("login");
 
+    state.client.auth.onAuthStateChange((event, session) => {
+      window.setTimeout(async () => {
+        if (event === "PASSWORD_RECOVERY") {
+          state.passwordRecoveryMode = true;
+          state.session = session;
+          elements.loggedOut.hidden = false;
+          elements.loggedIn.hidden = true;
+          showAuthView("reset-password");
+          setAuthMessage("Recovery link accepted. Choose a new password.", "success");
+          return;
+        }
+
+        await refreshAuth(session);
+      }, 0);
+    });
+
     const { data } = await state.client.auth.getSession();
     await refreshAuth(data.session);
-
-    state.client.auth.onAuthStateChange((_event, session) => {
-      window.setTimeout(() => refreshAuth(session), 0);
-    });
 
     await Promise.all([
       registerView(),

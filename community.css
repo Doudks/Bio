@@ -497,3 +497,47 @@ body.light-theme .community-edit-textarea { border-color: rgba(20,18,25,.14); ba
   .community-comment-form > div { align-items: stretch; flex-direction: column; }
   .community-comment-form .community-primary-btn { width: 100%; }
 }
+
+/* ============================================================
+   AUTH RECOVERY / SECONDARY ACTIONS
+============================================================ */
+.community-auth-link {
+  width: 100%;
+  min-height: 30px;
+  margin: -3px 0 0;
+  padding: 4px 8px;
+  border: 0;
+  color: rgba(235,231,241,.48);
+  background: transparent;
+  font: 700 9px/1.2 "Quicksand", sans-serif;
+  letter-spacing: .35px;
+  cursor: pointer;
+  transition: color .18s ease, text-shadow .18s ease;
+}
+
+.community-auth-link:hover {
+  color: var(--accent-soft);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.community-auth-form-heading {
+  display: grid;
+  gap: 6px;
+  padding: 4px 2px 5px;
+  text-align: center;
+}
+
+.community-auth-form-heading strong {
+  color: #f5f2f8;
+  font: 700 13px/1.2 "Quicksand", sans-serif;
+}
+
+.community-auth-form-heading span {
+  color: rgba(235,231,241,.43);
+  font: 500 9px/1.45 "Quicksand", sans-serif;
+}
+
+body.light-theme .community-auth-link { color: rgba(20,20,20,.52); }
+body.light-theme .community-auth-link:hover { color: var(--accent); }
+body.light-theme .community-auth-form-heading strong { color: #151515; }
+body.light-theme .community-auth-form-heading span { color: rgba(20,20,20,.48); }

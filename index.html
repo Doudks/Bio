@@ -24,7 +24,8 @@
   <meta property="og:title" content="Moonlit Archive">
   <meta property="og:description" content="Doldie's moonlit personal archive, guestbook, favorites and more.">
   <meta property="og:image" content="https://i.imgur.com/N3QvuyO.jpeg">
-  <meta property="og:url" content="https://doudks.github.io/Bio/">
+  <meta property="og:url" content="https://moonlitarchive.space/">
+  <link rel="canonical" href="https://moonlitarchive.space/">
   <meta property="og:type" content="website">
 
   <!-- =========================================================
@@ -2306,6 +2307,36 @@ body.hover-bg .qotd-box {
                   <input id="community-login-password" type="password" autocomplete="current-password" minlength="6" placeholder="••••••••" required>
                 </label>
                 <button class="community-primary-btn" type="submit">enter the archive</button>
+                <button id="community-forgot-password-btn" class="community-auth-link" type="button">forgot password?</button>
+              </form>
+
+              <form id="community-password-request-form" class="community-auth-form" hidden>
+                <div class="community-auth-form-heading">
+                  <strong>recover access</strong>
+                  <span>we'll send a secure reset link to your email.</span>
+                </div>
+                <label>
+                  <span>email</span>
+                  <input id="community-password-request-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                </label>
+                <button class="community-primary-btn" type="submit">send reset link</button>
+                <button id="community-password-request-back" class="community-auth-link" type="button">back to sign in</button>
+              </form>
+
+              <form id="community-password-reset-form" class="community-auth-form community-password-reset-form" hidden>
+                <div class="community-auth-form-heading">
+                  <strong>choose a new password</strong>
+                  <span>your recovery link was accepted.</span>
+                </div>
+                <label>
+                  <span>new password</span>
+                  <input id="community-password-reset-new" type="password" autocomplete="new-password" minlength="6" placeholder="at least 6 characters" required>
+                </label>
+                <label>
+                  <span>confirm password</span>
+                  <input id="community-password-reset-confirm" type="password" autocomplete="new-password" minlength="6" placeholder="repeat password" required>
+                </label>
+                <button class="community-primary-btn" type="submit">update password</button>
               </form>
 
               <form id="community-signup-form" class="community-auth-form" hidden>
