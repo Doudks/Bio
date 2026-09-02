@@ -17,14 +17,14 @@
   <meta name="theme-color" content="#0d0d0d">
   <meta name="twitter:card" content="summary_large_image">
 
-  <title>My Personal Site</title>
+  <title>Moonlit Archive</title>
 
   <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Doudks/Bio/e433d3c4654a2e2900eb9cebb2055e7228cefdea/favicon-removebg-preview.png">
 
-  <meta property="og:title" content="Doldie’s Profile">
-  <meta property="og:description" content="A dark personal profile with favorites, FAQ, aesthetics and more.">
+  <meta property="og:title" content="Moonlit Archive">
+  <meta property="og:description" content="Doldie's moonlit personal archive, guestbook, favorites and more.">
   <meta property="og:image" content="https://i.imgur.com/N3QvuyO.jpeg">
-  <meta property="og:url" content="https://doldie.github.io/Mybio">
+  <meta property="og:url" content="https://doudks.github.io/Bio/">
   <meta property="og:type" content="website">
 
   <!-- =========================================================
@@ -474,7 +474,7 @@ body.light-theme #bg-parallax::before {
   padding: 20px;
   background: var(--bg-panel);
   border-radius: 15px;
-  background; rgba(0,0,0,0,6);
+  background: rgba(0,0,0,0,6);
   position: relative;
   transition: opacity 1s;
 }
@@ -513,6 +513,7 @@ body.light-theme #bg-parallax::before {
         transparent 360deg
       );
       padding: 2px;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
@@ -1225,7 +1226,7 @@ body.manga-bg-video-active #bg-parallax::before {
   box-shadow:
     0 18px 50px rgba(0,0,0,0.6),
     0 0 20px rgba(255,0,93,0.08);
-  background; rgba(0,0,0,0,6);
+  background: rgba(0,0,0,0,6);
   z-index: 40000;
   opacity: 0;
   transform: translateY(16px) scale(0.96);
@@ -1909,6 +1910,8 @@ body.hover-bg .qotd-box {
   </style>
 
 <link rel="stylesheet" href="flavors.css">
+<link rel="stylesheet" href="vertical-layout.css">
+<link rel="stylesheet" href="community.css">
 
 </head>
 <body class="loading" data-flavor="vanilla">
@@ -2153,7 +2156,7 @@ body.hover-bg .qotd-box {
     </button>
   </div>
 
-  <button id="settings-close-btn" class="settings-close-btn" type="button" aria-label="Close settings">✕</button>
+  <button id="settings-close-btn" class="settings-close-btn" type="button" aria-label="Close settings">×</button>
 </div>
 <div class="settings-panel-body">
   <div id="settings-view-main" class="settings-view show">
@@ -2171,7 +2174,7 @@ body.hover-bg .qotd-box {
     </button>
 
     <button id="bg-video-toggle-btn" class="settings-row" type="button">
-      <span class="settings-row-label">Animated background</span>
+      <span class="settings-row-label">Animated banner</span>
       <span class="settings-switch" aria-hidden="true"></span>
     </button>
 
@@ -2264,6 +2267,104 @@ body.hover-bg .qotd-box {
 </div>
 </div>
     </section>
+
+    <!-- MOONLIT ARCHIVE / COMMUNITY -->
+    <section id="community" class="community-section" aria-labelledby="community-heading">
+      <div class="community-shell">
+        <div class="community-constellation" aria-hidden="true">
+          <span>✦</span><span>·</span><span>☾</span>
+        </div>
+
+        <header class="community-header">
+          <div>
+            <span class="community-kicker">MOONLIT ARCHIVE / GUESTBOOK</span>
+            <h2 id="community-heading">Leave a trace.</h2>
+            <p>Sign in with your email and leave something behind in the archive.</p>
+          </div>
+
+          <div class="community-view-counter" aria-live="polite">
+            <strong id="site-view-count">—</strong>
+            <span>archive views</span>
+          </div>
+        </header>
+
+        <div class="community-grid">
+          <aside class="community-auth-card" aria-label="Moonlit Archive account">
+            <div id="community-auth-logged-out">
+              <div class="community-auth-tabs" role="tablist" aria-label="Account access">
+                <button id="community-login-tab" class="is-active" type="button" role="tab" aria-selected="true">sign in</button>
+                <button id="community-signup-tab" type="button" role="tab" aria-selected="false">create account</button>
+              </div>
+
+              <form id="community-login-form" class="community-auth-form">
+                <label>
+                  <span>email</span>
+                  <input id="community-login-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                </label>
+                <label>
+                  <span>password</span>
+                  <input id="community-login-password" type="password" autocomplete="current-password" minlength="6" placeholder="••••••••" required>
+                </label>
+                <button class="community-primary-btn" type="submit">enter the archive</button>
+              </form>
+
+              <form id="community-signup-form" class="community-auth-form" hidden>
+                <label>
+                  <span>username</span>
+                  <input id="community-signup-username" type="text" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="moon_child" required>
+                </label>
+                <label>
+                  <span>email</span>
+                  <input id="community-signup-email" type="email" autocomplete="email" placeholder="you@example.com" required>
+                </label>
+                <label>
+                  <span>password</span>
+                  <input id="community-signup-password" type="password" autocomplete="new-password" minlength="6" placeholder="at least 6 characters" required>
+                </label>
+                <button class="community-primary-btn" type="submit">create account</button>
+                <small>A confirmation link will be sent to your email.</small>
+              </form>
+            </div>
+
+            <div id="community-auth-logged-in" class="community-account" hidden>
+              <div id="community-user-avatar" class="community-user-avatar" aria-hidden="true">M</div>
+              <div>
+                <small>signed in as</small>
+                <strong id="community-username">moon_guest</strong>
+              </div>
+              <button id="community-signout-btn" type="button">sign out</button>
+            </div>
+
+            <p id="community-auth-message" class="community-message" aria-live="polite"></p>
+          </aside>
+
+          <div class="community-guestbook-card">
+            <div class="community-guestbook-title">
+              <div>
+                <span>✦ recent transmissions</span>
+                <h3>Guestbook</h3>
+              </div>
+              <strong id="community-comment-count">0 comments</strong>
+            </div>
+
+            <p id="community-login-notice" class="community-login-notice">Sign in to write a comment.</p>
+
+            <form id="community-comment-form" class="community-comment-form" hidden>
+              <label for="community-comment-body">your message</label>
+              <textarea id="community-comment-body" maxlength="1000" rows="4" placeholder="say something to the night…" required></textarea>
+              <div>
+                <span id="community-comment-length">0 / 1000</span>
+                <button class="community-primary-btn" type="submit">send transmission</button>
+              </div>
+            </form>
+
+            <p id="community-comments-status" class="community-comments-status" aria-live="polite">Loading the archive…</p>
+            <div id="community-comments-list" class="community-comments-list"></div>
+            <button id="community-load-more" class="community-load-more" type="button" hidden>load older messages</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- =========================================================
@@ -2302,7 +2403,7 @@ body.hover-bg .qotd-box {
       </div>
       <a id="mini-player-link" class="mini-player-link" href="#" target="_blank" rel="noopener noreferrer">Open on YouTube</a>
     </div>
-    <button id="mini-player-close" class="mini-player-close" type="button">✕</button>
+    <button id="mini-player-close" class="mini-player-close" type="button">×</button>
   </div>
 
   <div class="mini-player-progress-wrap">
@@ -2361,7 +2462,7 @@ body.hover-bg .qotd-box {
     preload="auto"
     playsinline
   >
-    <source src="https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/MIH.mp4">
+    <source src="https://raw.githubusercontent.com/Doudks/test/refs/heads/main/Workingsongs/MIH.mp4" type="video/mp4">
   </video>
 </div>
 
@@ -2430,6 +2531,8 @@ body.hover-bg .qotd-box {
 <script src="updateLog.js"></script>
 <script src="settings.js"></script>
 <script src="terminal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="community.js"></script>
 
   <!-- =========================================================
     GLOBAL CONFIG
@@ -2582,80 +2685,44 @@ function shuffleFacts() {
   const factVideoPlayer = document.getElementById('fact-video-player');
 
 
-  let factVideoStartTimeout = null;
-let factVideoFadeInterval = null;
+  let factVideoShouldResumeMusic = false;
 
 function openFactVideoModal() {
   if (!factVideoModal || !factVideoPlayer) return;
 
-  if (factVideoStartTimeout) {
-    clearTimeout(factVideoStartTimeout);
-    factVideoStartTimeout = null;
-  }
-
-  if (factVideoFadeInterval) {
-    clearInterval(factVideoFadeInterval);
-    factVideoFadeInterval = null;
-  }
-
   factVideoModal.classList.add('show');
   document.body.style.overflow = 'hidden';
 
+  const bgMusic = document.getElementById('bg-music');
+  factVideoShouldResumeMusic = Boolean(bgMusic && !bgMusic.paused);
+  bgMusic?.pause();
+
   factVideoPlayer.pause();
   factVideoPlayer.currentTime = 0;
-  factVideoPlayer.volume = 0;
+  factVideoPlayer.muted = false;
+  factVideoPlayer.defaultMuted = false;
+  factVideoPlayer.volume = 1;
   factVideoPlayer.load();
 
-  factVideoStartTimeout = setTimeout(() => {
-    const playPromise = factVideoPlayer.play();
-
-    if (playPromise) {
-      playPromise
-        .then(() => {
-          let volume = 0;
-          const targetVolume = 1;
-          const fadeDuration = 1800;
-          const stepTime = 60;
-          const step = targetVolume / (fadeDuration / stepTime);
-
-          factVideoFadeInterval = setInterval(() => {
-            volume += step;
-
-            if (volume >= targetVolume) {
-              volume = targetVolume;
-              clearInterval(factVideoFadeInterval);
-              factVideoFadeInterval = null;
-            }
-
-            factVideoPlayer.volume = volume;
-          }, stepTime);
-        })
-        .catch((err) => {
-          console.error('Erro ao tocar vídeo JOJO:', err);
-        });
-    }
-  }, 900);
+  factVideoPlayer.play().catch((err) => {
+    console.error('Erro ao tocar vídeo JOJO:', err);
+  });
 }
 
   function closeFactVideo() {
   if (!factVideoModal || !factVideoPlayer) return;
 
-  if (factVideoStartTimeout) {
-    clearTimeout(factVideoStartTimeout);
-    factVideoStartTimeout = null;
-  }
-
-  if (factVideoFadeInterval) {
-    clearInterval(factVideoFadeInterval);
-    factVideoFadeInterval = null;
-  }
-
   factVideoPlayer.pause();
   factVideoPlayer.currentTime = 0;
+  factVideoPlayer.muted = false;
   factVideoPlayer.volume = 1;
 
   factVideoModal.classList.remove('show');
   document.body.style.overflow = '';
+
+  const bgMusic = document.getElementById('bg-music');
+  if (factVideoShouldResumeMusic) bgMusic?.play().catch(() => {});
+  factVideoShouldResumeMusic = false;
 }
 
   document.getElementById('funFactsContainer')?.addEventListener('click', (e) => {
@@ -2925,7 +2992,7 @@ function clearHoverState() {
 
 document.addEventListener('mousemove', (e) => {
   const overInteractive = e.target.closest(interactiveSelectors);
-  const insideContent = e.target.closest('.content, .banner, .mini-profile, .settings-panel');
+  const insideContent = e.target.closest('.content, .banner, .mini-profile, .settings-panel, .mini-player, .moonlit-sidebar, .vertical-stage, .vertical-hero');
   if (!overInteractive && !insideContent) activateBGHover();
   else clearHoverState();
 });
@@ -2990,5 +3057,6 @@ document.addEventListener('mousemove', (e) => {
   });
 </script>
   
+<script src="vertical-layout.js"></script>
 </body>
 </html>

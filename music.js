@@ -212,7 +212,14 @@ const musicList = [
     thumbnail: "https://i.imgur.com/v4x9M36.jpeg",
     youtube: "https://www.youtube.com/watch?v=WEp66-HjojQ",
     background: "https://i.ytimg.com/vi/WEp66-HjojQ/hqdefault.jpg?sqp=-oaymwEnCNACELwBSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLDW1sM1iYspOtCq7o5i-GIfMLuzGA" 
-  }
+  },
+  {
+    name: "Ella Red - Funeral (Official Lyric Video)",
+    src: "https://github.com/Doudks/test/raw/refs/heads/main/Workingsongs/Ella%20Red%20-%20Funeral%20(Official%20Lyric%20Video)%20-%20Ella%20Red%20(youtube).mp3",
+    thumbnail: "https://i.ytimg.com/vi/2tUh1KgP2s4/hqdefault.jpg",
+    youtube: "https://www.youtube.com/watch?v=2tUh1KgP2s4",
+    background: "https://i.imgur.com/AsTw42E.jpeg" 
+  },
   
 ];
 
@@ -229,10 +236,12 @@ let playerOpened = false;
 let isDraggingPlayer = false;
 let playerDragOffsetX = 0;
 let playerDragOffsetY = 0;
+let musicLibraryView = null;
+let musicNowPlayingView = null;
 
 function makeMiniPlayerDraggable() {
   const dragArea = document.querySelector(".mini-player-header");
-  if (!dragArea || !miniPlayer) return;
+  if (!dragArea || !miniPlayer || miniPlayer.classList.contains("music-sidebar-drawer")) return;
 
   dragArea.style.cursor = "grab";
 
@@ -329,9 +338,205 @@ function stopVisualizer() {
   let hidingComeHomeVideo = false;
   let playerImagesPreloaded = false;
 
-  const preloadedTracks = new Map();
-  let fullPlaylistPreloaded = false;
-  let fullPlaylistPreloading = false;
+  function normalizeMediaUrl(url) {
+    return url.replace(
+      "https://github.com/Doudks/test/raw/refs/heads/main/",
+      "https://raw.githubusercontent.com/Doudks/test/refs/heads/main/"
+    );
+  }
+
+  function getMediaUrl(url) {
+    return url.replace(
+      "https://github.com/Doudks/test/raw/refs/heads/main/",
+      "https://media.githubusercontent.com/media/Doudks/test/main/"
+    ).replace(
+      "https://raw.githubusercontent.com/Doudks/test/refs/heads/main/",
+      "https://media.githubusercontent.com/media/Doudks/test/main/"
+    );
+  }
+
+  function getAudioCandidates(track) {
+    return [...new Set([track.src, normalizeMediaUrl(track.src), getMediaUrl(track.src)])];
+  }
+
+  function getYoutubeId(url) {
+    try {
+      return new URL(url).searchParams.get("v") || "";
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function getThumbnailCandidates(track) {
+    const youtubeId = getYoutubeId(track.youtube);
+    return [...new Set([
+      track.thumbnail,
+      youtubeId ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : "",
+      track.background
+    ].filter(Boolean))];
+  }
+
+  function setTrackImage(image, track) {
+    const candidates = getThumbnailCandidates(track);
+    let candidateIndex = 0;
+
+    image.onerror = () => {
+      candidateIndex += 1;
+      if (candidateIndex < candidates.length) image.src = candidates[candidateIndex];
+      else image.classList.add("image-unavailable");
+    };
+
+    image.classList.remove("image-unavailable");
+    image.src = candidates[0] || "";
+  }
+
+  const artistOverrides = {
+    "good for you x one of the girls (lyrics) (tiktok mashup) | Selena Gomez x The Weeknd": "Selena Gomez × The Weeknd",
+    "Exit Music (For A Film)": "Radiohead",
+    "I love you, love you too": "Other",
+    "I hope this song makes you happy": "Other",
+    "Like Him": "Tyler, The Creator",
+    "Best Junkie You Adore": "Other",
+    "𝗖𝗘𝗡𝗦𝗢𝗥𝗘𝗗": "Other"
+  };
+
+  function getTrackArtist(track) {
+    if (artistOverrides[track.name]) return artistOverrides[track.name];
+    if (track.name.includes(" - ")) return track.name.split(" - ")[0].trim();
+    return "Other";
+  }
+
+  function getTrackTitle(track) {
+    if (!track.name.includes(" - ")) return track.name.split(" | ")[0].trim();
+    return track.name.slice(track.name.indexOf(" - ") + 3).trim();
+  }
+
+  function renderMusicLibrary(filter = "") {
+    if (!musicLibraryView) return;
+
+    const list = musicLibraryView.querySelector(".music-library-list");
+    const query = filter.trim().toLocaleLowerCase();
+    const grouped = new Map();
+
+    musicList.forEach((track, index) => {
+      const artist = getTrackArtist(track);
+      const title = getTrackTitle(track);
+      if (query && !`${artist} ${title}`.toLocaleLowerCase().includes(query)) return;
+      if (!grouped.has(artist)) grouped.set(artist, []);
+      grouped.get(artist).push({ track, index, title });
+    });
+
+    list.innerHTML = "";
+
+    [...grouped.entries()]
+      .sort(([artistA], [artistB]) => artistA.localeCompare(artistB))
+      .forEach(([artist, tracks]) => {
+        const group = document.createElement("section");
+        group.className = "music-artist-group";
+
+        const heading = document.createElement("h3");
+        heading.textContent = artist;
+        group.appendChild(heading);
+
+        tracks.forEach(({ track, index, title }) => {
+          const button = document.createElement("button");
+          button.className = "music-library-track";
+          button.type = "button";
+          button.dataset.trackIndex = String(index);
+          button.classList.toggle("is-current", index === currentMusicIndex);
+          button.innerHTML = `
+            <img alt="" loading="lazy">
+            <span><b></b><small>select track</small></span>
+            <i aria-hidden="true">›</i>`;
+          button.querySelector("b").textContent = title;
+          setTrackImage(button.querySelector("img"), track);
+          group.appendChild(button);
+        });
+
+        list.appendChild(group);
+      });
+
+    if (!list.children.length) {
+      list.innerHTML = '<p class="music-library-empty">no songs found.</p>';
+    }
+  }
+
+  function showMusicLibrary() {
+    miniPlayer.dataset.view = "library";
+    renderMusicLibrary(musicLibraryView?.querySelector("input")?.value || "");
+  }
+
+  function showNowPlaying() {
+    miniPlayer.dataset.view = "now-playing";
+  }
+
+  function setupMusicLibrary() {
+    miniPlayer.classList.add("music-sidebar-drawer");
+    miniPlayer.dataset.view = "library";
+
+    musicLibraryView = document.createElement("div");
+    musicLibraryView.className = "music-library-view";
+    musicLibraryView.innerHTML = `
+      <header class="music-library-header">
+        <div><small>☾ moonlit audio</small><h2>My favorite songs</h2></div>
+        <button class="music-library-close" type="button" aria-label="Close player">×</button>
+      </header>
+      <label class="music-library-search">
+        <span aria-hidden="true">⌕</span>
+        <input type="search" placeholder="search songs or artists" aria-label="Search songs or artists">
+      </label>
+      <div class="music-library-list"></div>`;
+
+    musicNowPlayingView = document.createElement("div");
+    musicNowPlayingView.className = "music-now-playing-view";
+
+    const backButton = document.createElement("button");
+    backButton.className = "music-player-back";
+    backButton.type = "button";
+    backButton.innerHTML = '<span aria-hidden="true">‹</span> playlist';
+    musicNowPlayingView.appendChild(backButton);
+
+    [
+      miniPlayer.querySelector(".mini-player-header"),
+      miniPlayer.querySelector(".mini-player-progress-wrap"),
+      miniPlayerVisualizer,
+      miniPlayer.querySelector(".mini-player-volume-box"),
+      miniPlayer.querySelector(".mini-player-controls")
+    ].filter(Boolean).forEach((element) => musicNowPlayingView.appendChild(element));
+
+    miniPlayer.append(musicLibraryView, musicNowPlayingView);
+
+    musicLibraryView.querySelector("input").addEventListener("input", (event) => {
+      renderMusicLibrary(event.target.value);
+    });
+
+    musicLibraryView.querySelector(".music-library-close").addEventListener("click", closeMiniPlayer);
+    backButton.addEventListener("click", showMusicLibrary);
+
+    musicLibraryView.querySelector(".music-library-list").addEventListener("click", async (event) => {
+      const trackButton = event.target.closest(".music-library-track");
+      if (!trackButton) return;
+
+      const selectedIndex = Number(trackButton.dataset.trackIndex);
+      const selectedCurrentTrack = selectedIndex === currentMusicIndex && Boolean(music.currentSrc || music.src);
+
+      if (!selectedCurrentTrack) {
+        loadMusic(selectedIndex);
+      }
+
+      showNowPlaying();
+
+      // Reopening the song that is already playing must only reveal its controls.
+      // Keeping the same <audio> source preserves currentTime instead of restarting it.
+      if (!selectedCurrentTrack || (music.paused && music.currentTime === 0)) {
+        await playCurrentMusic();
+      } else {
+        updateTrackUI();
+      }
+    });
+
+    renderMusicLibrary();
+  }
 
   function formatTime(seconds) {
     if (!isFinite(seconds)) return "0:00";
@@ -353,35 +558,6 @@ function stopVisualizer() {
       miniPlayerVolumeBtn.textContent = "🔉";
     } else {
       miniPlayerVolumeBtn.textContent = "🔊";
-    }
-  }
-
-  async function preloadTrack(index) {
-    const track = musicList[index];
-    if (!track || preloadedTracks.has(track.src)) return;
-
-    try {
-      const response = await fetch(track.src);
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      preloadedTracks.set(track.src, blobUrl);
-    } catch (err) {
-      console.error("Erro ao preloadar faixa:", track.name, err);
-    }
-  }
-
-  async function preloadAllTracks() {
-    if (fullPlaylistPreloaded || fullPlaylistPreloading) return;
-
-    fullPlaylistPreloading = true;
-
-    try {
-      await Promise.all(musicList.map((_, index) => preloadTrack(index)));
-      fullPlaylistPreloaded = true;
-    } catch (err) {
-      console.error("Erro no preload completo da playlist:", err);
-    } finally {
-      fullPlaylistPreloading = false;
     }
   }
 
@@ -599,7 +775,7 @@ await miniPlayerBgVideo.play();
     }
 
     miniPlayerTitle.textContent = track.name;
-    miniPlayerThumb.src = track.thumbnail;
+    setTrackImage(miniPlayerThumb, track);
     miniPlayerLink.href = track.youtube;
 
     setupTitleMarquee();
@@ -618,22 +794,46 @@ await miniPlayerBgVideo.play();
     resetComeHomeVideoState();
 
     const track = musicList[currentMusicIndex];
-    const preloadedUrl = preloadedTracks.get(track.src);
-
-    music.src = preloadedUrl || track.src;
+    const candidates = getAudioCandidates(track);
+    music.preload = "auto";
+    music.dataset.sourceIndex = "0";
+    music.src = candidates[0];
     music.load();
     updateTrackUI();
   }
 
   async function playCurrentMusic() {
-  try {
-    await music.play();
-    startVisualizer();
+    const track = musicList[currentMusicIndex];
+    if (!track) return;
+
+    const candidates = getAudioCandidates(track);
+    let candidateIndex = Number(music.dataset.sourceIndex || 0);
+    let lastError = null;
+
+    while (candidateIndex < candidates.length) {
+      try {
+        if (!music.src || music.error || music.src !== candidates[candidateIndex]) {
+          music.pause();
+          music.dataset.sourceIndex = String(candidateIndex);
+          music.src = candidates[candidateIndex];
+          music.load();
+        }
+
+        await music.play();
+        startVisualizer();
+        updateTrackUI();
+        return;
+      } catch (error) {
+        lastError = error;
+        if (error?.name === "NotAllowedError") break;
+        candidateIndex += 1;
+      }
+    }
+
+    stopVisualizer();
     updateTrackUI();
-  } catch (err) {
-    console.error("Erro ao tocar música:", err);
+    console.error("Erro ao tocar música:", track.name, lastError);
   }
-}
 
   function pauseCurrentMusic() {
   music.pause();
@@ -651,14 +851,15 @@ await miniPlayerBgVideo.play();
 
   miniPlayer.classList.add("show");
   playerOpened = true;
+  showMusicLibrary();
 
   openPlayerBtn.textContent = window.getSiteLanguage?.() === "pt"
     ? "fechar player"
     : "close player";
 
   updateTrackUI();
+  if (!music.paused) startVisualizer();
   preloadPlayerImages();
-  preloadAllTracks();
 }
 
   function closeMiniPlayer() {
@@ -668,7 +869,6 @@ await miniPlayerBgVideo.play();
     ? "abrir player"
     : "open player";
 
-  stopVisualizer();
   hideComeHomeBackgroundVideoSmooth();
 }
 
@@ -880,6 +1080,7 @@ await miniPlayerBgVideo.play();
   }
 });
 
- loadMusic(currentMusicIndex);
+setupMusicLibrary();
+loadMusic(currentMusicIndex);
 makeMiniPlayerDraggable();
 }

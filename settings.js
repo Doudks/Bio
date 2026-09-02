@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingQuestion: 'Loading question...',
     loadingAnswer: 'Loading answer...',
     honorableMentions: 'Honorable mentions',
-    bgVideoOn: 'Animated background: On',
-    bgVideoOff: 'Animated background: Off',
+    bgVideoOn: 'Animated banner: On',
+    bgVideoOff: 'Animated banner: Off',
     lowQualityOn: 'Low quality mode: On',
     lowQualityOff: 'Low quality mode: Off',
     settingsOthersTab: 'Others',
@@ -167,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingQuestion: 'Carregando pergunta...',
     loadingAnswer: 'Carregando resposta...',
     honorableMentions: 'Menções honrosas',
-    bgVideoOn: 'Fundo animado: Ligado',
-    bgVideoOff: 'Fundo animado: Desligado',
+    bgVideoOn: 'Banner animado: Ligado',
+    bgVideoOff: 'Banner animado: Desligado',
     lowQualityOn: 'Modo leve: Ligado',
     lowQualityOff: 'Modo leve: Desligado',
     settingsOthersTab: 'Outros',
@@ -752,8 +752,8 @@ function updateBackgroundVideoButtonText() {
 
   if (label) {
     label.textContent = getCurrentLanguage() === 'pt'
-      ? 'Fundo animado'
-      : 'Animated background';
+      ? 'Banner animado'
+      : 'Animated banner';
   }
 
   bgVideoToggleBtn.classList.toggle('is-on', enabled);
@@ -1022,8 +1022,10 @@ if (updateLogMainBtn && updateLogList) {
 
     const clickedInsidePanel = settingsPanel.contains(e.target);
     const clickedSettingsButton = settingsBtn.contains(e.target);
+    const clickedMusicButton = document.getElementById('music-btn')?.contains(e.target);
+    const clickedMusicPanel = document.getElementById('mini-player')?.contains(e.target);
 
-    if (!clickedInsidePanel && !clickedSettingsButton) {
+    if (!clickedInsidePanel && !clickedSettingsButton && !clickedMusicButton && !clickedMusicPanel) {
       closeSettingsPanel();
     }
   });

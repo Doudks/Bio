@@ -209,65 +209,71 @@ function bindGameCards() {
   }
 
   function startMangaBackgroundVideo(videoUrl) {
-  if (!videoUrl) return;
+    if (!videoUrl || !gameModal) return;
 
-  const bgVideo = document.getElementById("bg-video");
-  if (!bgVideo || !gameModal) return;
+    let videoModal = document.getElementById("favorite-easter-video-modal");
 
-  const source = bgVideo.querySelector("source");
-  const preloadedVideo = preloadedFavoriteVideos.get(videoUrl);
-  const finalVideoUrl = preloadedVideo?.src || videoUrl;
+    if (!videoModal) {
+      videoModal = document.createElement("div");
+      videoModal.id = "favorite-easter-video-modal";
+      videoModal.className = "favorite-easter-video-modal hidden";
+      videoModal.setAttribute("role", "dialog");
+      videoModal.setAttribute("aria-modal", "true");
+      videoModal.setAttribute("aria-label", "Easter egg video");
+      videoModal.innerHTML = `
+        <button class="favorite-easter-video-close" type="button" aria-label="Close video">×</button>
+        <video controls playsinline preload="auto"></video>`;
+      document.body.appendChild(videoModal);
 
-  gameModal.classList.add("manga-minimize");
+      const closeVideo = () => {
+        const player = videoModal.querySelector("video");
+        player.pause();
+        player.currentTime = 0;
+        player.removeAttribute("src");
+        player.load();
+        videoModal.classList.add("hidden");
+        document.body.style.overflow = "";
 
-  setTimeout(() => {
-    gameModal.classList.add("hidden");
-    gameModal.classList.remove("manga-minimize");
-    document.body.style.overflow = "";
+        const bgMusic = document.getElementById("bg-music");
+        if (videoModal.dataset.resumeMusic === "true") {
+          bgMusic?.play().catch(() => {});
+        }
+        videoModal.dataset.resumeMusic = "false";
+      };
 
-    document.body.classList.add("manga-bg-video-active");
-    document.body.classList.remove("video-bg-disabled");
-
-    bgVideo.pause();
-
-    if (source) {
-      source.src = finalVideoUrl;
-    } else {
-      bgVideo.src = finalVideoUrl;
+      videoModal.querySelector(".favorite-easter-video-close").addEventListener("click", closeVideo);
+      videoModal.querySelector("video").addEventListener("ended", closeVideo);
+      videoModal.addEventListener("click", (event) => {
+        if (event.target === videoModal) closeVideo();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !videoModal.classList.contains("hidden")) closeVideo();
+      });
     }
 
-    bgVideo.muted = false;
-    bgVideo.loop = false;
-    bgVideo.playsInline = true;
-    bgVideo.currentTime = 0;
-    bgVideo.load();
+    const player = videoModal.querySelector("video");
+    const bgMusic = document.getElementById("bg-music");
+    videoModal.dataset.resumeMusic = String(Boolean(bgMusic && !bgMusic.paused));
+    bgMusic?.pause();
 
-    function restoreNormalBackgroundAfterMangaVideo() {
-  document.body.classList.remove("manga-bg-video-active");
+    gameModal.classList.add("hidden");
+    gameModal.classList.remove("manga-minimize");
+    videoModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
 
-  if (source) {
-    source.src = "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/starry-sky-moon-clouds-moewalls-com%20(1).mp4";
-  } else {
-    bgVideo.src = "https://github.com/Doudks/test/raw/refs/heads/main/mp4file/starry-sky-moon-clouds-moewalls-com%20(1).mp4";
+    player.pause();
+    player.src = videoUrl.replace(
+      "https://github.com/Doudks/test/raw/refs/heads/main/",
+      "https://raw.githubusercontent.com/Doudks/test/refs/heads/main/"
+    );
+    player.muted = false;
+    player.volume = 1;
+    player.currentTime = 0;
+    player.load();
+    player.play().catch((err) => {
+      console.error("Erro ao tocar vídeo do manga:", err);
+    });
   }
-
-  bgVideo.muted = true;
-  bgVideo.loop = true;
-  bgVideo.currentTime = 0;
-  bgVideo.load();
-
-  if (!document.body.classList.contains("video-bg-disabled") && !document.body.classList.contains("low-quality-mode")) {
-    bgVideo.play().catch(() => {});
-  }
-}
-
-bgVideo.addEventListener("ended", restoreNormalBackgroundAfterMangaVideo, { once: true });
-
-bgVideo.play().catch((err) => {
-  console.error("Erro ao tocar vídeo de fundo do manga:", err);
-});
-  }, 420);
-}
 
   gameCards.forEach(card => {
     card.addEventListener("click", () => {
