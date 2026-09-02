@@ -2402,12 +2402,73 @@ body.hover-bg .qotd-box {
             </div>
 
             <div id="community-auth-logged-in" class="community-account" hidden>
-              <div id="community-user-avatar" class="community-user-avatar" aria-hidden="true">M</div>
-              <div>
-                <small>signed in as</small>
-                <strong id="community-username">moon_guest</strong>
+              <button id="community-account-card" class="community-account-card" type="button" aria-expanded="false" aria-controls="community-account-mini-profile">
+                <div id="community-user-avatar" class="community-user-avatar" aria-hidden="true">M</div>
+
+                <div class="community-account-card-copy">
+                  <small>signed in as</small>
+                  <span class="community-account-card-name-row">
+                    <strong id="community-username">moon_guest</strong>
+                    <em id="community-account-role" class="community-account-role">user</em>
+                  </span>
+                  <span class="community-account-card-hint">view your archive profile</span>
+                </div>
+
+                <span class="community-account-card-arrow" aria-hidden="true">⌄</span>
+              </button>
+
+              <div id="community-account-mini-profile" class="community-account-mini-profile" hidden>
+                <div class="community-account-mini-glow" aria-hidden="true"></div>
+
+                <div class="community-account-mini-topline">
+                  <span>ACCOUNT / ARCHIVE IDENTITY</span>
+                  <button id="community-account-mini-close" type="button" aria-label="Close account profile">×</button>
+                </div>
+
+                <div class="community-account-mini-hero">
+                  <div id="community-account-mini-avatar" class="community-account-mini-avatar" aria-hidden="true">M</div>
+                  <div class="community-account-mini-orbit" aria-hidden="true"></div>
+                </div>
+
+                <div class="community-account-mini-identity">
+                  <strong id="community-account-mini-username">@moon_guest</strong>
+                  <span id="community-account-mini-role" class="community-account-mini-role">user</span>
+                  <p id="community-account-mini-email">—</p>
+                </div>
+
+                <div class="community-account-avatar-controls">
+                  <input
+                    id="community-account-avatar-input"
+                    class="community-account-avatar-input"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/gif"
+                    hidden
+                  >
+                  <button id="community-account-avatar-button" class="community-account-avatar-button" type="button">
+                    <span aria-hidden="true">✦</span>
+                    change profile picture
+                  </button>
+                  <small id="community-account-avatar-status" class="community-account-avatar-status" aria-live="polite">
+                    PNG, JPG, WEBP or GIF · max 2 MB
+                  </small>
+                </div>
+
+                <div class="community-account-mini-stats">
+                  <div>
+                    <strong id="community-account-mini-comments">—</strong>
+                    <span>comments</span>
+                  </div>
+                  <i></i>
+                  <div>
+                    <strong id="community-account-mini-since">—</strong>
+                    <span>joined archive</span>
+                  </div>
+                </div>
+
+                <p class="community-account-mini-whisper">☾ your trace stays where the night can find it.</p>
+
+                <button id="community-signout-btn" class="community-account-signout" type="button">sign out</button>
               </div>
-              <button id="community-signout-btn" type="button">sign out</button>
             </div>
 
             <p id="community-auth-message" class="community-message" aria-live="polite"></p>
@@ -2416,7 +2477,7 @@ body.hover-bg .qotd-box {
           <div class="community-guestbook-card">
             <div class="community-guestbook-title">
               <div>
-                <span>✦ recent transmissions</span>
+                <span>✦ recent comments</span>
                 <h3>Guestbook</h3>
               </div>
               <strong id="community-comment-count">0 comments</strong>
@@ -2429,7 +2490,7 @@ body.hover-bg .qotd-box {
               <textarea id="community-comment-body" maxlength="1000" rows="4" placeholder="say something to the night…" required></textarea>
               <div>
                 <span id="community-comment-length">0 / 1000</span>
-                <button class="community-primary-btn" type="submit">send transmission</button>
+                <button class="community-primary-btn" type="submit">send comment</button>
               </div>
             </form>
 

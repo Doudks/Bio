@@ -286,16 +286,6 @@
   white-space: nowrap;
 }
 
-.community-account > button {
-  grid-column: 1 / -1;
-  min-height: 34px;
-  border: 1px solid rgba(255,255,255,.11);
-  border-radius: 9px;
-  color: rgba(235,231,241,.64);
-  background: rgba(255,255,255,.035);
-  cursor: pointer;
-}
-
 .community-guestbook-card { padding: 20px; }
 
 .community-guestbook-title {
@@ -851,3 +841,472 @@ body.low-quality-mode .community-recovery-primary::after {
   animation: none !important;
   transition: none !important;
 }
+
+
+/* ============================================================
+   MOONLIT ACCOUNT / MINI PROFILE
+============================================================ */
+
+.community-account {
+  position: relative;
+  display: block;
+}
+
+.community-account-card {
+  position: relative;
+  width: 100%;
+  min-height: 68px;
+  padding: 10px 11px;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 11px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 13px;
+  color: inherit;
+  background:
+    radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 31%),
+    rgba(255,255,255,.028);
+  box-shadow: inset 0 1px rgba(255,255,255,.025);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.community-account-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: linear-gradient(transparent, var(--accent), var(--accent-soft), transparent);
+  opacity: .55;
+}
+
+.community-account-card:hover,
+.community-account-card.is-open {
+  border-color: color-mix(in srgb, var(--accent) 45%, rgba(255,255,255,.12));
+  background:
+    radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 34%),
+    rgba(255,255,255,.042);
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.035),
+    0 0 18px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.community-account-card:hover { transform: translateY(-1px); }
+
+.community-account-card-copy {
+  min-width: 0;
+}
+
+.community-account-card-copy > small {
+  display: block;
+  margin: 0 0 4px;
+  color: rgba(235,231,241,.38);
+  font: 700 8px/1 ui-monospace, monospace;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+
+.community-account-card-name-row {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.community-account-card-name-row strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #f6f2f8;
+  font: 700 13px/1.2 "Quicksand", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-account-role,
+.community-account-mini-role {
+  flex: 0 0 auto;
+  padding: 3px 6px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 999px;
+  color: rgba(235,231,241,.42);
+  background: rgba(255,255,255,.025);
+  font: normal 700 7px/1 ui-monospace, monospace;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.community-account-role.is-admin,
+.community-account-mini-role.is-admin {
+  border-color: color-mix(in srgb, var(--accent) 58%, transparent);
+  color: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.community-account-card-hint {
+  display: block;
+  margin-top: 4px;
+  overflow: hidden;
+  color: rgba(235,231,241,.31);
+  font: 600 8px/1.2 "Quicksand", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-account-card-arrow {
+  color: var(--accent-soft);
+  font: 700 15px/1 ui-monospace, monospace;
+  opacity: .64;
+  transform: translateY(-1px);
+  transition: transform .22s ease, opacity .22s ease;
+}
+
+.community-account-card.is-open .community-account-card-arrow {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+
+.community-account-mini-profile {
+  position: relative;
+  margin-top: 9px;
+  padding: 12px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent) 31%, rgba(255,255,255,.09));
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% -12%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 40%),
+    linear-gradient(160deg, rgba(9,10,16,.98), rgba(5,7,12,.985));
+  box-shadow:
+    0 15px 35px rgba(0,0,0,.25),
+    inset 0 1px rgba(255,255,255,.03);
+  animation: communityAccountMiniIn .22s cubic-bezier(.2,.72,.25,1);
+}
+
+.community-account-mini-profile[hidden] {
+  display: none !important;
+}
+
+@keyframes communityAccountMiniIn {
+  from { opacity: 0; transform: translateY(-5px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.community-account-mini-glow {
+  position: absolute;
+  inset: -65px auto auto 50%;
+  width: 180px;
+  height: 120px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+  filter: blur(28px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.community-account-mini-topline {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: rgba(235,231,241,.34);
+  font: 700 7px/1 ui-monospace, monospace;
+  letter-spacing: .8px;
+}
+
+.community-account-mini-topline > button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 7px;
+  color: rgba(235,231,241,.46);
+  background: rgba(255,255,255,.025);
+  font: 400 15px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.community-account-mini-topline > button:hover {
+  border-color: rgba(255,255,255,.15);
+  color: #fff;
+}
+
+.community-account-mini-hero {
+  position: relative;
+  width: 82px;
+  height: 82px;
+  margin: 13px auto 8px;
+  display: grid;
+  place-items: center;
+}
+
+.community-account-mini-avatar {
+  position: relative;
+  z-index: 2;
+  width: 67px;
+  height: 67px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid color-mix(in srgb, var(--accent) 70%, white 10%);
+  border-radius: 50%;
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 25%, #080a10);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.025),
+    0 0 20px color-mix(in srgb, var(--accent) 16%, transparent);
+  font: 700 23px/1 "Quicksand", sans-serif;
+}
+
+.community-account-mini-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.community-account-mini-orbit {
+  position: absolute;
+  inset: 0;
+  border: 1px dashed color-mix(in srgb, var(--accent-soft) 34%, transparent);
+  border-radius: 50%;
+  opacity: .68;
+  animation: communityAccountOrbit 13s linear infinite;
+}
+
+.community-account-mini-orbit::after {
+  content: "✦";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  color: var(--accent-soft);
+  font-size: 9px;
+  text-shadow: 0 0 8px var(--accent);
+  transform: translateX(-50%);
+}
+
+@keyframes communityAccountOrbit {
+  to { transform: rotate(360deg); }
+}
+
+.community-account-mini-identity {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.community-account-mini-identity > strong {
+  display: block;
+  overflow: hidden;
+  color: #f8f3f8;
+  font: 700 16px/1.2 "Quicksand", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-account-mini-role {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.community-account-mini-identity > p {
+  margin: 7px 0 0;
+  overflow: hidden;
+  color: rgba(235,231,241,.34);
+  font: 600 8px/1.3 ui-monospace, monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-account-mini-stats {
+  position: relative;
+  z-index: 2;
+  margin-top: 13px;
+  padding: 10px 6px;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,.065);
+  border-radius: 10px;
+  background: rgba(255,255,255,.022);
+}
+
+.community-account-mini-stats > i {
+  width: 1px;
+  height: 25px;
+  background: linear-gradient(transparent, rgba(255,255,255,.12), transparent);
+}
+
+.community-account-mini-stats > div {
+  min-width: 0;
+  text-align: center;
+}
+
+.community-account-mini-stats strong {
+  display: block;
+  overflow: hidden;
+  color: #f4eff5;
+  font: 700 11px/1.1 "Quicksand", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.community-account-mini-stats span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(235,231,241,.30);
+  font: 700 6.5px/1 ui-monospace, monospace;
+  letter-spacing: .45px;
+  text-transform: uppercase;
+}
+
+.community-account-mini-whisper {
+  position: relative;
+  z-index: 2;
+  margin: 11px 3px;
+  color: rgba(235,231,241,.37);
+  font: italic 10px/1.5 Georgia, serif;
+  text-align: center;
+}
+
+.community-account-signout {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 33px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 9px;
+  color: rgba(235,231,241,.52);
+  background: rgba(255,255,255,.025);
+  font: 700 9px/1 "Quicksand", sans-serif;
+  cursor: pointer;
+  transition: border-color .18s ease, color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.community-account-signout:hover {
+  border-color: color-mix(in srgb, var(--accent) 38%, rgba(255,255,255,.10));
+  color: #fff;
+  background: color-mix(in srgb, var(--accent) 7%, rgba(255,255,255,.025));
+  transform: translateY(-1px);
+}
+
+body.light-theme .community-account-card,
+body.light-theme .community-account-mini-profile,
+body.light-theme .community-account-mini-stats,
+body.light-theme .community-account-signout {
+  border-color: rgba(20,18,25,.10);
+  background-color: rgba(255,255,255,.46);
+}
+
+body.light-theme .community-account-card-name-row strong,
+body.light-theme .community-account-mini-identity > strong,
+body.light-theme .community-account-mini-stats strong {
+  color: #16141a;
+}
+
+body.light-theme .community-account-card-copy > small,
+body.light-theme .community-account-card-hint,
+body.light-theme .community-account-mini-topline,
+body.light-theme .community-account-mini-identity > p,
+body.light-theme .community-account-mini-stats span,
+body.light-theme .community-account-mini-whisper {
+  color: rgba(22,20,26,.44);
+}
+
+body.light-theme .community-account-signout {
+  color: rgba(22,20,26,.58);
+}
+
+body.low-quality-mode .community-account-mini-orbit {
+  animation: none !important;
+}
+
+@media (max-width: 720px) {
+  .community-account-mini-profile {
+    margin-top: 8px;
+  }
+}
+
+
+
+/* ============================================================
+   ACCOUNT AVATAR UPLOAD
+============================================================ */
+.community-account-avatar-controls {
+  position: relative;
+  z-index: 2;
+  margin-top: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.community-account-avatar-button {
+  width: 100%;
+  min-height: 34px;
+  padding: 0 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, rgba(255,255,255,.09));
+  border-radius: 9px;
+  color: rgba(246,240,247,.72);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 8%, rgba(255,255,255,.025)), rgba(255,255,255,.025));
+  box-shadow: inset 0 1px rgba(255,255,255,.025);
+  font: 700 8.5px/1 "Quicksand", sans-serif;
+  letter-spacing: .15px;
+  cursor: pointer;
+  transition: transform .18s ease, border-color .18s ease, color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.community-account-avatar-button > span {
+  color: var(--accent-soft);
+  font-size: 9px;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.community-account-avatar-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent-soft) 60%, rgba(255,255,255,.14));
+  color: #fff;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 14%, rgba(255,255,255,.035)), rgba(255,255,255,.035));
+  box-shadow: 0 0 15px color-mix(in srgb, var(--accent) 9%, transparent);
+}
+
+.community-account-avatar-button:disabled {
+  opacity: .55;
+  cursor: wait;
+}
+
+.community-account-avatar-status {
+  min-height: 10px;
+  color: rgba(235,231,241,.28);
+  font: 600 6.5px/1.35 ui-monospace, monospace;
+  text-align: center;
+}
+
+.community-account-avatar-status.is-error { color: #ff91a8; }
+.community-account-avatar-status.is-success { color: var(--accent-soft); }
+
+body.light-theme .community-account-avatar-button {
+  border-color: color-mix(in srgb, var(--accent) 28%, rgba(20,18,25,.10));
+  color: rgba(22,20,26,.65);
+  background: rgba(255,255,255,.48);
+}
+
+body.light-theme .community-account-avatar-button:hover:not(:disabled) {
+  color: #16141a;
+  background: rgba(255,255,255,.72);
+}
+
+body.light-theme .community-account-avatar-status { color: rgba(22,20,26,.38); }
+body.light-theme .community-account-avatar-status.is-error { color: #b7294c; }
+body.light-theme .community-account-avatar-status.is-success { color: var(--accent); }

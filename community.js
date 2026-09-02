@@ -14,7 +14,8 @@
     page: 0,
     totalComments: 0,
     authRefreshToken: 0,
-    passwordRecoveryMode: false
+    passwordRecoveryMode: false,
+    profileCommentCount: 0
   };
 
   const elements = {};
@@ -44,6 +45,19 @@
       passwordMatch: document.getElementById("community-password-match"),
       passwordToggleButtons: document.querySelectorAll(".community-password-toggle"),
       signoutButton: document.getElementById("community-signout-btn"),
+      accountCard: document.getElementById("community-account-card"),
+      accountRole: document.getElementById("community-account-role"),
+      accountMiniProfile: document.getElementById("community-account-mini-profile"),
+      accountMiniClose: document.getElementById("community-account-mini-close"),
+      accountMiniAvatar: document.getElementById("community-account-mini-avatar"),
+      accountMiniUsername: document.getElementById("community-account-mini-username"),
+      accountMiniRole: document.getElementById("community-account-mini-role"),
+      accountMiniEmail: document.getElementById("community-account-mini-email"),
+      accountMiniComments: document.getElementById("community-account-mini-comments"),
+      accountMiniSince: document.getElementById("community-account-mini-since"),
+      accountAvatarInput: document.getElementById("community-account-avatar-input"),
+      accountAvatarButton: document.getElementById("community-account-avatar-button"),
+      accountAvatarStatus: document.getElementById("community-account-avatar-status"),
       authMessage: document.getElementById("community-auth-message"),
       username: document.getElementById("community-username"),
       userAvatar: document.getElementById("community-user-avatar"),
@@ -176,7 +190,7 @@
 
     const { data, error } = await state.client
       .from("profiles")
-      .select("id, username, avatar_url, role")
+      .select("id, username, avatar_url, role, created_at")
       .eq("id", user.id)
       .single();
 
@@ -223,6 +237,156 @@
     container.textContent = (profile?.username || "M").charAt(0).toUpperCase();
   }
 
+  function formatAccountJoinDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "unknown";
+
+    return new Intl.DateTimeFormat("en", {
+      month: "short",
+      year: "numeric"
+    }).format(date);
+  }
+
+  function closeAccountMiniProfile() {
+    if (!elements.accountMiniProfile || !elements.accountCard) return;
+    elements.accountMiniProfile.hidden = true;
+    elements.accountCard.classList.remove("is-open");
+    elements.accountCard.setAttribute("aria-expanded", "false");
+  }
+
+  function openAccountMiniProfile() {
+    if (!state.session?.user || !elements.accountMiniProfile || !elements.accountCard) return;
+    elements.accountMiniProfile.hidden = false;
+    elements.accountCard.classList.add("is-open");
+    elements.accountCard.setAttribute("aria-expanded", "true");
+  }
+
+  function toggleAccountMiniProfile() {
+    if (elements.accountMiniProfile?.hidden) openAccountMiniProfile();
+    else closeAccountMiniProfile();
+  }
+
+  async function loadOwnCommentCount() {
+    if (!state.session?.user) {
+      state.profileCommentCount = 0;
+      return;
+    }
+
+    try {
+      const { count, error } = await state.client
+        .from("comments")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", state.session.user.id);
+
+      if (error) throw error;
+      state.profileCommentCount = Number(count) || 0;
+    } catch (error) {
+      console.error("Moonlit account comment count:", error);
+      state.profileCommentCount = 0;
+    }
+  }
+
+  function renderAccountMiniProfile() {
+    if (!state.session?.user || !state.profile) return;
+
+    const role = state.profile.role === "admin" ? "admin" : "user";
+    const email = state.session.user.email || "private";
+    const joined = formatAccountJoinDate(
+      state.profile.created_at ||
+      state.session.user.created_at
+    );
+
+    elements.accountRole.textContent = role;
+    elements.accountRole.classList.toggle("is-admin", role === "admin");
+
+    elements.accountMiniUsername.textContent = `@${state.profile.username}`;
+    elements.accountMiniRole.textContent = role;
+    elements.accountMiniRole.classList.toggle("is-admin", role === "admin");
+    elements.accountMiniEmail.textContent = email;
+    elements.accountMiniComments.textContent = new Intl.NumberFormat("en-US").format(state.profileCommentCount);
+    elements.accountMiniSince.textContent = joined;
+
+    renderAvatar(elements.accountMiniAvatar, state.profile);
+    setAvatarStatus();
+  }
+
+  function setAvatarStatus(message, type) {
+    if (!elements.accountAvatarStatus) return;
+    elements.accountAvatarStatus.textContent = message || "PNG, JPG, WEBP or GIF · max 2 MB";
+    elements.accountAvatarStatus.classList.toggle("is-error", type === "error");
+    elements.accountAvatarStatus.classList.toggle("is-success", type === "success");
+  }
+
+  async function handleAvatarUpload(event) {
+    const file = event.target.files?.[0];
+    const user = state.session?.user;
+    if (!file || !user || !state.profile) return;
+
+    const allowedTypes = new Set(["image/png", "image/jpeg", "image/webp", "image/gif"]);
+    if (!allowedTypes.has(file.type)) {
+      setAvatarStatus("Use PNG, JPG, WEBP or GIF.", "error");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      setAvatarStatus("Image is too large. Maximum size is 2 MB.", "error");
+      event.target.value = "";
+      return;
+    }
+
+    setButtonBusy(elements.accountAvatarButton, true, "uploading…");
+    setAvatarStatus("Uploading your new profile picture…");
+
+    try {
+      const objectPath = `${user.id}/avatar`;
+      const { error: uploadError } = await state.client.storage
+        .from("avatars")
+        .upload(objectPath, file, {
+          upsert: true,
+          contentType: file.type,
+          cacheControl: "600"
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data: publicData } = state.client.storage
+        .from("avatars")
+        .getPublicUrl(objectPath);
+
+      const publicUrl = publicData?.publicUrl;
+      if (!publicUrl) throw new Error("Avatar URL could not be created.");
+
+      const avatarUrl = `${publicUrl}?v=${Date.now()}`;
+      const { data: profile, error: profileError } = await state.client
+        .from("profiles")
+        .update({ avatar_url: avatarUrl })
+        .eq("id", user.id)
+        .select("id, username, avatar_url, role, created_at")
+        .single();
+
+      if (profileError) throw profileError;
+
+      state.profile = profile;
+      renderAvatar(elements.userAvatar, state.profile);
+      renderAvatar(elements.accountMiniAvatar, state.profile);
+      renderAccountMiniProfile();
+      await loadComments({ append: false });
+      setAvatarStatus("Profile picture updated.", "success");
+    } catch (error) {
+      console.error("Moonlit avatar upload:", error);
+      const message = String(error?.message || "").toLowerCase();
+      if (message.includes("bucket") || message.includes("row-level security") || message.includes("permission")) {
+        setAvatarStatus("Avatar storage is not configured yet.", "error");
+      } else {
+        setAvatarStatus("Profile picture could not be updated.", "error");
+      }
+    } finally {
+      setButtonBusy(elements.accountAvatarButton, false, "uploading…");
+      event.target.value = "";
+    }
+  }
+
   async function refreshAuth(session) {
     const token = ++state.authRefreshToken;
     state.session = session;
@@ -248,8 +412,12 @@
     if (signedIn) {
       elements.username.textContent = `@${state.profile.username}`;
       renderAvatar(elements.userAvatar, state.profile);
+      await loadOwnCommentCount();
+      renderAccountMiniProfile();
       setAuthMessage("");
     } else {
+      closeAccountMiniProfile();
+      state.profileCommentCount = 0;
       elements.commentBody.value = "";
       elements.commentLength.textContent = "0 / 1000";
     }
@@ -347,7 +515,7 @@
     elements.commentsList.replaceChildren();
 
     if (!state.comments.length) {
-      setCommentsStatus("No transmissions yet. Be the first one.", false);
+      setCommentsStatus("No comments yet. Be the first one.", false);
     } else {
       setCommentsStatus("", false);
       const fragment = document.createDocumentFragment();
@@ -366,7 +534,7 @@
     const from = nextPage * PAGE_SIZE;
     const to = from + PAGE_SIZE - 1;
 
-    setCommentsStatus(append ? "Loading older transmissions…" : "Loading the archive…", false);
+    setCommentsStatus(append ? "Loading older comments…" : "Loading the archive…", false);
     setButtonBusy(elements.loadMore, true, "loading…");
 
     try {
@@ -539,6 +707,8 @@
       elements.commentBody.value = "";
       elements.commentLength.textContent = "0 / 1000";
       await loadComments({ append: false });
+      await loadOwnCommentCount();
+      renderAccountMiniProfile();
     } catch (error) {
       console.error("Moonlit comment insert:", error);
       const message = String(error?.message || "");
@@ -617,6 +787,8 @@
     }
 
     await loadComments({ append: false });
+    await loadOwnCommentCount();
+    renderAccountMiniProfile();
   }
 
   function handleCommentAction(event) {
@@ -704,8 +876,22 @@
     elements.passwordToggleButtons.forEach((button) => {
       button.addEventListener("click", () => toggleRecoveryPassword(button));
     });
+    elements.accountCard.addEventListener("click", toggleAccountMiniProfile);
+    elements.accountMiniClose.addEventListener("click", closeAccountMiniProfile);
+    elements.accountAvatarButton.addEventListener("click", () => elements.accountAvatarInput.click());
+    elements.accountAvatarInput.addEventListener("change", handleAvatarUpload);
     elements.signoutButton.addEventListener("click", handleSignout);
     elements.commentForm.addEventListener("submit", handleCommentSubmit);
+
+    document.addEventListener("click", (event) => {
+      if (!elements.accountMiniProfile || elements.accountMiniProfile.hidden) return;
+      if (event.target.closest("#community-auth-logged-in")) return;
+      closeAccountMiniProfile();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeAccountMiniProfile();
+    });
     elements.commentsList.addEventListener("click", handleCommentAction);
     elements.loadMore.addEventListener("click", () => loadComments({ append: true }));
     elements.commentBody.addEventListener("input", () => {
