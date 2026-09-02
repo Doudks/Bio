@@ -1,4 +1,4 @@
-MOONLIT VERTICAL — REFINAMENTO 2.3
+MOONLIT VERTICAL — REFINAMENTO 1.5
 
 Esta versão parte dos arquivos originais e acrescenta apenas:
 - sidebar fixa, mais larga e totalmente opaca;
