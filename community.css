@@ -541,3 +541,313 @@ body.light-theme .community-auth-link { color: rgba(20,20,20,.52); }
 body.light-theme .community-auth-link:hover { color: var(--accent); }
 body.light-theme .community-auth-form-heading strong { color: #151515; }
 body.light-theme .community-auth-form-heading span { color: rgba(20,20,20,.48); }
+
+/* ============================================================
+   MOONLIT PASSWORD RECOVERY — DECORATED FLOW
+============================================================ */
+.community-recovery-form {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: -2px;
+  padding: 16px 14px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, rgba(255,255,255,.09));
+  border-radius: 15px;
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 36%),
+    linear-gradient(160deg, rgba(255,255,255,.028), rgba(0,0,0,.12));
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.04),
+    0 16px 34px rgba(0,0,0,.18);
+}
+
+.community-recovery-form::before,
+.community-recovery-form::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.community-recovery-form::before {
+  inset: 0;
+  background:
+    linear-gradient(115deg, transparent 15%, color-mix(in srgb, var(--accent-soft) 3%, transparent) 42%, transparent 66%),
+    repeating-linear-gradient(90deg, transparent 0 27px, rgba(255,255,255,.014) 28px);
+  opacity: .9;
+}
+
+.community-recovery-form::after {
+  left: 14%;
+  right: 14%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 42%, transparent);
+  opacity: .62;
+}
+
+.community-recovery-orb {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  margin: 2px auto 4px;
+  display: grid;
+  place-items: center;
+}
+
+.community-recovery-orbit {
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in srgb, var(--accent) 43%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 14px color-mix(in srgb, var(--accent) 10%, transparent),
+    inset 0 0 12px rgba(255,255,255,.018);
+  animation: communityRecoveryOrbit 8s linear infinite;
+}
+
+.community-recovery-orbit::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  box-shadow: 0 0 9px var(--accent-soft);
+}
+
+.community-recovery-orbit.is-small {
+  inset: 13px;
+  border-color: rgba(255,255,255,.08);
+  animation-direction: reverse;
+  animation-duration: 5.5s;
+}
+
+.community-recovery-moon,
+.community-recovery-keyhole {
+  position: relative;
+  z-index: 2;
+  color: var(--accent-soft);
+  font: 29px/1 Georgia, serif;
+  text-shadow:
+    0 0 11px color-mix(in srgb, var(--accent) 70%, transparent),
+    0 0 24px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.community-recovery-keyhole {
+  font-size: 24px;
+  transform: rotate(45deg);
+}
+
+.community-recovery-star {
+  position: absolute;
+  top: 5px;
+  right: 3px;
+  color: var(--accent-soft);
+  font-size: 10px;
+  text-shadow: 0 0 8px var(--accent);
+  animation: communityRecoveryStar 2.1s ease-in-out infinite;
+}
+
+.community-recovery-heading {
+  gap: 7px;
+  padding: 1px 2px 7px;
+}
+
+.community-recovery-heading .community-recovery-kicker {
+  color: var(--accent-soft);
+  font: 700 7.5px/1 ui-monospace, monospace;
+  letter-spacing: 1.55px;
+  text-transform: uppercase;
+  opacity: .82;
+}
+
+.community-recovery-heading strong {
+  color: #fff;
+  font: italic 22px/1.05 Georgia, serif;
+  letter-spacing: -.3px;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.community-recovery-heading span:last-child {
+  max-width: 210px;
+  margin: 0 auto;
+  color: rgba(235,231,241,.47);
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.community-auth-input-wrap {
+  position: relative;
+}
+
+.community-auth-input-wrap input {
+  padding-left: 35px;
+  padding-right: 38px;
+}
+
+.community-auth-input-glyph {
+  position: absolute;
+  z-index: 2;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-soft);
+  font: 700 11px/1 ui-monospace, monospace;
+  opacity: .65;
+  pointer-events: none;
+}
+
+.community-password-toggle {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: 7px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 8px;
+  color: rgba(235,231,241,.38);
+  background: transparent;
+  cursor: pointer;
+  transition: color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.community-password-toggle:hover {
+  color: var(--accent-soft);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.community-password-toggle:active {
+  transform: translateY(-50%) scale(.9);
+}
+
+.community-recovery-note {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 8px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255,255,255,.065);
+  border-radius: 10px;
+  background: rgba(0,0,0,.13);
+}
+
+.community-recovery-note > span {
+  color: var(--accent-soft);
+  font-size: 9px;
+  text-align: center;
+  text-shadow: 0 0 7px var(--accent);
+}
+
+.community-recovery-note p {
+  margin: 0;
+  color: rgba(235,231,241,.39);
+  font: 500 8px/1.5 "Quicksand", sans-serif;
+}
+
+.community-recovery-primary {
+  position: relative;
+  overflow: hidden;
+  min-height: 42px;
+  letter-spacing: .55px;
+}
+
+.community-recovery-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.32) 50%, transparent 70%);
+  transition: transform .48s ease;
+}
+
+.community-recovery-primary:hover::after {
+  transform: translateX(120%);
+}
+
+.community-recovery-back {
+  min-height: 26px;
+  margin-top: -5px;
+}
+
+.community-password-strength {
+  display: grid;
+  gap: 5px;
+  margin-top: -5px;
+}
+
+.community-password-strength-track {
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,.07);
+}
+
+.community-password-strength-track i {
+  display: block;
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: width .22s ease, background .22s ease;
+}
+
+.community-password-strength > span,
+.community-password-match {
+  color: rgba(235,231,241,.32);
+  font: 600 7.5px/1.35 ui-monospace, monospace;
+  letter-spacing: .25px;
+  text-align: right;
+}
+
+.community-password-match {
+  margin-top: -5px;
+  text-align: left;
+  transition: color .18s ease;
+}
+
+.community-password-match.is-match {
+  color: color-mix(in srgb, var(--accent-soft) 82%, white 8%);
+}
+
+.community-password-match.is-mismatch {
+  color: #ff7897;
+}
+
+@keyframes communityRecoveryOrbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes communityRecoveryStar {
+  0%, 100% { opacity: .4; transform: scale(.85); }
+  50% { opacity: 1; transform: scale(1.16); }
+}
+
+body.light-theme .community-recovery-form {
+  border-color: color-mix(in srgb, var(--accent) 28%, rgba(0,0,0,.11));
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 38%),
+    linear-gradient(160deg, rgba(255,255,255,.62), rgba(245,242,247,.48));
+}
+
+body.light-theme .community-recovery-heading strong { color: #17131a; }
+body.light-theme .community-recovery-heading span:last-child,
+body.light-theme .community-recovery-note p,
+body.light-theme .community-password-strength > span,
+body.light-theme .community-password-match { color: rgba(20,18,24,.48); }
+body.light-theme .community-recovery-note { border-color: rgba(0,0,0,.07); background: rgba(255,255,255,.34); }
+body.light-theme .community-password-toggle { color: rgba(20,18,24,.42); }
+
+body.low-quality-mode .community-recovery-orbit,
+body.low-quality-mode .community-recovery-star,
+body.low-quality-mode .community-recovery-primary::after {
+  animation: none !important;
+  transition: none !important;
+}

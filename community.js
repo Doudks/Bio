@@ -39,6 +39,10 @@
       passwordResetForm: document.getElementById("community-password-reset-form"),
       passwordResetNew: document.getElementById("community-password-reset-new"),
       passwordResetConfirm: document.getElementById("community-password-reset-confirm"),
+      passwordStrengthBar: document.getElementById("community-password-strength-bar"),
+      passwordStrengthLabel: document.getElementById("community-password-strength-label"),
+      passwordMatch: document.getElementById("community-password-match"),
+      passwordToggleButtons: document.querySelectorAll(".community-password-toggle"),
       signoutButton: document.getElementById("community-signout-btn"),
       authMessage: document.getElementById("community-auth-message"),
       username: document.getElementById("community-username"),
@@ -629,6 +633,59 @@
     if (button.dataset.action === "delete") deleteComment(comment, button);
   }
 
+  function getPasswordStrength(password) {
+    let score = 0;
+    if (password.length >= 6) score++;
+    if (password.length >= 10) score++;
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+    return Math.min(score, 4);
+  }
+
+  function syncPasswordRecoveryDecor() {
+    const password = elements.passwordResetNew?.value || "";
+    const confirm = elements.passwordResetConfirm?.value || "";
+    const score = getPasswordStrength(password);
+    const widths = [0, 27, 50, 75, 100];
+    const labels = [
+      "make it hard to guess",
+      "weak — keep going",
+      "okay — could be stronger",
+      "strong — looking good",
+      "very strong — sealed"
+    ];
+
+    if (elements.passwordStrengthBar) {
+      elements.passwordStrengthBar.style.width = `${widths[score]}%`;
+      elements.passwordStrengthBar.style.filter = score >= 3 ? "brightness(1.25)" : "";
+    }
+    if (elements.passwordStrengthLabel) elements.passwordStrengthLabel.textContent = labels[score];
+
+    if (elements.passwordMatch) {
+      elements.passwordMatch.classList.remove("is-match", "is-mismatch");
+      if (!confirm) {
+        elements.passwordMatch.textContent = "two matching keys open the same door.";
+      } else if (password === confirm) {
+        elements.passwordMatch.textContent = "keys match — you're ready.";
+        elements.passwordMatch.classList.add("is-match");
+      } else {
+        elements.passwordMatch.textContent = "the keys don't match yet.";
+        elements.passwordMatch.classList.add("is-mismatch");
+      }
+    }
+  }
+
+  function toggleRecoveryPassword(button) {
+    const target = document.getElementById(button.dataset.target || "");
+    if (!target) return;
+    const showing = target.type === "text";
+    target.type = showing ? "password" : "text";
+    button.textContent = showing ? "◉" : "◌";
+    button.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+    target.focus({ preventScroll: true });
+  }
+
   function bindEvents() {
     elements.loginTab.addEventListener("click", () => switchAuthTab("login"));
     elements.signupTab.addEventListener("click", () => switchAuthTab("signup"));
@@ -642,6 +699,11 @@
     elements.passwordRequestBack.addEventListener("click", () => showAuthView("login"));
     elements.passwordRequestForm.addEventListener("submit", handlePasswordResetRequest);
     elements.passwordResetForm.addEventListener("submit", handlePasswordUpdate);
+    elements.passwordResetNew.addEventListener("input", syncPasswordRecoveryDecor);
+    elements.passwordResetConfirm.addEventListener("input", syncPasswordRecoveryDecor);
+    elements.passwordToggleButtons.forEach((button) => {
+      button.addEventListener("click", () => toggleRecoveryPassword(button));
+    });
     elements.signoutButton.addEventListener("click", handleSignout);
     elements.commentForm.addEventListener("submit", handleCommentSubmit);
     elements.commentsList.addEventListener("click", handleCommentAction);
